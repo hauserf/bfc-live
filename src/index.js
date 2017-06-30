@@ -9,6 +9,36 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 import './index.css';
 import './App.css';
 
+var timerEvents = [
+  {
+    key: 1000,
+    btnName: "Start Game",
+    timerEvent: "Waiting for Kickoff"
+  },
+  {
+    key: 1001,
+    btnName: "End 1st Half",
+    timerEvent: "Game On! #WeAreBeyond"
+  },
+  {
+    key: 1002,
+    btnName: "Start 2nd Half",
+    timerEvent: "First Half Ended"
+  },
+  {
+    key: 1003,
+    btnName: "End 2nd Half",
+    timerEvent: "Second Half Begins"
+  },
+  {
+    key: 1004,
+    btnName: "Game Ended",
+    timerEvent: "Second Half Ended"
+  },
+
+];
+
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -23,34 +53,58 @@ class App extends Component {
 
   triggeredBtnEvents(buttonEvent) {
     this.setState({buttonEvent});
-    console.log(buttonEvent);
   }
+
+  secsToParent(secElap) {
+    this.setState({
+      secondsElapsed: secElap
+    });
+    this.handleLabClick()
+  }
+
+  handleLabClick() {
+    this.setState({
+      laps: this.state.laps.concat([this.state.secondsElapsed])
+    })
+  }
+
+  updateScore(score) {
+    this.setState({score});
+    }
+
+
 
   render() {
     return (
-      <div className="bfc-live">
-        <div className="fixture">
-          <Fixture
-            score={this.state.score}
-            scoreChange={(score) => this.setState({score})}
-            />
+      <div className="container">
+        <div className="row">
+          <div className="col-md-4 "></div>
+          <div className="col-sm-4 bfc-live">
+              <div className="fixture">
+                <Fixture
+                  score={this.state.score}
+                  scoreChange={this.updateScore.bind(this)}
+                  />
+              </div>
+              <Timer
+                buttonEvent={this.state.buttonEvent}
+                triggeredBtnEvents={this.triggeredBtnEvents.bind(this)}
+                // timerChange={(secondsElapsed) => this.setState({secondsElapsed})}
+                timeStamp={this.state.laps}
+                lastClearedIncrementer={this.state.lastClearedIncrementer}
+                timerEvents={this.props.timerEvents}
+                secsToParent={this.secsToParent.bind(this)}
+              />
+              <LiveContainer
+                score={this.state.score}
+                buttonEvent={this.state.buttonEvent}
+                timerEvents={this.props.timerEvents}
+              />
+          </div>
         </div>
-        <Timer
-          buttonEvent={this.state.buttonEvent}
-          triggeredBtnEvents={this.triggeredBtnEvents.bind(this)}
-          timerChange={(secondsElapsed) => this.setState({secondsElapsed})}
-          secondsElapsed={this.state.secondsElapsed}
-          timeStamp={this.state.laps}
-          lastClearedIncrementer={this.state.lastClearedIncrementer}
-        />
-        <LiveContainer
-          score={this.state.score}
-          buttonEvent={this.state.buttonEvent}
-          />
-
       </div>
     )
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App timerEvents={timerEvents}/>, document.getElementById('root'));

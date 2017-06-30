@@ -4,52 +4,30 @@ import TimerEvent from './timer-event.js'
 
 
 
-const timerEvents = [
-  {
-    key: 1000,
-    btnName: "Start Game",
-    timerEvent: "Waiting for Kickoff"
-  },
-  {
-    key: 1001,
-    btnName: "End 1st Half",
-    timerEvent: "Game On! #WeAreBeyond"
-  },
-  {
-    key: 1002,
-    btnName: "Start 2nd Half",
-    timerEvent: "First Half Ended"
-  },
-  {
-    key: 1003,
-    btnName: "End 2nd Half",
-    timerEvent: "Second Half Begins"
-  },
-  {
-    key: 1004,
-    btnName: "Game Ended",
-    timerEvent: "Second Half Ended"
-  },
 
-];
 
 
 class LiveContainer extends Component {
   constructor(props){
     super(props);
     this.state = {
+      goalsArr: [],
       highlights: [],
+
     }
   }
 
   render() {
 
-    const key = -this.props.score
+    // const key = (this.props.buttonEvent * 80).toString()
+
     const timerIterator = this.props.buttonEvent
+    const timerEvents = this.props.timerEvents
+    const key = this.props.score + 100
 
     const triggeredHighlights = () => {
       if (this.props.score > 0 ){
-        this.state.highlights.unshift(<Highlight key={key}/>);
+        this.state.highlights.push(<Highlight key={key}/>);
       };
         return (
           this.state.highlights
@@ -57,8 +35,9 @@ class LiveContainer extends Component {
     };
 
     const triggeredBtnEvents = () => {
+
       if (this.props.buttonEvent > 0 ){
-        this.state.highlights.unshift(
+        this.state.highlights.push(
           <TimerEvent
             timerEvent={timerEvents[timerIterator].timerEvent}
             key={timerEvents[timerIterator].key.toString()}
@@ -69,19 +48,23 @@ class LiveContainer extends Component {
           this.state.highlights
         )
     }
+
     triggeredBtnEvents();
     triggeredHighlights();
 
 
-
     return (
+
+
       <div className="highlights-container">
         <div className="highlights-intro">
           <h1>Highlights</h1>
         </div>
         <div className="highlights">
           <ul className="list-unstyled">
+
             {this.state.highlights}
+
 
           </ul>
         </div>

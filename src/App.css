@@ -23,13 +23,30 @@
   to { transform: rotate(360deg); }
 }*/
 
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,900');
 
+.bfc-brand-title {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 1.2em;
+    line-height: 1.2;
+    color: #05518a;
+
+}
+
+.font-roboto {
+    font-family: 'Roboto', sans-serif;
+    color: #05518a;
+
+}
 
 .bfc-live {
- background: #333;
- width: 400px;
- margin: 40px auto;
+ background: #103154;
+ /*width: 100%;*/
+ min-height: 100vh;
  box-shadow: 0 4px 0px #333;
+ margin: 0;
+ padding: 0;
  border-radius: 15px;
 
 }
@@ -43,21 +60,25 @@
 
 .home, .away {
  display: flex;
- font-size: 1.2em;
- border-bottom: solid 2px #444;
+ font-size: 1.4em;
+ color: #00b2ee;
+ font-family: 'Roboto', sans-serif;
+ font-weight: normal;
+ border-bottom: solid 2px #324c60;
  letter-spacing: 2px;
 }
 
 .hometeam, .awayteam {
   flex-grow: 1;
-  padding: 20px 10px 10px 10px;
+  padding: 20px 10px 10px 20px;
+  text-transform: uppercase;
 }
 
 .score {
   width: 60px;
 
   font-size: 1.5em;
-  padding: 15px 10px 10px 10px;
+  padding: 12px 10px 10px 10px;
 }
 
 .counter {
@@ -108,10 +129,9 @@
 
 
 .stopwatch {
- padding: 30px 10px 25px 10px;
-
- background: #2f2f2f;
- border-radius: 0 15px 0 0;
+ padding: 30px 10px 45px 10px;
+ background: #181e32;
+ border-radius: 0 0 0 0;
  text-align: center;
 }
 
@@ -122,21 +142,21 @@
 
  .stopwatch button {
    margin: 8px 5px;
-   background-color: #222;
+   background-color: #324c60;
    border-radius: 5px;
    padding: 7px 8px;
    border: none;
-   color: #999;
+   color: #fff;
    letter-spacing: 2px;
-   font-size: 1.5em;
-   font-weight: bold;
+   font-size: 1em;
+   font-weight: normal;
    text-shadow: none;
    text-transform: uppercase;
  }
 
  .stopwatch button:hover {
-   background: #4b71b5;
-   color: #fafafa;
+   background: #324c60;
+   color: #fff;
    cursor: pointer;
  }
 
@@ -159,19 +179,24 @@
 
 .highlights-intro {
  padding: 5px 10px;
+ margin-top: -15px;
  text-align: center;
  display: flex;
  align-items: center;
- background-color: #222;
+ background-color: #103154;
  border-radius: 15px 15px 0 0;
- border-bottom: solid 2px #444;
+ border-bottom: solid 2px #103154;
 }
 
 .highlights-intro h1 {
  flex-grow: 1;
+ padding: 0 0;
  font-size: 1.5em;
+ color: #324c60;
  letter-spacing: 3px;
- font-weight: normal;
+ font-weight: bold;
+ text-transform: uppercase;
+ /*font-family: 'Roboto', sans-serif;*/
 }
 
 .highlights {
@@ -180,8 +205,9 @@
 
 .highlight {
   display: flex;
-  background: #001122;
-  border-bottom: solid 1px #444;
+  background: #181e32;
+  color: #324c60;
+  border-bottom: solid 1px #324c60;
 }
 
 .timestamp {
@@ -194,6 +220,15 @@
   flex-grow: 7;
   padding: 10px 10px 10px 10px;
 }
+
+.game-ended {
+  border: solid 1px #324c60;
+  max-width: 50%;
+  margin: 0 auto;
+
+
+}
+
 /*
 
  .remove-player {

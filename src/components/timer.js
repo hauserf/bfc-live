@@ -17,15 +17,13 @@ const formattedSeconds = (sec) =>
   ('00' + sec % 60).slice(-2)
 
 
-
 class Timer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      secondsElapsed: this.props.secondsElapsed,
+      secondsElapsed: 0,
       laps: this.props.timeStamp,
       lastClearedIncrementer: this.props.lastClearedIncrementer,
-
     };
     this.incrementer = null;
   }
@@ -46,6 +44,7 @@ class Timer extends Component {
 
     this.recordClick(1);
 
+
   }
 
   handleStopClick() {
@@ -53,8 +52,7 @@ class Timer extends Component {
     this.setState({
       lastClearedIncrementer: this.incrementer,
     });
-
-    this.recordClick(1);
+      this.recordClick(1);
   }
 
   handleResetClick() {
@@ -71,36 +69,57 @@ class Timer extends Component {
     })
   }
 
+
+
   render() {
+    const labelIterator = this.props.buttonEvent;
+    const buttonLabel = this.props.timerEvents[labelIterator].btnName;
+
     return (
 
+
+
       <div className="stopwatch">
+        {/* {(
+        this.state.secondsElapsed === 0 ||
+        this.incrementer === this.state.lastClearedIncrementer
+        ? <Button onClick={this.handleStartClick.bind(this)}>Resume</Button>
+        : <Button className="stop-stop" onClick={this.handleStopClick.bind(this)}>Pause</Button>
+        )} */}
+
         <div className="stopwatch-time">{formattedSeconds(this.state.secondsElapsed)}</div>
 
-        {(this.state.secondsElapsed === 0 ||
-          this.incrementer === this.state.lastClearedIncrementer
-          ? <Button className="start-stop" onClick={this.handleStartClick.bind(this)}>start</Button>
-          : <Button className="stop-stop" onClick={this.handleStopClick.bind(this)}>stop</Button>
-        )}
 
-        {(this.state.secondsElapsed !== 0 &&
+        { (this.props.buttonEvent < 4
+            ?(
+            this.state.secondsElapsed === 0 ||
+            this.incrementer === this.state.lastClearedIncrementer
+            ? <Button className="start-stop" onClick={this.handleStartClick.bind(this)}>{buttonLabel}</Button>
+            : <Button className="stop-stop" onClick={this.handleStopClick.bind(this)}>{buttonLabel}</Button>
+            )
+            :
+            <div className="game-ended text-danger">"Game has ended"</div>
+          )
+        }
+
+        {/* {(this.state.secondsElapsed !== 0 &&
           this.incrementer !== this.state.lastClearedIncrementer
           ? <Button onClick={this.handleLabClick.bind(this)}>lab</Button>
           : null
-        )}
+        )} */}
 
 
-        {(this.state.secondsElapsed !== 0 &&
+        {/* {(this.state.secondsElapsed !== 0 &&
           this.incrementer === this.state.lastClearedIncrementer
           ? <Button onClick={this.handleResetClick.bind(this)}>reset</Button>
           : null
-        )}
+        )} */}
 
-        {/* <ul className="stopwatch-laps">
+        <ul className="stopwatch-laps">
           { this.state.laps.map((lap, i) =>
               <li className="stopwatch-lap"><strong>{i + 1}</strong>/ {formattedSeconds(lap)}</li>)
           }
-        </ul> */}
+        </ul>
       </div>
     );
   }

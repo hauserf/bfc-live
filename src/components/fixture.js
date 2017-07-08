@@ -1,11 +1,17 @@
 import React from 'react';
 
-const Fixture = ({ score, scoreChange, triggerBtnEvent}) => {
+const Fixture = ({ score, scoreChange, triggerBtnEvent, buttonEvent}) => {
 
   const newScore = (delta) => {
     return (
       scoreChange(score + delta)
     )
+
+    // return (
+    //   buttonEvent === 1 || buttonEvent === 3
+    //   ? scoreChange(score + delta)
+    //   : null
+    // )
   }
 
     return (

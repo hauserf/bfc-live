@@ -21,7 +21,7 @@ class Timer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      secondsElapsed: 0,
+      secondsElapsed: this.props.secondsElapsed,
       laps: this.props.timeStamp,
       lastClearedIncrementer: this.props.lastClearedIncrementer,
     };
@@ -75,10 +75,9 @@ class Timer extends Component {
     const labelIterator = this.props.buttonEvent;
     const buttonLabel = this.props.timerEvents[labelIterator].btnName;
 
+console.log(this.state.laps)
+
     return (
-
-
-
       <div className="stopwatch">
         {/* {(
         this.state.secondsElapsed === 0 ||
@@ -88,8 +87,6 @@ class Timer extends Component {
         )} */}
 
         <div className="stopwatch-time">{formattedSeconds(this.state.secondsElapsed)}</div>
-
-
         { (this.props.buttonEvent < 4
             ?(
             this.state.secondsElapsed === 0 ||
@@ -98,15 +95,27 @@ class Timer extends Component {
             : <Button className="stop-stop" onClick={this.handleStopClick.bind(this)}>{buttonLabel}</Button>
             )
             :
-            <div className="game-ended text-danger">"Game has ended"</div>
+            <div className="game-ended text-danger">Game has ended</div>
           )
         }
 
-        {/* {(this.state.secondsElapsed !== 0 &&
+        {/* {(<div>
+            <button type="button" data-toggle="collapse" data-target="#collapseTimerOptions" aria-expanded="false" aria-controls="collapseTimerOptions">
+            |||
+            </button>
+            <div className="collapse" id="collapseTimerOptions">
+              <div className="card card-block">
+                STOP | PAUSE | RESET | ADD 30 seconds | Deduct 30 seconds
+              </div>
+            </div>
+          </div>
+        )} */}
+
+        {(this.state.secondsElapsed !== 0 &&
           this.incrementer !== this.state.lastClearedIncrementer
           ? <Button onClick={this.handleLabClick.bind(this)}>lab</Button>
           : null
-        )} */}
+        )}
 
 
         {/* {(this.state.secondsElapsed !== 0 &&

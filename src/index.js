@@ -9,6 +9,8 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 import './index.css';
 import './App.css';
 
+var gameEvents = ["Goal", "Yellow Card", "Red Card", "Penalty Missed"]
+
 var timerEvents = [
   {
     key: 1000,
@@ -55,24 +57,21 @@ class App extends Component {
     this.setState({buttonEvent});
   }
 
-  secsToParent(secElap) {
-    this.setState({
-      secondsElapsed: secElap
-    });
-    this.handleLabClick()
-  }
-
-  handleLabClick() {
-    this.setState({
-      laps: this.state.laps.concat([this.state.secondsElapsed])
-    })
-  }
-
-  updateScore(score) {
+  updateScore(score, getGoalMins) {
     this.setState({score});
     }
 
+  handleLabClick(laps) {
+    this.setState({
+      laps
+    })
+  }
 
+  // handleLabClick(laps) {
+  //   this.setState({
+  //     laps: this.state.laps.concat([this.state.secondsElapsed])
+  //   })
+  // }
 
   render() {
     return (
@@ -84,22 +83,26 @@ class App extends Component {
                 <Fixture
                   score={this.state.score}
                   scoreChange={this.updateScore.bind(this)}
+                  buttonEvent={this.state.buttonEvent}
                   />
               </div>
-              <Timer
-                buttonEvent={this.state.buttonEvent}
-                triggeredBtnEvents={this.triggeredBtnEvents.bind(this)}
-                // timerChange={(secondsElapsed) => this.setState({secondsElapsed})}
-                timeStamp={this.state.laps}
-                lastClearedIncrementer={this.state.lastClearedIncrementer}
-                timerEvents={this.props.timerEvents}
-                secsToParent={this.secsToParent.bind(this)}
-              />
-              <LiveContainer
-                score={this.state.score}
-                buttonEvent={this.state.buttonEvent}
-                timerEvents={this.props.timerEvents}
-              />
+                <Timer
+                  buttonEvent={this.state.buttonEvent}
+                  triggeredBtnEvents={this.triggeredBtnEvents.bind(this)}
+                  // timerChange={(secondsElapsed) => this.setState({secondsElapsed})}
+                  secondsElapsed={this.state.secondsElapsed}
+                  timeStamp={this.state.laps}
+                  lastClearedIncrementer={this.state.lastClearedIncrementer}
+                  timerEvents={this.props.timerEvents}
+                  handleLabClick={this.handleLabClick}
+
+                />
+                <LiveContainer
+                  score={this.state.score}
+                  buttonEvent={this.state.buttonEvent}
+                  timerEvents={this.props.timerEvents}
+                  gameEvents={this.props.gameEvents}
+                />
           </div>
         </div>
       </div>
@@ -107,4 +110,4 @@ class App extends Component {
   }
 }
 
-ReactDOM.render(<App timerEvents={timerEvents}/>, document.getElementById('root'));
+ReactDOM.render(<App timerEvents={timerEvents} gameEvents={gameEvents} />, document.getElementById('root'));

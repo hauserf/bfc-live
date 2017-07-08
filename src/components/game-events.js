@@ -1,14 +1,15 @@
 import React from 'react';
 
-const Highlight = (props) => {
+
+const GameEvents = (props) => {
 
   return (
     <div className="highlight">
       <div className="timestamp"> 12' </div>
-      <div className="event"> {props.gameEvents[0]}</div>
+      <div className="event"> {props.gameEvents[1]}</div>
     </div>
   )
 
 }
 
-export default Highlight;
+export default GameEvents;

@@ -56,41 +56,82 @@
  width: 170px;
 }*/
 
-
-
-.home, .away {
+.fixture {
  display: flex;
- font-size: 1.4em;
+ }
+
+.fixture-teams {
+  flex-grow: 1;
+}
+
+.fixture-bfc {
+ display: flex;
  color: #00b2ee;
  font-family: 'Roboto', sans-serif;
  font-weight: normal;
- border-bottom: solid 2px #324c60;
- letter-spacing: 2px;
+ /*border-bottom: solid 2px #324c60;*/
+ letter-spacing: 0.8px;
 }
 
-.hometeam, .awayteam {
+.team-bfc {
+  width: 100%;
+  padding: 20px 5px 10px 10px;
+  font-size: 1em;
+  color: #00b2ee;
+  /*text-transform: uppercase;*/
+}
+
+.score-bfc {
+  width: 50px;
+  font-size: 2.5em;
+  padding: 5px 5px 0 0;
+  text-align: right;
+  font-family: Helvetica, sans-serif;
+}
+
+.fixture-opp {
+  display: flex;
+  color: #00b2ee;
+  font-family: 'Roboto', sans-serif;
+  font-weight: normal;
+  /*border-bottom: solid 2px #324c60;*/
+  letter-spacing: 1.1px;
+}
+
+.team-opp {
   flex-grow: 1;
-  padding: 20px 10px 10px 20px;
-  text-transform: uppercase;
+  padding: 20px 10px 10px 5px;
+  font-size: 1em;
+  text-align: right;
+  color: #00b2ee;
+  /*text-transform: uppercase;*/
 }
 
-.score {
-  width: 60px;
-
-  font-size: 1.5em;
-  padding: 12px 10px 10px 10px;
+.score-opp {
+  width: 50px;
+  font-size: 2.5em;
+  padding: 5px 0 0 5px ;
+  text-align: left;
+  font-family: Helvetica, sans-serif;
 }
 
+.vs-fixture {
+  margin-top: 22px;
+  color: #00b2ee;
+  font-family: Arial, sans-serif;
+  /*font-size: 1.5em;*/
+}
 .counter {
   display: flex;
 }
 
-.score-action {
+.score-action-bfc {
+  width: 100%;
   border: none;
   font-weight: bold;
   color: #FAFAFA;
   display: block;
-  padding: 20px 20px;
+  padding: 10px 20px;
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -98,14 +139,38 @@
   user-select: none;
 }
 
-.score-action.increment {
+.score-action-bfc.increment {
   background: #66BB6A;
 }
 
-.score-action.increment:hover {
+.score-action-bfc.increment:hover {
   background: #549d59;
   cursor: pointer;
 }
+
+.score-action-opp {
+  width: 100%;
+  border: none;
+  font-weight: bold;
+  color: #FAFAFA;
+  display: block;
+  padding: 10px 20px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.score-action-opp.increment {
+  background: #324c60;
+}
+
+.score-action-opp.increment:hover {
+  background: #324c60;
+  cursor: pointer;
+}
+
 
 .score-action.decrement {
   background: #ef5350;
@@ -129,7 +194,7 @@
 
 
 .stopwatch {
- padding: 30px 10px 45px 10px;
+ padding: 15px 10px 25px 10px;
  background: #181e32;
  border-radius: 0 0 0 0;
  text-align: center;
@@ -138,15 +203,14 @@
  .stopwatch-time {
    font-family: Menlo;
    font-size: 4em;
+   color: #324c60;
  }
 
  .stopwatch button {
    margin: 8px 5px;
-   background-color: #324c60;
    border-radius: 5px;
    padding: 7px 8px;
    border: none;
-   color: #fff;
    letter-spacing: 2px;
    font-size: 1em;
    font-weight: normal;
@@ -154,11 +218,11 @@
    text-transform: uppercase;
  }
 
- .stopwatch button:hover {
+ /*.stopwatch button:hover {
    background: #324c60;
    color: #fff;
    cursor: pointer;
- }
+ }*/
 
  .stopwatch h2 {
    font-size: .6em;
@@ -170,7 +234,13 @@
 
 
 .start-stop {
-  background-color: #00b2ee;
+  background-color: #324c60;
+  color: #fff;
+}
+
+.fwd-bwd {
+  background-color: #103154;
+  color: #324c60;
 }
 
 .highlights-container {
@@ -195,7 +265,7 @@
  color: #324c60;
  letter-spacing: 3px;
  font-weight: bold;
- text-transform: uppercase;
+ /*text-transform: uppercase;*/
  /*font-family: 'Roboto', sans-serif;*/
 }
 
@@ -211,23 +281,51 @@
 }
 
 .timestamp {
-  width: 60px;
+  /*width: 50px;*/
+  flex-grow: 1;
   padding: 10px 10px 10px 10px;
+  text-align: right;
+  font-size: 1.2em;
+  border-right: 1px solid #324c60;
+}
+
+.highlight-event {
+  flex-grow: 16;
+  padding: 10px 10px 10px 10px;
+  font-size: 1.2em;
+}
+
+.timestamp-opp {
+  /*width: 50px;*/
+  flex-grow: 1;
+  padding: 10px 10px 10px 10px;
+  text-align: left;
+  font-size: 1.2em;
+  border-left: 1px solid #324c60;
+}
+
+.highlight-event-opp {
+  flex-grow: 16;
+  padding: 10px 10px 10px 10px;
+  font-size: 1.2em;
   text-align: right;
 }
 
-.event {
-  flex-grow: 7;
+.timer-event {
+  flex-grow: 16;
   padding: 10px 10px 10px 10px;
+  font-size: 1em;
+  text-align: center;
 }
 
 .game-ended {
   border: solid 1px #324c60;
   max-width: 50%;
   margin: 0 auto;
-
+  color: orange;
 
 }
+
 
 /*
 

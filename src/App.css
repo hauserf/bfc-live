@@ -23,7 +23,48 @@
   to { transform: rotate(360deg); }
 }*/
 
+
+
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,900');
+
+
+.main {
+  min-height: calc(100vh - #{footer-height})
+}
+
+.footer {
+  height: 3em;
+  background: #262c42;
+  font-weight: lighter;
+  font-size: 0.8em;
+  display: flex;
+  text-align: center;
+  text-transform: uppercase;
+  color: #05518a;
+}
+
+.footer-col {
+  padding: 10px;
+  margin: 0;
+  width: 50%;
+  height: 3em;
+  cursor: pointer;
+  display: block;
+  text-decoration: none;
+}
+
+.footer-col:hover,
+.footer-col:active {
+  background-color: orange;
+  text-decoration: none;
+  color: #fff;
+}
+
+a:active {
+  text-decoration: none;
+
+}
+
 
 .bfc-brand-title {
     font-family: 'Roboto', sans-serif;
@@ -41,13 +82,15 @@
 }
 
 .bfc-live {
- background: #103154;
+ background: #181e32;
  /*width: 100%;*/
- min-height: 100vh;
+ min-height: calc(100vh - 3em);
  box-shadow: 0 4px 0px #333;
  margin: 0;
  padding: 0;
- border-radius: 15px;
+ border-left: solid 1px #181e32;
+ border-right: solid 1px #181e32;
+ /*border-radius: 15px;*/
 
 }
 
@@ -326,6 +369,29 @@
 
 }
 
+
+.roster {
+  display: flex;
+  background: #181e32;
+  color: #324c60;
+  border-bottom: solid 1px #324c60;
+  cursor: pointer;
+}
+
+.player-minutes {
+  /*width: 50px;*/
+  flex-grow: 1;
+  padding: 10px 10px 10px 10px;
+  text-align: right;
+  font-size: 1.2em;
+  }
+
+.player {
+  flex-grow: 16;
+  padding: 10px 10px 10px 10px;
+  font-size: 1.2em;
+  text-align: left;
+}
 
 /*
 

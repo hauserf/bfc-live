@@ -65,7 +65,7 @@ export default class Roster extends Component {
           <Player
             name={player.firstName}
             key={id}
-            ident={id}
+            index={id}
             togglePlayer={this.togglePlayer.bind(this)}
           />
         )
@@ -88,3 +88,18 @@ export default class Roster extends Component {
   }
 
 }
+
+{/* togglePlayer(id){
+  const roster = this.state.roster;
+  const playerToMove = this.state.roster.splice(id, 1);
+  const playersOnField = playersPlaying.concat(playerToMove);
+  console.log(playerToMove);
+  const playersPlaying = this.state.playersPlaying;
+  const playersNotPlaying= this.state.playersNotPlaying;
+
+  if(playersOnField[0].playerActive){
+    playersPlaying.concat(playerToMove);
+  } else{
+    const playersNotOnField = playersNotPlaying.concat(playerToMove);
+  }
+} */}

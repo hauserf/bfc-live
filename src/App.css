@@ -29,27 +29,30 @@
 
 
 .main {
-  min-height: calc(100vh - #{footer-height})
+  /*min-height: calc(100vh - #{footer-height})*/
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .footer {
+  display: flex;
+  justify-content: space-between;
   height: 3em;
   background: #262c42;
   font-weight: lighter;
   font-size: 0.8em;
-  display: flex;
   text-align: center;
   text-transform: uppercase;
   color: #05518a;
 }
 
 .footer-col {
+  flex-grow: 1;
+  min-width: 30%;
   padding: 10px;
   margin: 0;
-  width: 50%;
-  height: 3em;
   cursor: pointer;
-  display: block;
   text-decoration: none;
 }
 
@@ -82,9 +85,12 @@ a:active {
 }
 
 .bfc-live {
+ display: flex;
+ flex-direction: column;
+ min-height: calc(100vh - 3em);
  background: #181e32;
  /*width: 100%;*/
- min-height: calc(100vh - 3em);
+ /*min-height: calc(100vh - 3em);*/
  box-shadow: 0 4px 0px #333;
  margin: 0;
  padding: 0;
@@ -101,10 +107,13 @@ a:active {
 
 .fixture {
  display: flex;
+ justify-content: center;
  }
 
 .fixture-teams {
   flex-grow: 1;
+  min-width: 50%;
+
 }
 
 .fixture-bfc {
@@ -288,6 +297,7 @@ a:active {
 
 .highlights-container {
   padding: 0;
+
 }
 
 .highlights-intro {

@@ -15,6 +15,7 @@ export default class Footer extends Component {
         <div className="row">
           <div className="col-md-4"></div>
           <div className="col-sm-4 footer">
+              <NavLink to="/settings" activeStyle={{ background: 'orange', 'textDecoration': 'none' }} className="footer-col">Settings</NavLink>
               <NavLink to="/roster" activeStyle={{ background: 'orange', 'textDecoration': 'none' }} className="footer-col">Roster</NavLink>
               <NavLink to="/bfc-live" activeStyle={{ background: 'orange', 'textDecoration': 'none' }} className="footer-col">Live Stats</NavLink>
           </div>

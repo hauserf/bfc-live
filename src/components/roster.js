@@ -1,105 +1,60 @@
-import React, { Component } from 'react';
-import Player from './player'
-import { PlayerStats } from '../data/player-stats';
+import React, { Component } from 'react'
 
+import { Player } from './player'
+import { PlayerStats } from '../data/player-stats'
+import { findById, togglePlayer, updatePlayer } from '../lib/rosterHelpers'
 
-export default class Roster extends Component {
-  constructor(){
-    super(...arguments);
-    this.state = {
-      playersOnField: [],
-      playersPlaying: [],
-      roster: PlayerStats,
-    }
-  }
+class Roster extends Component {
 
-  togglePlayer(id) {
-
-    this.state.roster[id].playerActive === true
-    ? this.subPlayerOut(id)
-    : this.subPlayerIn(id)
-  }
-
-
-  subPlayerIn(id){
-    const roster = this.state.roster;
-    roster[id].playerActive = true;
-    const playerToMove = this.state.roster.splice(id, 1);
-    this.setState({ roster });
-
-    const playersPlaying = this.state.playersPlaying;
-    const playersOnField = playersPlaying.concat(playerToMove);
-    this.setState({ playersPlaying: playersOnField });
-
-
-  }
-
-  subPlayerOut(id) {
-    const playersPlaying = this.state.playersPlaying;
-    const playerToMove = playersPlaying.splice(id, 1);
-    this.setState({ playersPlaying });
-
-    const roster = this.state.roster;
-    roster[id].playerActive = false;
-    const rosterList = roster.concat(playerToMove);
-    this.setState({ roster: rosterList });
-
+    state = {
+        roster: []
     }
 
+    handleToggle = (id) => {
+        const player = findById(id, this.state.roster)
+        console.log(player)
+        const toggled = togglePlayer(player)
+        const updatedRoster = updatePlayer(this.state.roster, toggled)
+        this.setState({ roster: updatedRoster })
+    }
 
+    componentWillMount() {
+        this.setState({ roster: PlayerStats })
+    }
 
-
-  render(){
-    // map/list players from data/player.stats.js in "Subs"
-    const rosterList = PlayerStats.map((player, id)  =>
-        <Player
-          name={player.firstName}
-          key={id}
-          index={id}
-          togglePlayer={this.togglePlayer.bind(this)}
-        />)
-
-      // map/list players in "On the field" (as in currently playing)
-      const playersPlaying = this.state.playersPlaying;
-      const playersOnField = playersPlaying.map((player, id)  =>
-          <Player
-            name={player.firstName}
-            key={id}
-            index={id}
-            togglePlayer={this.togglePlayer.bind(this)}
-          />
-        )
-
-    return(
-      <div className="container">
-        <div className="row">
-          <div className="col-md-4 "></div>
-          <div className="col-sm-4 bfc-live">
-            <div>
-              <h1>On the field</h1>
-              {playersOnField}
-              <h1>Subs</h1>
-              {rosterList}
+    render() {
+        return (
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-4 "></div>
+                    <div className="col-sm-4 bfc-live">
+                        <div>
+                            <h1>On the field</h1>
+                            {this.state.roster
+                                .filter((player, id) => player.playerActive)
+                                .map((player, id) =>
+                                    <Player
+                                        key={player.id}
+                                        handleToggle={this.handleToggle}
+                                        {...player}
+                                    />
+                                )}
+                            <h1>Subs</h1>
+                            {this.state.roster
+                                .filter((player, id) => !player.playerActive)
+                                .map((player, id) =>
+                                    <Player
+                                        key={player.id}
+                                        handleToggle={this.handleToggle}
+                                        {...player}
+                                    />
+                                )}
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
+        )
+    }
 }
 
-/* togglePlayer(id){
-  const roster = this.state.roster;
-  const playerToMove = this.state.roster.splice(id, 1);
-  const playersOnField = playersPlaying.concat(playerToMove);
-  console.log(playerToMove);
-  const playersPlaying = this.state.playersPlaying;
-  const playersNotPlaying= this.state.playersNotPlaying;
-
-  if(playersOnField[0].playerActive){
-    playersPlaying.concat(playerToMove);
-  } else{
-    const playersNotOnField = playersNotPlaying.concat(playerToMove);
-  }
-} */
+export default Roster;

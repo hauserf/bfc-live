@@ -89,7 +89,7 @@ export default class Roster extends Component {
 
 }
 
-{/* togglePlayer(id){
+/* togglePlayer(id){
   const roster = this.state.roster;
   const playerToMove = this.state.roster.splice(id, 1);
   const playersOnField = playersPlaying.concat(playerToMove);
@@ -102,4 +102,4 @@ export default class Roster extends Component {
   } else{
     const playersNotOnField = playersNotPlaying.concat(playerToMove);
   }
-} */}
+} */

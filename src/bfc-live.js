@@ -83,7 +83,7 @@ export default class BFCLive extends Component {
   }
 
   fastForward(e){
-    var currentTime = this.state.timeLive
+    var currentTime = this.state.timeLive;
     this.setState({timeLive: currentTime + 480})
   }
 
@@ -150,7 +150,7 @@ export default class BFCLive extends Component {
               onOff={this.startStopMatch.bind(this)}
               // snap={this.snapGoals.bind(this)}
               currentButtonState={this.state.currentButtonState}
-              plusMinutes={this.fastForward.bind(this)}
+              fastForward={this.fastForward.bind(this)}
             />
             <div className="highlights-container">
               <div className="highlights-intro">

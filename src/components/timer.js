@@ -5,15 +5,17 @@ import {TimerEvents} from '../data/timer-events'
 export default class Timer extends Component {
 
   fastForward(e){
-    this.props.plusMinutes();
+    this.props.fastForward();
   }
 
   handleClicker(e){
     this.props.onOff();
   }
+
   snapShot(e){
     this.props.snap();
   }
+
   render() {
     const buttonName = TimerEvents[this.props.currentButtonState].btnName
     return (
@@ -23,7 +25,12 @@ export default class Timer extends Component {
         ?
         <div>
           <button className="start-stop" onClick={this.handleClicker.bind(this)}>{buttonName}</button>
-          <button className="fwd-bwd" onClick={this.fastForward.bind(this)}>+8</button>
+          <button
+            className="fwd-bwd"
+            id="buttonPlusEight"
+            onClick={this.fastForward.bind(this)}>
+            +8
+          </button>
         </div>
         : <div className="game-ended text-danger">Game ended</div>}
 

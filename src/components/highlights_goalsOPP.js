@@ -11,10 +11,10 @@ export default class GoalsOPP extends Component {
         <div className="highlight-event-opp">Goal</div>
         <div className="timestamp-opp">
           {this.props.currentButtonState === 1 && this.props.timeLive > lengthOfHalf
-            ? (lengthOfHalf / 60 + " + " + Math.ceil((this.props.time - lengthOfHalf) / 60) + "'")
+            ? (lengthOfHalf / 60 + " + " + Math.ceil((this.props.timeLive - lengthOfHalf) / 60) + "'")
             : (this.props.currentButtonState === 3 && this.props.timeLive > lengthOfGame
-                ? (lengthOfGame / 60 + " + " + Math.ceil((this.props.time - lengthOfGame) / 60) + "'")
-                : (Math.ceil(this.props.time / 60) + "'")
+                ? (lengthOfGame / 60 + " + " + Math.ceil((this.props.timeLive - lengthOfGame) / 60) + "'")
+                : (Math.ceil(this.props.timeLive / 60) + "'")
               )
           }
         </div>

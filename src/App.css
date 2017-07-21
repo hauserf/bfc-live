@@ -1,32 +1,136 @@
-/*.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}*/
-
-
 
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,900');
 
+.flex-vh {
+  height: 550px;
+  margin-bottom: 50px;
+}
+
+.flex-con {
+  display: flex;
+}
+
+.flex-dir-col {
+  flex-direction: column;
+  padding: 0 20px;
+}
+
+.flex-dir-row {
+  flex-direction: row;
+  justify-content: space-around;
+  height: 40px;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.flex-items-align {
+  justify-content: space-between;
+  /*flex-align: center;*/
+}
+
+.flex-align-self-center {
+  align-self: center;
+}
+
+.flex-g-1 {
+  flex-grow: 1;
+}
+
+.flex-g-2 {
+  flex-grow: 2;
+}
+
+.flex-g-3 {
+  flex-grow: 3;
+}
+
+.setting-h {
+  color: #00b2ee;
+}
+
+div > div > p {
+  color: #05518a;
+  flex-grow: 1;
+}
+
+input {
+  flex-grow: 2;
+  background: #262c42;
+  border: none;
+  color: #00b2ee;
+  padding: 10px;
+  font-size: 1.2em;
+  font-weight: 100;
+  font-family: arial, sans-serif;
+}
+
+input:focus {
+  flex-grow: 2;
+  background: #262c42;
+  border: 5px solid orange ;
+  color: #00b2ee;
+  padding: 10px;
+  font-size: 1.2em;
+  font-weight: 100;
+  font-family: arial, sans-serif;
+}
+
+.x-aside,
+.length-btn {
+    background: #262c42;
+    border: none;
+    color: #00b2ee;
+    padding: 10px;
+    font-size: 1.2em;
+    font-weight: 100;
+    font-family: arial, sans-serif;
+    border-radius: 20%;
+    cursor: pointer;
+}
+
+.x-aside:hover,
+.length-btn:hover {
+    background: orange;
+    border: none;
+    color: #fff;
+    padding: 10px;
+    font-size: 1.2em;
+    font-weight: 100;
+    font-family: arial, sans-serif;
+    border-radius: 20%;
+    cursor: pointer;
+}
+
+.back-to-live {
+  background: #262c42;
+  border: none;
+  color: orange;
+  padding: 10px;
+  font-size: 1em;
+  font-weight: 100;
+  font-family: arial, sans-serif;
+  border-radius: 5%;
+  cursor: pointer;
+}
+
+.back-to-live:hover {
+  background: orange;
+  border: none;
+  color: #fff;
+  padding: 10px;
+  font-size: 1em;
+  font-weight: 100;
+  font-family: arial, sans-serif;
+  border-radius: 5%;
+  cursor: pointer;
+}
+
+.settings-data {
+  border: 1px solid #262c42;
+  padding: 10px;
+  min-width: 50%;
+  align-content: space-around;
+}
 
 .main {
   /*min-height: calc(100vh - #{footer-height})*/

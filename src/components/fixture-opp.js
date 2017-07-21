@@ -18,7 +18,7 @@ export default class FixtureOPP extends Component {
             <div className="team-opp">
               {teamName.length > 11
               ?
-              teamName.slice(0, 9)
+              teamName.slice(0, 9) + "…"
               :
               teamName}
             </div>

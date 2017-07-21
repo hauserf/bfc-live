@@ -11,7 +11,7 @@ export default class TimerState extends Component {
         <div className="timer-event">
           {timerStateEvent}
           {this.props.currentButtonState === 1 || this.props.currentButtonState === 3
-            ? (" (" + (Math.floor(this.props.time / 60) + ":" + ("0" + this.props.time % 60).slice(-2)) + ")")
+            ? (" (" + (Math.floor(this.props.timeLive / 60) + ":" + ("0" + this.props.timeLive % 60).slice(-2)) + ")")
             : null
           }
         </div>

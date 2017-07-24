@@ -4,11 +4,11 @@ export default class GoalsOPP extends Component {
   render() {
 
     const lengthOfHalf = this.props.lengthOfHalf;
-    const lengthOfGame = this.props.lengthOfGame;
+    const lengthOfGame = lengthOfHalf * 2;
 
     return (
       <div className="highlight">
-        <div className="highlight-event-opp">Goal</div>
+        <div className="highlight-event-opp">Goal <span className="spacing"> </span> ⚽ <span className="spacing"> </span></div>
         <div className="timestamp-opp">
           {this.props.currentButtonState === 1 && this.props.timeLive > lengthOfHalf
             ? (lengthOfHalf / 60 + " + " + Math.ceil((this.props.timeLive - lengthOfHalf) / 60) + "'")

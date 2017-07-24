@@ -11,16 +11,13 @@ export default class Footer extends Component {
 
   render() {
     return(
-      <div className="container">
-        <div className="row">
-          <div className="col-md-4"></div>
-          <div className="col-sm-4 footer">
-              <NavLink to="/settings" activeStyle={{ background: 'orange', 'textDecoration': 'none' }} className="footer-col">Settings</NavLink>
-              <NavLink to="/roster" activeStyle={{ background: 'orange', 'textDecoration': 'none' }} className="footer-col">Roster</NavLink>
-              <NavLink to="/bfc-live" activeStyle={{ background: 'orange', 'textDecoration': 'none' }} className="footer-col">Live Stats</NavLink>
-          </div>
-        </div>
-      </div>
+
+            <div className="navbar-footer footer">
+              <NavLink to="/settings" activeStyle={{ background: 'orange', 'textDecoration': 'none', color: '#fff'}} className="footer-col">Settings</NavLink>
+              <NavLink to="/roster" activeStyle={{ background: 'orange', 'textDecoration': 'none', color: '#fff' }} className="footer-col">Roster</NavLink>
+              <NavLink to="/bfc-live" activeStyle={{ background: 'orange', 'textDecoration': 'none', color: '#fff' }} className="footer-col">Live Stats</NavLink>
+            </div>
+
     )
   }
 }

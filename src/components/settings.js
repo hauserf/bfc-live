@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
-import { Format } from '../data/format';
 
 export const FormationSelector = (props) => {
     const handleFormationSelected = props.handleFormationSelected.bind(null, props.name + 'v' + props.name)
     return (
         <div className="x-aside" onClick={handleFormationSelected}>{props.name}</div>
     )
+}
+
+export const LengthOfHalfSelector = (props) => {
+  const handleLengthOfHalfSelected = props.handleLengthOfHalfSelected.bind(null, props.name)
+  return (
+    <div className="length-btn" onClick={handleLengthOfHalfSelected}>{props.name}</div>
+  )
 }
 
 export default class Settings extends Component {
@@ -27,7 +33,11 @@ export default class Settings extends Component {
     }
 
     handleFormationSelected = (formationName) => {
-        this.setState({ format: formationName })
+      this.props.handleFormationSelected(formationName);
+    }
+
+    handleLengthOfHalfSelected = (lengthAdjuster) => {
+      this.props.handleLengthOfHalfSelected(lengthAdjuster);
     }
 
     render() {
@@ -57,7 +67,7 @@ export default class Settings extends Component {
                             <div className="flex-con flex-dir-col">
                                 <p>Format:</p>
                                 <div>
-                                    <h4 className="text-warning flex-g-1 text-center settings-data"> {this.state.format} </h4>
+                                    <h4 className="text-warning flex-g-1 text-center settings-data"> {this.props.format} </h4>
                                 </div>
                                 <div className="flex-con flex-dir-row flex-g-2">
                                     <FormationSelector name='5' handleFormationSelected={this.handleFormationSelected} />
@@ -75,10 +85,18 @@ export default class Settings extends Component {
                                     <h4 className="text-warning flex-g-1 text-center settings-data"> {lengthOfHalf} </h4>
                                 </div>
                                 <div className="flex-con flex-dir-row">
-                                    <div className="length-btn">-5</div>
-                                    <div className="length-btn">-1</div>
-                                    <div className="length-btn">+1</div>
-                                    <div className="length-btn">+5</div>
+                                    <LengthOfHalfSelector name="-10"
+                                    handleLengthOfHalfSelected={this.handleLengthOfHalfSelected}/>
+                                    <LengthOfHalfSelector name="-5"
+                                    handleLengthOfHalfSelected={this.handleLengthOfHalfSelected}/>
+                                    <LengthOfHalfSelector name="-1"
+                                    handleLengthOfHalfSelected={this.handleLengthOfHalfSelected}/>
+                                    <LengthOfHalfSelector name="+1"
+                                    handleLengthOfHalfSelected={this.handleLengthOfHalfSelected}/>
+                                    <LengthOfHalfSelector name="+5"
+                                    handleLengthOfHalfSelected={this.handleLengthOfHalfSelected}/>
+                                    <LengthOfHalfSelector name="+10"
+                                    handleLengthOfHalfSelected={this.handleLengthOfHalfSelected}/>
                                 </div>
                             </div>
 

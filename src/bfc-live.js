@@ -132,11 +132,10 @@ export default class BFCLive extends Component {
 
 
   render() {
-    console.log(this.props.teamBFC);
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-md-4 "></div>
+      // <div className="container">
+      //   <div className="row">
+      //     <div className="col-md-4 "></div>
           <div className="col-sm-4 bfc-live">
             <div className="fixture">
               <div className="fixture-teams">
@@ -174,8 +173,8 @@ export default class BFCLive extends Component {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+      //   </div>
+      // </div>
     );
   }
 }

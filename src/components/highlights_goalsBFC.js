@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {emojify} from 'react-emojione';
 
 
 export default class GoalsBFC extends Component {
@@ -6,7 +7,7 @@ export default class GoalsBFC extends Component {
 
     const lengthOfHalf = this.props.lengthOfHalf;
     const lengthOfGame = lengthOfHalf * 2;
-    
+
     return (
       <div className="highlight">
         <div className="timestamp">
@@ -18,7 +19,7 @@ export default class GoalsBFC extends Component {
               )
           }
         </div>
-      <div className="highlight-event">Goal</div>
+      <div className="highlight-event text-white"> ⚽  <span className="spacing"> _ </span> Goal !!! </div>
       </div>
     );
   }

@@ -3,7 +3,6 @@
 
 .flex-vh {
   height: 550px;
-  margin-bottom: 50px;
 }
 
 .flex-con {
@@ -12,7 +11,7 @@
 
 .flex-dir-col {
   flex-direction: column;
-  padding: 0 20px;
+  padding: 0 10px;
 }
 
 .flex-dir-row {
@@ -46,6 +45,12 @@
 
 .setting-h {
   color: #00b2ee;
+  padding: 0 10px;
+}
+
+.roster-hint {
+  color: #324c60;
+  padding: 0 10px;
 }
 
 div > div > p {
@@ -113,6 +118,59 @@ input:focus {
   cursor: pointer;
 }
 
+/************* PLAYER COMPONENT *************/
+
+.first-yellow {
+  background-color: yellow;
+}
+
+.second-yellow {
+  background-color: orange;
+  border-width: 0;
+}
+
+.red-card {
+  background-color: red;
+  color: #fff;
+}
+
+
+/************* PLAYER COMPONENT *************/
+
+/* =================================
+    ReactCSSTransitionGroup Classes
+==================================== */
+
+/* start enter state */
+.slide-enter {
+  transform: translateX(5%);
+}
+
+/* end enter state */
+.slide-enter.slide-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+  transition: transform 0.5s ease-out;
+  background: #00b2ee;
+  color: white;
+}
+
+
+/* start leave state */
+/*.slide-leave {
+ transform: translateX(0);
+}*/
+
+/* end leave state */
+/*.slide-leave.slide-leave-active {
+  transform: translateX(100%);
+  opacity: 0;
+  transition: 0.1s ease-in;
+}*/
+
+
+/************* END OF TRANSITION *************/
+
 .back-to-live:hover {
   background: orange;
   border: none;
@@ -133,16 +191,28 @@ input:focus {
 }
 
 .main {
-  /*min-height: calc(100vh - #{footer-height})*/
   display: flex;
   flex-direction: column;
-  height: 100%;
+  justify-content: center;
+
+}
+
+.navbar-footer {
+  position: fixed;
+  bottom: 0;
+  background-color: white;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  min-width: 320px;
+  max-width: 400px;
 }
 
 .footer {
   display: flex;
-  justify-content: space-between;
+  width: 100%;
   height: 3em;
+  margin: 0 auto;
   background: #262c42;
   font-weight: lighter;
   font-size: 0.8em;
@@ -158,6 +228,8 @@ input:focus {
   margin: 0;
   cursor: pointer;
   text-decoration: none;
+  /*border: 1px solid #324c60;*/
+  color: #00b2ee;
 }
 
 .footer-col:hover,
@@ -165,6 +237,7 @@ input:focus {
   background-color: orange;
   text-decoration: none;
   color: #fff;
+  /*border: 1px solid #324c60;*/
 }
 
 a:active {
@@ -188,16 +261,23 @@ a:active {
 
 }
 
+.spacing {
+  color: #181e32;
+}
+
 .bfc-live {
- display: flex;
- flex-direction: column;
- min-height: calc(100vh - 3em);
+ /*display: flex;
+ flex-direction: column;*/
+ position: absolute;
+ left: 0;
+ right: 0;
+ min-height: 100vh;
  background: #181e32;
- /*width: 100%;*/
- /*min-height: calc(100vh - 3em);*/
+ min-width: 320px;
+ max-width: 400px;
  box-shadow: 0 4px 0px #333;
- margin: 0;
- padding: 0;
+ margin: 0 auto;
+ padding: 0 0 4em 0;
  border-left: solid 1px #181e32;
  border-right: solid 1px #181e32;
  /*border-radius: 15px;*/
@@ -223,7 +303,7 @@ a:active {
 .fixture-bfc {
  display: flex;
  color: #00b2ee;
- font-family: 'Roboto', sans-serif;
+ font-family: arial, sans-serif;
  font-weight: normal;
  /*border-bottom: solid 2px #324c60;*/
  letter-spacing: 0.8px;
@@ -242,13 +322,13 @@ a:active {
   font-size: 2.5em;
   padding: 5px 5px 0 0;
   text-align: right;
-  font-family: Helvetica, sans-serif;
+  font-family: arial, sans-serif;
 }
 
 .fixture-opp {
   display: flex;
   color: #00b2ee;
-  font-family: 'Roboto', sans-serif;
+  font-family: arial, sans-serif;
   font-weight: normal;
   /*border-bottom: solid 2px #324c60;*/
   letter-spacing: 1.1px;
@@ -268,7 +348,7 @@ a:active {
   font-size: 2.5em;
   padding: 5px 0 0 5px ;
   text-align: left;
-  font-family: Helvetica, sans-serif;
+  font-family: arial, sans-serif;
 }
 
 .vs-fixture {
@@ -296,11 +376,12 @@ a:active {
 }
 
 .score-action-bfc.increment {
-  background: #66BB6A;
+  /*background: #66BB6A;*/
+  background: #00b2ee;
 }
 
 .score-action-bfc.increment:hover {
-  background: #549d59;
+  background: #00b2ff;
   cursor: pointer;
 }
 
@@ -319,11 +400,12 @@ a:active {
 }
 
 .score-action-opp.increment {
-  background: #324c60;
+  /*background: #324c60;*/
+  background: #262c42;
 }
 
 .score-action-opp.increment:hover {
-  background: #324c60;
+  background: #262c49;
   cursor: pointer;
 }
 
@@ -390,8 +472,9 @@ a:active {
 
 
 .start-stop {
-  background-color: #324c60;
-  color: #fff;
+  /*background-color: #324c60;*/
+  background-color: #262c42;
+  color: #00b2ee;
 }
 
 .fwd-bwd {
@@ -410,9 +493,9 @@ a:active {
  text-align: center;
  display: flex;
  align-items: center;
- background-color: #103154;
+ background-color: #262c42;
  border-radius: 15px 15px 0 0;
- border-bottom: solid 2px #103154;
+ border-bottom: solid 2px #262c42;
 }
 
 .highlights-intro h1 {
@@ -444,12 +527,14 @@ a:active {
   text-align: right;
   font-size: 1.2em;
   border-right: 1px solid #324c60;
+  color: #00b2ee;
 }
 
 .highlight-event {
   flex-grow: 16;
   padding: 10px 10px 10px 10px;
   font-size: 1.2em;
+  color: #00b2ee;
 }
 
 .timestamp-opp {
@@ -459,6 +544,7 @@ a:active {
   text-align: left;
   font-size: 1.2em;
   border-left: 1px solid #324c60;
+  color: #00b2ee;
 }
 
 .highlight-event-opp {
@@ -466,6 +552,7 @@ a:active {
   padding: 10px 10px 10px 10px;
   font-size: 1.2em;
   text-align: right;
+  color: #00b2ee;
 }
 
 .timer-event {
@@ -490,15 +577,27 @@ a:active {
   color: #324c60;
   border-bottom: solid 1px #324c60;
   cursor: pointer;
+
 }
 
 .player-minutes {
   /*width: 50px;*/
+  max-width: 60px;
   flex-grow: 1;
-  padding: 10px 10px 10px 10px;
+  padding: 10px;
   text-align: right;
   font-size: 1.2em;
   }
+
+  .player-stats {
+    width: 20px;
+    flex-grow: 1;
+    padding: 15px 0px 0px 0px;
+    text-align: center;
+    justify-content: center;
+    font-weight: bolder;
+    font-size: 0.9em;
+    }
 
 .player {
   flex-grow: 16;

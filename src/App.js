@@ -32,7 +32,7 @@ class App extends Component {
       oppScore: 0,
       currentButtonState: 0,
       lister:[],
-      format: "11"
+      format: "11v11"
   }
 
   componentWillMount() {
@@ -58,8 +58,13 @@ class App extends Component {
     this.setState({teamOPP: e.target.value});
   }
 
-  setFormation(e){
-    this.setState({})
+  handleFormationSelected = (formationName) => {
+
+    this.setState({ format: formationName });
+  }
+
+  handleLengthOfHalfSelected(lengthAdjuster) {
+    this.setState({ lengthOfHalf: this.state.lengthOfHalf + (lengthAdjuster * 60)})
   }
 
 /********************************
@@ -67,13 +72,78 @@ class App extends Component {
 ********************************/
 
   handleToggle = (id) => {
-      const player = findById(id, this.state.roster)
-      console.log(player)
-      console.log(id);
-      const toggled = togglePlayer(player)
-      const updatedRoster = updatePlayer(this.state.roster, toggled)
-      this.setState({ roster: updatedRoster })
+    const player = findById(id, this.state.roster)
+    const toggled = togglePlayer(player)
+    const updatedRoster = updatePlayer(this.state.roster, toggled)
+
+    this.setState({ roster: updatedRoster })
+
+    const roster = this.state.roster;
+    const playerActive = updatedRoster[roster.indexOf(player)].playerActive;
+    const playerSubIns = updatedRoster[roster.indexOf(player)].subIns;
+    const playerSubOuts = updatedRoster[roster.indexOf(player)].subOuts;
+
+    // record sub ins / sub outs (push time stamp into array)
+    playerActive === true
+    ? updatePlayer(updatedRoster, playerSubIns.push(this.state.timeLive))
+    : updatePlayer(updatedRoster, playerSubOuts.push(this.state.timeLive))
+
   }
+
+  handleFirstYellow = (id) => {
+    const player = findById(id, this.state.roster)
+    const toggleYellow = (player) => ({ ...player, firstYellow: !player.firstYellow})
+    const toggled = toggleYellow(player)
+    const updatedRoster = updatePlayer(this.state.roster, toggled)
+    this.setState({ roster: updatedRoster })
+
+    const roster = this.state.roster;
+    const firstYellow = updatedRoster[roster.indexOf(player)].firstYellow;
+    const yellowCards = updatedRoster[roster.indexOf(player)].yellowCards;
+
+    firstYellow === true
+      ? updatePlayer(updatedRoster, yellowCards.push(this.state.timeLive))
+      : updatePlayer(updatedRoster, yellowCards.pop())
+  }
+
+  handleSecondYellow = (id) => {
+    const player = findById(id, this.state.roster)
+    const toggleYellow = (player) => ({ ...player, secondYellow: !player.secondYellow})
+    const toggled = toggleYellow(player)
+    const updatedRoster = updatePlayer(this.state.roster, toggled)
+    this.setState({ roster: updatedRoster })
+
+    const roster = this.state.roster;
+    const secondYellow = updatedRoster[roster.indexOf(player)].secondYellow;
+    const yellowCards = updatedRoster[roster.indexOf(player)].yellowCards;
+
+    secondYellow === true
+    ? updatePlayer(updatedRoster, yellowCards.push(this.state.timeLive))
+    : updatePlayer(updatedRoster, yellowCards.pop())
+  }
+
+  handleRed = (id) => {
+    const player = findById(id, this.state.roster)
+    const roster = this.state.roster;
+    const redCard = roster[roster.indexOf(player)].redCard;
+
+    redCard.length === 0
+    ? updatePlayer(roster, redCard.push(this.state.timeLive))
+    : updatePlayer(roster, redCard.pop())
+
+    this.setState({ roster })
+  }
+
+
+  // handleRed = (id) => {
+  //   const player = findById(id, this.state.roster)
+  //   const toggleRed = (player) => ({ ...player, redCard: !player.redCard })
+  //   const toggled = toggleRed(player)
+  //   const updatedRoster = updatePlayer(this.state.roster, toggled)
+  //
+  //   this.setState({ roster: updatedRoster })
+  //
+  // }
 
   /********************************
   ------------- BFC Live ------------
@@ -83,12 +153,12 @@ class App extends Component {
     var score = this.state.beyondScore;
     if(this.state.timeLive === 0){
       alert("Start the game first!");
-    } else if (this.state.timeLive === this.state.lengthOfHalf){
+    } else if (this.state.currentButtonState === 2){
         alert("Restart game first!");
       } else if (this.state.currentButtonState === 4){
           alert("Game ended!");
     } else {
-        this.setState({beyondScore:score+1})
+        this.setState({ beyondScore: score + 1 })
         this.snapGoalsBFC();
       }
   }
@@ -97,12 +167,12 @@ class App extends Component {
     var score = this.state.oppScore;
     if(this.state.timeLive === 0){
       alert("Start the game first!");
-    } else if (this.state.timeLive === this.state.lengthOfHalf){
+    } else if (this.state.currentButtonState === 2){
         alert("Restart game first!");
       } else if (this.state.currentButtonState === 4){
           alert("Game ended!");
     } else {
-        this.setState({oppScore:score+1})
+        this.setState({ oppScore: score + 1 })
         this.snapGoalsOPP();
       }
   }
@@ -116,7 +186,7 @@ class App extends Component {
         this.setState({clockState:false, currentButtonState: buttonStateCounter + 1, timeLive: this.state.lengthOfHalf})
         clearInterval(timer);
       } else if(this.state.clockState){
-        this.setState({clockState:false, currentButtonState: buttonStateCounter + 1})
+        this.setState({ clockState: false, currentButtonState: buttonStateCounter + 1 })
         clearInterval(timer);
         }
 
@@ -127,14 +197,14 @@ class App extends Component {
           timeLive={this.state.timeLive}
           currentButtonState={this.state.currentButtonState}/>]
       );
-      this.setState({lister:arrayTimerState})
+      this.setState({ lister: arrayTimerState })
     }
     snapTimerState();
   }
 
   fastForward(e){
     var currentTime = this.state.timeLive;
-    this.setState({timeLive: currentTime + 480})
+    this.setState({ timeLive: currentTime + 480 })
   }
 
   snapGoalsBFC(e){
@@ -147,7 +217,7 @@ class App extends Component {
         lengthOfGame={this.state.lengthOfGame}
       />]
     );
-    this.setState({lister:arrayGoalBFC})
+    this.setState({ lister: arrayGoalBFC })
 
   }
 
@@ -162,7 +232,7 @@ class App extends Component {
         lengthOfGame={this.state.lengthOfGame}
       />]
     );
-    this.setState({lister:arrayGoalOPP})
+    this.setState({ lister: arrayGoalOPP })
   }
 
 
@@ -178,9 +248,10 @@ class App extends Component {
             setOPPTeam={this.setOPPTeam.bind(this)}
             teamBFC={this.state.teamBFC}
             teamOPP={this.state.teamOPP}
-            setFormation={this.setFormation.bind(this)}
             format={this.state.format}
             lengthOfHalf={this.state.lengthOfHalf}
+            handleFormationSelected={this.handleFormationSelected.bind(this)}
+            handleLengthOfHalfSelected={this.handleLengthOfHalfSelected.bind(this)}
             />}
           />
           <Route path="/bfc-live" render={() => <BFCLive
@@ -205,7 +276,13 @@ class App extends Component {
           <Route path="/roster" render={() => <Roster
             roster={this.state.roster}
             handlePlayerToggle={this.handleToggle.bind(this)}
+            handleFirstYellow={this.handleFirstYellow.bind(this)}
+            handleSecondYellow={this.handleSecondYellow.bind(this)}
+            handleRed={this.handleRed.bind(this)}
             clockState={this.state.clockState}
+            format={this.props.format}
+            currentButtonState={this.state.currentButtonState}
+            timeLive={this.state.timeLive}
             /> }
           />
           <Footer />

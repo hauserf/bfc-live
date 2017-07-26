@@ -16,9 +16,9 @@ export const LengthOfHalfSelector = (props) => {
 
 export default class Settings extends Component {
 
-    state = {
-        format: '11v11'
-    }
+    // state = {
+    //     format: '11v11'
+    // }
 
     setBFCTeam(e) {
         this.props.setBFCTeam(e);
@@ -28,9 +28,9 @@ export default class Settings extends Component {
         this.props.setOPPTeam(e);
     }
 
-    setFormation(e) {
-        this.props.setFormation();
-    }
+    // setFormation(e) {
+    //     this.props.setFormation();
+    // }
 
     handleFormationSelected = (formationName) => {
       this.props.handleFormationSelected(formationName);

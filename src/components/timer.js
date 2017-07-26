@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Timecounter from './subcomponents/timecounter';
-import {TimerEvents} from '../data/timer-events'
+import {TimerEvents} from '../data/timer-events';
+import SentimentBox from './sentiment-box';
+
+
 
 export default class Timer extends Component {
 
@@ -16,7 +19,12 @@ export default class Timer extends Component {
     this.props.snap();
   }
 
+  handleSentimentSelected = (sentiment) => {
+    this.props.handleSentimentSelected(sentiment);
+  }
+
   render() {
+
     const buttonName = TimerEvents[this.props.currentButtonState].btnName
     return (
       <div className="stopwatch">
@@ -32,11 +40,23 @@ export default class Timer extends Component {
             +8
           </button>
         </div>
-        : <div className="game-ended text-danger">Game ended</div>}
+        : (
+            <div>
+              <div>
+                <div className="game-ended text-danger">Game ended</div>
+              </div>
+              <div>
+                <SentimentBox
+                  handleSentimentSelected={this.handleSentimentSelected}
+                  oppScore={this.props.oppScore}
+                  beyondScore={this.props.beyondScore}
+                />
+              </div>
+            </div>
+          )
+        }
 
       </div>
     );
   }
 }
-
-/* <button className="stop-stop" onClick={this.snapshot.bind(this)}>Capture Moment</button> */

@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {emojify} from 'react-emojione';
+
 
 export const Player = (props) => {
     const handleToggle = props.handleToggle.bind(null, props.id);
     const handleFirstYellow = props.handleFirstYellow.bind(null, props.id);
     const handleSecondYellow = props.handleSecondYellow.bind(null, props.id);
     const handleRed = props.handleRed.bind(null, props.id);
-
+    const handlePlayerGoals = props.handlePlayerGoals.bind(null, props.id);
+    const handlePlayerAssists = props.handlePlayerAssists.bind(null, props.id);
+    
     // minutesPlayed current interval
 
     const latestSubIn = props.subIns[props.subIns.length - 1];
@@ -45,10 +49,37 @@ export const Player = (props) => {
     const timeOfSecondYellows = (Math.ceil(props.yellowCards[1] / 60) + "'");
     const timeOfRedCard = (Math.ceil(props.redCard[0] / 60) + "'");
 
+    // goals array
+    // const playerGoals = () => {
+    //   for (var i = 0; i < props.goals.length; i += 1) {
+    //   return ("Goal" + (Math.ceil(props.goals[i] / 60) + "'"))
+    //   }
+    // }
+    // console.log(props.goals.length, playerGoals());
+
+
     return (
-        <div className="roster">
-            <div className="player" onClick={handleToggle}>
+          <div className="player">
+            <div className="player-names" onClick={handleToggle}>
                 {props.firstName}
+            </div>
+            <div className="goals-assists" >
+                <div className="goals">
+                 {props.goals
+                   .map((goal, id) => {
+                   return "⚽" }
+                 )}{props.assists
+                   .map((assist, id) => {
+                   return "😀" }
+                 )}
+                </div>
+            </div>
+
+            <div className="player-stats" onClick={handlePlayerGoals}>
+              GL
+            </div>
+            <div className="player-stats" onClick={handlePlayerAssists}>
+              AS
             </div>
 
             { props.firstYellow === false && props.redCard.length === 1
@@ -83,20 +114,12 @@ export const Player = (props) => {
                   </div>
             }
 
-
-            {/* <div className={props.redCard === true
-                ? "player-minutes red-card"
-                : "player-minutes"
-              }
-               onClick={handleRed} >RC
-            </div> */}
-
-                { minutesPlayedCurrentInterval === updateMinutes()
-                  ? null
-                  : props.playerActive === true
-                    ? <div className="player-minutes">{("0" + Math.floor(minutesPlayedCurrentInterval / 60)).slice(-2) + ":" + ("0" + minutesPlayedCurrentInterval % 60).slice(-2)}</div>
-                    : null
-                }
+            { minutesPlayedCurrentInterval === updateMinutes()
+              ? null
+              : props.playerActive === true
+                ? <div className="player-minutes">{("0" + Math.floor(minutesPlayedCurrentInterval / 60)).slice(-2) + ":" + ("0" + minutesPlayedCurrentInterval % 60).slice(-2)}</div>
+                : null
+            }
 
             <div className="player-minutes">
                 {("0" + Math.floor(updateMinutes() / 60)).slice(-2) + ":" + ("0" + updateMinutes() % 60).slice(-2)

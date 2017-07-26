@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Player } from './player';
 
@@ -18,6 +19,18 @@ class Roster extends Component {
 
   handleRed = (id) => {
       this.props.handleRed(id);
+  }
+
+  handlePlayerGoals = (id) => {
+      this.props.handlePlayerGoals(id);
+  }
+
+  handlePlayerAssists = (id) => {
+      this.props.handlePlayerAssists(id);
+  }
+
+  handlePlayerOwnGoals = (id) => {
+      this.props.handlePlayerOwnGoals(id);
   }
 
   render() {
@@ -40,7 +53,7 @@ class Roster extends Component {
                         </h3>
 
                       {this.props.clockState === true
-                      ? <button className="back-to-live flex-align-self-center">Return to BFC Live >>> </button>
+                      ? <Link to="/bfc-live"><button className="back-to-live flex-align-self-center">Go to BFC Live >>> </button></Link>
                       : null }
                     </div>
                       <p className="roster-hint">
@@ -63,7 +76,11 @@ class Roster extends Component {
                                   handleFirstYellow={this.handleFirstYellow}
                                   handleSecondYellow={this.handleSecondYellow}
                                   handleRed={this.handleRed}
+                                  handlePlayerGoals={this.handlePlayerGoals}
+                                  handlePlayerAssists={this.handlePlayerAssists}
+                                  handlePlayerOwnGoals={this.handlePlayerOwnGoals}
                                   timeLive={this.props.timeLive}
+
                                   {...player}
                               />
                           )}
@@ -92,6 +109,9 @@ class Roster extends Component {
                                   handleFirstYellow={this.handleFirstYellow}
                                   handleSecondYellow={this.handleSecondYellow}
                                   handleRed={this.handleRed}
+                                  handlePlayerGoals={this.handlePlayerGoals}
+                                  handlePlayerAssists={this.handlePlayerAssists}
+                                  handlePlayerOwnGoals={this.handlePlayerOwnGoals}
                                   timeLive={this.props.timeLive}
                                   {...player}
                               />

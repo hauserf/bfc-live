@@ -13,6 +13,7 @@ import Settings from './components/settings';
 import TimerState from './components/highlights_timer-state';
 import GoalsBFC from './components/highlights_goalsBFC';
 import GoalsOPP from './components/highlights_goalsOPP';
+import GameReport from './components/game-report';
 import { PlayerStats } from './data/player-stats';
 import { findById, togglePlayer, updatePlayer } from './lib/rosterHelpers'
 
@@ -32,7 +33,8 @@ class App extends Component {
       oppScore: 0,
       currentButtonState: 0,
       lister:[],
-      format: "11v11"
+      format: "11v11",
+      sentiment: "inputNeeded",
   }
 
   componentWillMount() {
@@ -59,7 +61,6 @@ class App extends Component {
   }
 
   handleFormationSelected = (formationName) => {
-
     this.setState({ format: formationName });
   }
 
@@ -133,6 +134,35 @@ class App extends Component {
 
     this.setState({ roster })
   }
+
+  handlePlayerGoals = (id) => {
+    const player = findById(id, this.state.roster)
+    const roster = this.state.roster;
+    const playerGoals = roster[roster.indexOf(player)].goals;
+    updatePlayer(roster, playerGoals.push(this.state.timeLive))
+    console.log(roster[roster.indexOf(player)].goals);
+    this.setState({ roster })
+  }
+
+  handlePlayerAssists = (id) => {
+    const player = findById(id, this.state.roster)
+    const roster = this.state.roster;
+    const playerAssists = roster[roster.indexOf(player)].assists;
+    updatePlayer(roster, playerAssists.push(this.state.timeLive))
+    console.log(roster[roster.indexOf(player)].assists);
+    this.setState({ roster })
+  }
+
+  handlePlayerOwnGoals = (id) => {
+    const player = findById(id, this.state.roster)
+    const roster = this.state.roster;
+    const playerOwnGoals = roster[roster.indexOf(player)].ownGoals;
+    updatePlayer(roster, playerOwnGoals.push(this.state.timeLive))
+    console.log(roster[roster.indexOf(player)].ownGoals);
+    this.setState({ roster })
+  }
+
+
 
 
   // handleRed = (id) => {
@@ -235,6 +265,15 @@ class App extends Component {
     this.setState({ lister: arrayGoalOPP })
   }
 
+  handleSentimentSelected = (sentiment) => {
+
+    const sentimentSplit = sentiment.split(" ");
+    const sentimentSplitZero = sentimentSplit[0].toLowerCase();
+    const sentimentKey = sentimentSplitZero + sentimentSplit[1];
+
+    this.setState({ sentiment: sentimentKey });
+  }
+
 
   render() {
 
@@ -271,6 +310,8 @@ class App extends Component {
             fastForward={this.fastForward.bind(this)}
             snapGoalsBFC={this.snapGoalsBFC.bind(this)}
             snapGoalsOPP={this.snapGoalsOPP.bind(this)}
+            handleSentimentSelected={this.handleSentimentSelected.bind(this)}
+            sentiment={this.state.sentiment}
             />}
           />
           <Route path="/roster" render={() => <Roster
@@ -279,11 +320,34 @@ class App extends Component {
             handleFirstYellow={this.handleFirstYellow.bind(this)}
             handleSecondYellow={this.handleSecondYellow.bind(this)}
             handleRed={this.handleRed.bind(this)}
+            handlePlayerGoals={this.handlePlayerGoals}
+            handlePlayerAssists={this.handlePlayerAssists}
+            handlePlayerOwnGoals={this.handlePlayerOwnGoals}
             clockState={this.state.clockState}
             format={this.props.format}
             currentButtonState={this.state.currentButtonState}
             timeLive={this.state.timeLive}
             /> }
+          />
+          <Route path="/game-report" render={() => <GameReport
+            lister={this.state.lister}
+            timeLive={this.state.timeLive}
+            clockState={this.state.clockState}
+            teamBFC={this.state.teamBFC}
+            teamOPP={this.state.teamOPP}
+            beyondScore={this.state.beyondScore}
+            oppScore={this.state.oppScore}
+            currentButtonState={this.state.currentButtonState}
+            lengthOfHalf={this.state.lengthOfHalf}
+            lengthOfGame={this.state.lengthOfGame}
+            addGoalBFC={this.addGoalBFC.bind(this)}
+            addGoalOPP={this.addGoalOPP.bind(this)}
+            startStopMatch={this.startStopMatch.bind(this)}
+            fastForward={this.fastForward.bind(this)}
+            snapGoalsBFC={this.snapGoalsBFC.bind(this)}
+            snapGoalsOPP={this.snapGoalsOPP.bind(this)}
+            sentiment={this.state.sentiment}
+            />}
           />
           <Footer />
         </div>

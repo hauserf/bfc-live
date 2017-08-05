@@ -133,6 +133,7 @@ input:focus {
   border: none;
   color: orange;
   padding: 10px;
+  margin-top: 10px;
   font-size: 1em;
   font-weight: 100;
   font-family: arial, sans-serif;
@@ -202,12 +203,19 @@ input:focus {
     width: 40px;
     /*flex-grow: 1;*/
     margin: 1px 1px;
-    padding: 15px 0px 0px 0px;
+    padding: 6px 0px 0px 3px;
     text-align: center;
     /*justify-content: center;*/
     font-weight: bolder;
     font-size: 0.9em;
     }
+
+  .red-carded {
+    /*text-decoration: line-through;*/
+    background: #000;
+    opacity: 0.4;
+    /*color: #be0000;*/
+  }
 
 /*.player {
   flex-grow: 16;
@@ -215,21 +223,75 @@ input:focus {
   font-size: 1.2em;
   text-align: left;
 }*/
+.record-goals {
+  background-image: url("bg-images/soccer-ball.png");
+  background-size: 30px 30px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  opacity: 0.2;
+}
 
-
+.record-assists {
+  background-image: url("bg-images/gift.png");
+  background-size: 30px 30px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  opacity: 0.2;
+}
 
 .first-yellow {
-  background-color: yellow;
+  /*background-color: yellow;*/
+  background-image: url("bg-images/yellowCard.png");
+  opacity: 0.1;
+}
+
+.first-yellow-active {
+  /*background-color: yellow;*/
+  background-image: url("bg-images/yellowCard.png");
 }
 
 .second-yellow {
-  background-color: orange;
+  /*background-color: orange;*/
   border-width: 0;
+  background-image: url("bg-images/yellowRed.png");
+  background-size: 45px 45px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  opacity: 0.1;
+
+}
+
+.second-yellow-active {
+  /*background-color: orange;*/
+  border-width: 0;
+  background-image: url("bg-images/yellowRed.png");
+  background-size: 45px 45px;
+  background-position: center center;
+  background-repeat: no-repeat;
+
 }
 
 .red-card {
-  background-color: red;
+  /*background-color: red;*/
   color: #fff;
+  background-image: url("bg-images/redCard.png");
+  opacity: 0.1;
+}
+
+.red-card-active {
+  /*background-color: red;*/
+  color: #fff;
+  background-image: url("bg-images/redCard.png");
+}
+
+.roster-icon {
+  opacity: 0.5;
+}
+
+.roster-icon-mini {
+  width: 12px;
+  height: 12px;
+  margin-right: 2px;
 }
 
 
@@ -327,7 +389,7 @@ input:focus {
   cursor: pointer;
   text-decoration: none;
   /*border: 1px solid #324c60;*/
-  color: #00b2ee;
+  color: #fff;
 }
 
 .footer-col:hover,
@@ -340,7 +402,15 @@ input:focus {
 
 a:active {
   text-decoration: none;
+}
 
+.footer-live {
+  font-size: 1.2em;
+  padding: 8px;
+  box-shadow: 0 -2px 0px 1px orange;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+  color: orange;
 }
 
 
@@ -379,6 +449,7 @@ a:active {
  border-left: solid 1px #181e32;
  border-right: solid 1px #181e32;
  /*border-radius: 15px;*/
+ box-shadow: 0px 0 15px #480048;
 
 }
 
@@ -390,6 +461,9 @@ a:active {
 .fixture {
  display: flex;
  justify-content: center;
+ padding-bottom: 0px;
+ border-bottom: 2px solid #00b2ee;
+ border-radius: 2px;
  }
 
 .fixture-teams {
@@ -476,6 +550,7 @@ a:active {
 .score-action-bfc.increment {
   /*background: #66BB6A;*/
   background: #00b2ee;
+  border-bottom-left-radius: 3px;
 }
 
 .score-action-bfc.increment:hover {
@@ -582,7 +657,6 @@ a:active {
 
 .highlights-container {
   padding: 0;
-
 }
 
 .highlights-intro {
@@ -619,8 +693,8 @@ a:active {
 }
 
 .timestamp {
-  /*width: 50px;*/
-  flex-grow: 1;
+  min-width: 50px;
+  /*flex-grow: 1;*/
   padding: 10px 10px 10px 10px;
   text-align: right;
   font-size: 1.2em;
@@ -628,16 +702,28 @@ a:active {
   color: #00b2ee;
 }
 
+.highlight-icon {
+  width: 40px;
+  padding: 10px 10px 10px 10px;
+  text-align: center;
+  font-size: 0.8em;
+}
+
+.icon-size {
+  width: 25px;
+  height: 25px;
+}
+
 .highlight-event {
   flex-grow: 16;
-  padding: 10px 10px 10px 10px;
+  padding: 10px 10px 10px 5px;
   font-size: 1.2em;
   color: #00b2ee;
 }
 
 .timestamp-opp {
-  /*width: 50px;*/
-  flex-grow: 1;
+  min-width: 50px;
+  /*flex-grow: 1;*/
   padding: 10px 10px 10px 10px;
   text-align: left;
   font-size: 1.2em;
@@ -647,7 +733,7 @@ a:active {
 
 .highlight-event-opp {
   flex-grow: 16;
-  padding: 10px 10px 10px 10px;
+  padding: 10px 0px 10px 10px;
   font-size: 1.2em;
   text-align: right;
   color: #00b2ee;
@@ -690,6 +776,8 @@ a:active {
   color: #324c60;
   border: solid 1px #324c60;
   text-align: center;
+  border: solid 1px orange;
+  color: orange;
 }
 
 .copy-report:hover {
@@ -698,6 +786,37 @@ a:active {
   color: orange;
   border: solid 1px orange;
   cursor: pointer;
+}
+
+.bfc-logo-wrapper {
+  margin: 10px auto;
+  display: flex;
+}
+
+.bfc-logo {
+  flex-align: center;
+  margin: auto;
+  width: 80px;
+  height: 80px;
+}
+
+.checklist-wrapper {
+  max-width: 80%;
+  padding: 10px;
+  margin: 20px auto;
+  color: #324c60;
+  /*border: solid 1px #324c60;*/
+  text-align: center;
+  /*border: solid 1px orange;*/
+  color: #00b2ee;
+}
+
+.checklist {
+  color: #324c60;
+  text-align: left;
+  padding-left: 0;
+  margin: 15px 15px 30px;
+  font-weight: 200;
 }
 /*
 

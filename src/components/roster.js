@@ -39,11 +39,16 @@ class Roster extends Component {
     const numberOfSubs = this.props.roster.filter((player, id) => !player.playerActive).length;
 
     return (
-      <div className="container">
-          <div className="row">
-              <div className="col-md-4 "></div>
-              <div className="col-sm-4 bfc-live">
+      // <div className="container">
+      //     <div className="row">
+      //         <div className="col-md-4 "></div>
+      //         <div className="col-sm-4 bfc-live">
+                <div>
                   <div>
+                    { this.props.clockState === false
+                      ? <Link to="/bfc-live"><div className="copy-report">Start/resume game to add scores and track time >>> </div> </Link>
+                      : null
+                    }
                     <div className="flex-con flex-items-align mr-2">
                       <h3 className="setting-h mx-2">
                         {this.props.currentButtonState < 1
@@ -80,6 +85,7 @@ class Roster extends Component {
                                   handlePlayerAssists={this.handlePlayerAssists}
                                   handlePlayerOwnGoals={this.handlePlayerOwnGoals}
                                   timeLive={this.props.timeLive}
+                                  clockState={this.props.clockState}
 
                                   {...player}
                               />
@@ -119,8 +125,6 @@ class Roster extends Component {
                       </ReactCSSTransitionGroup>
                   </div>
               </div>
-          </div>
-      </div>
     )
   }
 }

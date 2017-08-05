@@ -46,64 +46,58 @@ export default class Settings extends Component {
         const lengthOfHalf = Math.ceil(this.props.lengthOfHalf / 60) + "'"
 
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-md-4 "></div>
-                    <div className="col-sm-4 bfc-live">
-                        <div className="flex-vh flex-con flex-dir-col flex-items-align">
-                            <h2 className="setting-h">Settings</h2>
-                            <div className="flex-con flex-dir-col">
-                                <p>BFC Team:</p>
-                                <input
-                                    value={this.props.teamBFC}
-                                    onChange={this.setBFCTeam.bind(this)} />
-                            </div>
-                            <div className="flex-con flex-dir-col">
-                                <p>Opponent:</p>
-                                <input
-                                    value={this.props.teamOPP}
-                                    onChange={this.setOPPTeam.bind(this)} />
-                            </div>
-                            <div className="flex-con flex-dir-col">
-                                <p>Format:</p>
-                                <div>
-                                    <h4 className="text-warning flex-g-1 text-center settings-data"> {this.props.format} </h4>
-                                </div>
-                                <div className="flex-con flex-dir-row flex-g-2">
-                                    <FormationSelector name='5' handleFormationSelected={this.handleFormationSelected} />
-                                    <FormationSelector name='6' handleFormationSelected={this.handleFormationSelected} />
-                                    <FormationSelector name='7' handleFormationSelected={this.handleFormationSelected} />
-                                    <FormationSelector name='8' handleFormationSelected={this.handleFormationSelected} />
-                                    <FormationSelector name='9' handleFormationSelected={this.handleFormationSelected} />
-                                    <FormationSelector name='10' handleFormationSelected={this.handleFormationSelected} />
-                                    <FormationSelector name='11' handleFormationSelected={this.handleFormationSelected} />
-                                </div>
-                            </div>
-                            <div className="flex-con flex-dir-col">
-                                <p className="flex-g-1 pt-1">Length of Halfs:</p>
-                                <div className="flex-g-1">
-                                    <h4 className="text-warning flex-g-1 text-center settings-data"> {lengthOfHalf} </h4>
-                                </div>
-                                <div className="flex-con flex-dir-row">
-                                    <LengthOfHalfSelector name="-10"
-                                    handleLengthOfHalfSelected={this.handleLengthOfHalfSelected}/>
-                                    <LengthOfHalfSelector name="-5"
-                                    handleLengthOfHalfSelected={this.handleLengthOfHalfSelected}/>
-                                    <LengthOfHalfSelector name="-1"
-                                    handleLengthOfHalfSelected={this.handleLengthOfHalfSelected}/>
-                                    <LengthOfHalfSelector name="+1"
-                                    handleLengthOfHalfSelected={this.handleLengthOfHalfSelected}/>
-                                    <LengthOfHalfSelector name="+5"
-                                    handleLengthOfHalfSelected={this.handleLengthOfHalfSelected}/>
-                                    <LengthOfHalfSelector name="+10"
-                                    handleLengthOfHalfSelected={this.handleLengthOfHalfSelected}/>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
+          <div>
+            <div className="flex-vh flex-con flex-dir-col flex-items-align">
+              <h2 className="setting-h">Settings</h2>
+              <div className="flex-con flex-dir-col">
+                  <p>BFC Team:</p>
+                  <input
+                      value={this.props.teamBFC}
+                      onChange={this.setBFCTeam.bind(this)} />
+              </div>
+              <div className="flex-con flex-dir-col">
+                  <p>Opponent:</p>
+                  <input
+                      value={this.props.teamOPP}
+                      onChange={this.setOPPTeam.bind(this)} />
+              </div>
+              <div className="flex-con flex-dir-col">
+                  <p>Format:</p>
+                  <div>
+                      <h4 className="text-warning flex-g-1 text-center settings-data"> {this.props.format} </h4>
+                  </div>
+                  <div className="flex-con flex-dir-row flex-g-2">
+                      <FormationSelector name='5' handleFormationSelected={this.handleFormationSelected} />
+                      <FormationSelector name='6' handleFormationSelected={this.handleFormationSelected} />
+                      <FormationSelector name='7' handleFormationSelected={this.handleFormationSelected} />
+                      <FormationSelector name='8' handleFormationSelected={this.handleFormationSelected} />
+                      <FormationSelector name='9' handleFormationSelected={this.handleFormationSelected} />
+                      <FormationSelector name='10' handleFormationSelected={this.handleFormationSelected} />
+                      <FormationSelector name='11' handleFormationSelected={this.handleFormationSelected} />
+                  </div>
+              </div>
+              <div className="flex-con flex-dir-col">
+                  <p className="flex-g-1 pt-1">Length of Halfs:</p>
+                  <div className="flex-g-1">
+                      <h4 className="text-warning flex-g-1 text-center settings-data"> {lengthOfHalf} </h4>
+                  </div>
+                  <div className="flex-con flex-dir-row">
+                      <LengthOfHalfSelector name="-10"
+                      handleLengthOfHalfSelected={this.handleLengthOfHalfSelected}/>
+                      <LengthOfHalfSelector name="-5"
+                      handleLengthOfHalfSelected={this.handleLengthOfHalfSelected}/>
+                      <LengthOfHalfSelector name="-1"
+                      handleLengthOfHalfSelected={this.handleLengthOfHalfSelected}/>
+                      <LengthOfHalfSelector name="+1"
+                      handleLengthOfHalfSelected={this.handleLengthOfHalfSelected}/>
+                      <LengthOfHalfSelector name="+5"
+                      handleLengthOfHalfSelected={this.handleLengthOfHalfSelected}/>
+                      <LengthOfHalfSelector name="+10"
+                      handleLengthOfHalfSelected={this.handleLengthOfHalfSelected}/>
+                  </div>
+              </div>
             </div>
+          </div>
         )
     }
 

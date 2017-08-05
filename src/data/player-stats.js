@@ -35,8 +35,8 @@ export const PlayerStats = [
   },
   {
     id: 103,
-    firstName: "Gabe",
-    lastName: "Odess",
+    firstName: "Varun",
+    lastName: "Rangaraj",
     playerActive: false,
     minutesPlayed: 0,
     startingEleven: false,
@@ -52,8 +52,8 @@ export const PlayerStats = [
   },
   {
     id: 104,
-    firstName: "Kevin",
-    lastName: "Spacey",
+    firstName: "Ali",
+    lastName: "Reza",
     playerActive: false,
     minutesPlayed: 0,
     startingEleven: false,

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export default class FixtureBFC extends Component {
 
-  increaseScore(e) {
-    this.props.scoreChange();
-  }
+  // increaseScore(e) {
+  //   this.props.scoreChange();
+  // }
 
   render() {
 
@@ -19,12 +20,12 @@ export default class FixtureBFC extends Component {
             :
             teamName}
           </div>
-          <div className="score-bfc"> {this.props.currentBFCScore} </div>
+          <div className="score-bfc"> {this.props.beyondScore} </div>
         </div>
-        <button className="score-action-bfc increment" onClick={this.increaseScore.bind(this)}> + </button>
+        <Link to="/roster"><button className="score-action-bfc increment"> + </button></Link>
       </div>
     );
   }
 }
 
-            // (teamName.slice(0, 9) + "…" )
+            // (teamName.slice(0, 9) + "…" ) onClick={this.increaseScore.bind(this)}

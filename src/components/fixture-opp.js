@@ -14,7 +14,7 @@ export default class FixtureOPP extends Component {
     <div>
         <div>
           <div className="fixture-opp">
-            <div className="score-opp"> {this.props.currentOPPScore} </div>
+            <div className="score-opp"> {this.props.oppScore} </div>
             <div className="team-opp">
               {teamName.length > 11
               ?

@@ -14,8 +14,8 @@ export default class Footer extends Component {
 
             <div className="navbar-footer footer">
               <NavLink to="/settings" activeStyle={{ background: 'orange', 'textDecoration': 'none', color: '#fff'}} className="footer-col">Settings</NavLink>
+              <NavLink to="/bfc-live" activeStyle={{ background: 'orange', 'textDecoration': 'none', color: '#fff'}} className="footer-col footer-live">Live</NavLink>
               <NavLink to="/roster" activeStyle={{ background: 'orange', 'textDecoration': 'none', color: '#fff' }} className="footer-col">Roster</NavLink>
-              <NavLink to="/bfc-live" activeStyle={{ background: 'orange', 'textDecoration': 'none', color: '#fff' }} className="footer-col">Live Stats</NavLink>
             </div>
 
     )

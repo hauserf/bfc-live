@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import FixtureBFC from './components/fixture-bfc';
-import FixtureOPP from './components/fixture-opp';
+// import FixtureBFC from './components/fixture-bfc';
+// import FixtureOPP from './components/fixture-opp';
 import Timer from './components/timer';
 
 export default class BFCLive extends Component {
@@ -35,9 +35,10 @@ export default class BFCLive extends Component {
 
 
   render() {
+
     return (
-          <div className="col-sm-4 bfc-live">
-            <div className="fixture">
+          <div>
+            {/* <div className="fixture">
               <div className="fixture-teams">
               <FixtureBFC
                 teamBFC={this.props.teamBFC}
@@ -53,7 +54,7 @@ export default class BFCLive extends Component {
                 scoreChange={this.addGoalOPP.bind(this)}
               />
               </div>
-            </div>
+            </div> */}
             <Timer
               currentState={this.props.currentState}
               currentTime={this.props.timeLive}
@@ -72,6 +73,29 @@ export default class BFCLive extends Component {
                 <ul className="list-unstyled">
                   {this.props.lister}
                 </ul>
+              </div>
+              <div>
+                { this.props.currentButtonState === 0
+                    ?
+                    <div>
+                      <div className="bfc-logo-wrapper">
+                        <img className="bfc-logo" src="BFCNY_logo_fullcolor.png" alt="BFC logo" />
+                      </div>
+                      <div className="checklist-wrapper">
+                        Before the game starts, please make sure to
+                        <div className="checklist">
+                          <ol>
+                            <li>Update game details in 'Settings'</li>
+                            <li>Select starting players in 'Roster'</li>
+                            <li>Take a team photo</li>
+                            <li>Return to 'Live' to start the timer</li>
+                          </ol>
+                        </div>
+                        <h3>#GoBeyond</h3>
+                      </div>
+                    </div>
+                  : null
+                }
               </div>
             </div>
           </div>

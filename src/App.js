@@ -14,6 +14,7 @@ import TimerState from './components/highlights_timer-state';
 import GoalsBFC from './components/highlights_goalsBFC';
 import GoalsOPP from './components/highlights_goalsOPP';
 import GameReport from './components/game-report';
+import Fixture from './components/fixture';
 import { PlayerStats } from './data/player-stats';
 import { findById, togglePlayer, updatePlayer } from './lib/rosterHelpers'
 
@@ -99,12 +100,15 @@ class App extends Component {
     this.setState({ roster: updatedRoster })
 
     const roster = this.state.roster;
+    const event = "yc"
     const firstYellow = updatedRoster[roster.indexOf(player)].firstYellow;
     const yellowCards = updatedRoster[roster.indexOf(player)].yellowCards;
 
     firstYellow === true
       ? updatePlayer(updatedRoster, yellowCards.push(this.state.timeLive))
       : updatePlayer(updatedRoster, yellowCards.pop())
+
+    this.snapGoalsBFC(player, event);
   }
 
   handleSecondYellow = (id) => {
@@ -112,45 +116,65 @@ class App extends Component {
     const toggleYellow = (player) => ({ ...player, secondYellow: !player.secondYellow})
     const toggled = toggleYellow(player)
     const updatedRoster = updatePlayer(this.state.roster, toggled)
-    this.setState({ roster: updatedRoster })
+
+    this.setState({ roster: updatedRoster });
 
     const roster = this.state.roster;
+    const event = "yy"
     const secondYellow = updatedRoster[roster.indexOf(player)].secondYellow;
     const yellowCards = updatedRoster[roster.indexOf(player)].yellowCards;
 
     secondYellow === true
     ? updatePlayer(updatedRoster, yellowCards.push(this.state.timeLive))
     : updatePlayer(updatedRoster, yellowCards.pop())
+
+    this.snapGoalsBFC(player, event);
+
   }
 
   handleRed = (id) => {
     const player = findById(id, this.state.roster)
     const roster = this.state.roster;
+    const event = "rc"
     const redCard = roster[roster.indexOf(player)].redCard;
 
     redCard.length === 0
     ? updatePlayer(roster, redCard.push(this.state.timeLive))
     : updatePlayer(roster, redCard.pop())
 
-    this.setState({ roster })
+    this.setState({ roster });
+
+    // sub out and grey out red carded player
+    const playerActive = roster[roster.indexOf(player)].playerActive;
+    playerActive === true && redCard.length === 1
+    ? this.handleToggle(id)
+    : null
+
+    this.snapGoalsBFC(player, event);
+
+
   }
 
   handlePlayerGoals = (id) => {
     const player = findById(id, this.state.roster)
     const roster = this.state.roster;
+    const event = "goal"
     const playerGoals = roster[roster.indexOf(player)].goals;
     updatePlayer(roster, playerGoals.push(this.state.timeLive))
-    console.log(roster[roster.indexOf(player)].goals);
     this.setState({ roster })
+    this.addGoalBFC();
+    this.snapGoalsBFC(player, event);
   }
 
   handlePlayerAssists = (id) => {
     const player = findById(id, this.state.roster)
     const roster = this.state.roster;
+    const event = "assist"
     const playerAssists = roster[roster.indexOf(player)].assists;
     updatePlayer(roster, playerAssists.push(this.state.timeLive))
-    console.log(roster[roster.indexOf(player)].assists);
     this.setState({ roster })
+    this.snapGoalsBFC(player, event);
+
   }
 
   handlePlayerOwnGoals = (id) => {
@@ -162,18 +186,6 @@ class App extends Component {
     this.setState({ roster })
   }
 
-
-
-
-  // handleRed = (id) => {
-  //   const player = findById(id, this.state.roster)
-  //   const toggleRed = (player) => ({ ...player, redCard: !player.redCard })
-  //   const toggled = toggleRed(player)
-  //   const updatedRoster = updatePlayer(this.state.roster, toggled)
-  //
-  //   this.setState({ roster: updatedRoster })
-  //
-  // }
 
   /********************************
   ------------- BFC Live ------------
@@ -189,7 +201,7 @@ class App extends Component {
           alert("Game ended!");
     } else {
         this.setState({ beyondScore: score + 1 })
-        this.snapGoalsBFC();
+        // this.snapGoalsBFC();
       }
   }
 
@@ -237,7 +249,7 @@ class App extends Component {
     this.setState({ timeLive: currentTime + 480 })
   }
 
-  snapGoalsBFC(e){
+  snapGoalsBFC(player, event){
     var arrayGoalBFC = this.state.lister;
     arrayGoalBFC.unshift(
       [<GoalsBFC
@@ -245,6 +257,10 @@ class App extends Component {
         currentButtonState={this.state.currentButtonState}
         lengthOfHalf={this.state.lengthOfHalf}
         lengthOfGame={this.state.lengthOfGame}
+        roster={this.state.roster}
+        scorer={player}
+        event={event}
+
       />]
     );
     this.setState({ lister: arrayGoalBFC })
@@ -279,77 +295,90 @@ class App extends Component {
 
     return(
       <BrowserRouter>
-        <div>
+        <div className="container">
+          <div className="row">
+            <div className="col-md-4 "></div>
+            <div className="col-sm-4 bfc-live">
+              <Fixture
+                teamBFC={this.state.teamBFC}
+                beyondScore={this.state.beyondScore}
+                addGoalBFC={this.addGoalBFC.bind(this)}
+                teamOPP={this.state.teamOPP}
+                oppScore={this.state.oppScore}
+                addGoalOPP={this.addGoalOPP.bind(this)}
+              />
 
-          <Route exact path="/" render={() => <Redirect to="/settings" />} />
-          <Route path="/settings" render={() => <Settings
-            setBFCTeam={this.setBFCTeam.bind(this)}
-            setOPPTeam={this.setOPPTeam.bind(this)}
-            teamBFC={this.state.teamBFC}
-            teamOPP={this.state.teamOPP}
-            format={this.state.format}
-            lengthOfHalf={this.state.lengthOfHalf}
-            handleFormationSelected={this.handleFormationSelected.bind(this)}
-            handleLengthOfHalfSelected={this.handleLengthOfHalfSelected.bind(this)}
-            />}
-          />
-          <Route path="/bfc-live" render={() => <BFCLive
-            lister={this.state.lister}
-            timeLive={this.state.timeLive}
-            clockState={this.state.clockState}
-            teamBFC={this.state.teamBFC}
-            teamOPP={this.state.teamOPP}
-            beyondScore={this.state.beyondScore}
-            oppScore={this.state.oppScore}
-            currentButtonState={this.state.currentButtonState}
-            lengthOfHalf={this.state.lengthOfHalf}
-            lengthOfGame={this.state.lengthOfGame}
-            addGoalBFC={this.addGoalBFC.bind(this)}
-            addGoalOPP={this.addGoalOPP.bind(this)}
-            startStopMatch={this.startStopMatch.bind(this)}
-            fastForward={this.fastForward.bind(this)}
-            snapGoalsBFC={this.snapGoalsBFC.bind(this)}
-            snapGoalsOPP={this.snapGoalsOPP.bind(this)}
-            handleSentimentSelected={this.handleSentimentSelected.bind(this)}
-            sentiment={this.state.sentiment}
-            />}
-          />
-          <Route path="/roster" render={() => <Roster
-            roster={this.state.roster}
-            handlePlayerToggle={this.handleToggle.bind(this)}
-            handleFirstYellow={this.handleFirstYellow.bind(this)}
-            handleSecondYellow={this.handleSecondYellow.bind(this)}
-            handleRed={this.handleRed.bind(this)}
-            handlePlayerGoals={this.handlePlayerGoals}
-            handlePlayerAssists={this.handlePlayerAssists}
-            handlePlayerOwnGoals={this.handlePlayerOwnGoals}
-            clockState={this.state.clockState}
-            format={this.props.format}
-            currentButtonState={this.state.currentButtonState}
-            timeLive={this.state.timeLive}
-            /> }
-          />
-          <Route path="/game-report" render={() => <GameReport
-            lister={this.state.lister}
-            timeLive={this.state.timeLive}
-            clockState={this.state.clockState}
-            teamBFC={this.state.teamBFC}
-            teamOPP={this.state.teamOPP}
-            beyondScore={this.state.beyondScore}
-            oppScore={this.state.oppScore}
-            currentButtonState={this.state.currentButtonState}
-            lengthOfHalf={this.state.lengthOfHalf}
-            lengthOfGame={this.state.lengthOfGame}
-            addGoalBFC={this.addGoalBFC.bind(this)}
-            addGoalOPP={this.addGoalOPP.bind(this)}
-            startStopMatch={this.startStopMatch.bind(this)}
-            fastForward={this.fastForward.bind(this)}
-            snapGoalsBFC={this.snapGoalsBFC.bind(this)}
-            snapGoalsOPP={this.snapGoalsOPP.bind(this)}
-            sentiment={this.state.sentiment}
-            />}
-          />
-          <Footer />
+              <Route exact path="/" render={() => <Redirect to="/bfc-live" />} />
+              <Route path="/settings" render={() => <Settings
+                setBFCTeam={this.setBFCTeam.bind(this)}
+                setOPPTeam={this.setOPPTeam.bind(this)}
+                teamBFC={this.state.teamBFC}
+                teamOPP={this.state.teamOPP}
+                format={this.state.format}
+                lengthOfHalf={this.state.lengthOfHalf}
+                handleFormationSelected={this.handleFormationSelected.bind(this)}
+                handleLengthOfHalfSelected={this.handleLengthOfHalfSelected.bind(this)}
+                />}
+              />
+              <Route path="/bfc-live" render={() => <BFCLive
+                lister={this.state.lister}
+                timeLive={this.state.timeLive}
+                clockState={this.state.clockState}
+                teamBFC={this.state.teamBFC}
+                teamOPP={this.state.teamOPP}
+                beyondScore={this.state.beyondScore}
+                oppScore={this.state.oppScore}
+                currentButtonState={this.state.currentButtonState}
+                lengthOfHalf={this.state.lengthOfHalf}
+                lengthOfGame={this.state.lengthOfGame}
+                addGoalBFC={this.addGoalBFC.bind(this)}
+                addGoalOPP={this.addGoalOPP.bind(this)}
+                startStopMatch={this.startStopMatch.bind(this)}
+                fastForward={this.fastForward.bind(this)}
+                snapGoalsBFC={this.snapGoalsBFC.bind(this)}
+                snapGoalsOPP={this.snapGoalsOPP.bind(this)}
+                handleSentimentSelected={this.handleSentimentSelected.bind(this)}
+                sentiment={this.state.sentiment}
+                />}
+              />
+              <Route path="/roster" render={() => <Roster
+                roster={this.state.roster}
+                handlePlayerToggle={this.handleToggle.bind(this)}
+                handleFirstYellow={this.handleFirstYellow.bind(this)}
+                handleSecondYellow={this.handleSecondYellow.bind(this)}
+                handleRed={this.handleRed.bind(this)}
+                handlePlayerGoals={this.handlePlayerGoals}
+                handlePlayerAssists={this.handlePlayerAssists}
+                handlePlayerOwnGoals={this.handlePlayerOwnGoals}
+                clockState={this.state.clockState}
+                format={this.props.format}
+                currentButtonState={this.state.currentButtonState}
+                timeLive={this.state.timeLive}
+                /> }
+              />
+              <Route path="/game-report" render={() => <GameReport
+                lister={this.state.lister}
+                timeLive={this.state.timeLive}
+                clockState={this.state.clockState}
+                teamBFC={this.state.teamBFC}
+                teamOPP={this.state.teamOPP}
+                beyondScore={this.state.beyondScore}
+                oppScore={this.state.oppScore}
+                currentButtonState={this.state.currentButtonState}
+                lengthOfHalf={this.state.lengthOfHalf}
+                lengthOfGame={this.state.lengthOfGame}
+                addGoalBFC={this.addGoalBFC.bind(this)}
+                addGoalOPP={this.addGoalOPP.bind(this)}
+                startStopMatch={this.startStopMatch.bind(this)}
+                fastForward={this.fastForward.bind(this)}
+                snapGoalsBFC={this.snapGoalsBFC.bind(this)}
+                snapGoalsOPP={this.snapGoalsOPP.bind(this)}
+                sentiment={this.state.sentiment}
+                />}
+              />
+              <Footer />
+            </div>
+          </div>
         </div>
       </BrowserRouter>
     )

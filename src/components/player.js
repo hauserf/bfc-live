@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {emojify} from 'react-emojione';
 
 
 export const Player = (props) => {
@@ -10,7 +9,7 @@ export const Player = (props) => {
     const handleRed = props.handleRed.bind(null, props.id);
     const handlePlayerGoals = props.handlePlayerGoals.bind(null, props.id);
     const handlePlayerAssists = props.handlePlayerAssists.bind(null, props.id);
-    
+
     // minutesPlayed current interval
 
     const latestSubIn = props.subIns[props.subIns.length - 1];
@@ -59,7 +58,13 @@ export const Player = (props) => {
 
 
     return (
-          <div className="player">
+
+
+          <div className=
+            {props.redCard.length === 1 || props.secondYellow === true
+              ? "player red-carded"
+              : "player"
+            }>
             <div className="player-names" onClick={handleToggle}>
                 {props.firstName}
             </div>
@@ -67,50 +72,58 @@ export const Player = (props) => {
                 <div className="goals">
                  {props.goals
                    .map((goal, id) => {
-                   return "⚽" }
+                   return <img className="roster-icon-mini" key={id} src="soccer-ball.png" alt="icon8 - goal" />}
                  )}{props.assists
                    .map((assist, id) => {
-                   return "😀" }
+                   return <img className="roster-icon-mini" key={id} src="gift.png" alt="icon8 - goal" /> }
                  )}
                 </div>
             </div>
+            { props.playerActive === true && props.clockState === true
+              ? (
+                  <div className="player-stats record-goals" onClick={handlePlayerGoals}>
 
-            <div className="player-stats" onClick={handlePlayerGoals}>
-              GL
-            </div>
-            <div className="player-stats" onClick={handlePlayerAssists}>
-              AS
-            </div>
+                  </div>
+                )
+              : null
+            }
+            { props.playerActive === true && props.clockState === true
+              ? (
+                  <div className="player-stats record-assists" onClick={handlePlayerAssists}>
 
+                  </div>
+                )
+              : null
+            }
             { props.firstYellow === false && props.redCard.length === 1
               ? null
               : props.firstYellow === true
-                ? <div className="player-stats first-yellow" onClick={handleFirstYellow}>
+                ? <div className="player-stats first-yellow-active" onClick={handleFirstYellow}>
                     {timeOfFirstYellows}
                   </div>
-                : <div className="player-stats" onClick={handleFirstYellow}>
-                  YC
+                : <div className="player-stats first-yellow" onClick={handleFirstYellow}>
+
                   </div>
             }
 
             { props.firstYellow === false || props.redCard.length === 1
               ? null
               : props.firstYellow === true && props.secondYellow === true
-                ? <div className="player-stats second-yellow" onClick={handleSecondYellow}>
+                ? <div className="player-stats second-yellow-active" onClick={handleSecondYellow}>
                     {timeOfSecondYellows}
                   </div>
-                : <div className="player-stats" onClick={handleSecondYellow}>
-                    YY
+                : <div className="player-stats second-yellow" onClick={handleSecondYellow}>
+
                   </div>
             }
             { props.secondYellow === true && props.firstYellow === true
               ? null
               : props.redCard.length === 1
-                ? <div className="player-stats red-card" onClick={handleRed}>
+                ? <div className="player-stats red-card-active" onClick={handleRed}>
                     {timeOfRedCard}
                   </div>
-                : <div className="player-stats" onClick={handleRed}>
-                    RC
+                : <div className="player-stats red-card" onClick={handleRed}>
+
                   </div>
             }
 

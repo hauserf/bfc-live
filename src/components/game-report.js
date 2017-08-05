@@ -6,6 +6,23 @@ import { GameReportsTemplate } from '../data/game-reports';
 
 export default class GameReport extends Component {
 
+  // componentWillMount() {
+  //   var Jimp = require ('jimp');
+  //   var numberString = "1:1";
+  //
+  //   Jimp.read("../public/BFC_CSL_Jerseys.png", function (err, img) {
+  //       if (err) throw err;
+  //       Jimp.loadFont( Jimp.FONT_SANS_64_WHITE ).then(function (font) { // load font from .fnt file
+  //       img.print(font, 50, 50, numberString)
+  //       img.print(font, 50, 110, "59'")
+  //       img.print(font, 50, 170, "Jesse Rose")
+  //       img.scaleToFit( 400, 400)
+  //             .write("../public/BFC_CSL_Jerseys_new.jpg"); // save
+  //       // image.print(font, x, y, str, width); // print a message on an image with text wrapped at width
+  //   });
+  //   });
+  // }
+
   render() {
 
     const outcomeFilter = () => {
@@ -41,28 +58,24 @@ export default class GameReport extends Component {
 
 
     return (
-      <div className="container">
-          <div className="row">
-              <div className="col-md-4 "></div>
-              <div className="col-sm-4 bfc-live">
-                <h2 className="setting-h">Game Report</h2>
-                <div className="flex-vh flex-con flex-dir-col">
-                  <div className="report-titles">
-                    Summary
-                  </div>
-                  <div className="report-summary">
-                  {report}
-                  </div>
-                  <div className="report-titles">
-                    Scorers
-                  </div>
-                  <div className="report-titles">
-                    Assists
-                  </div>
-                  <div className="copy-report">Copy game report to clip board</div>
-                </div>  
-              </div>
+      <div>
+        <h2 className="setting-h">Game Report</h2>
+        <div className="flex-vh flex-con flex-dir-col">
+          <div className="report-titles">
+            Summary
           </div>
+          <div className="report-summary">
+          {report}
+          </div>
+          <div className="report-titles">
+            Scorers
+          </div>
+          <div className="report-titles">
+            Assists
+          </div>
+          <img src="BFC_CSL_Jerseys_new.jpg" alt="report_img" />
+          <div className="copy-report">Copy game report to clip board</div>
+        </div>
       </div>
     );
   }

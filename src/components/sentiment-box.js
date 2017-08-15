@@ -45,27 +45,6 @@ export default class SentimentBox extends Component {
 
           }
 
-{/*
-        { outcomeFilter() === "win"
-          ? GameReportsTemplate[0].win.sentiments
-              .map((sentiment, id) =>
-              <SentimentSelector key={id} name={sentiment}
-                handleSentimentSelected={this.handleSentimentSelected}/>
-              )
-          : outcomeFilter() === "tie"
-            ? GameReportsTemplate[1].tie.sentiments
-                .map((sentiment, id) =>
-                <SentimentSelector key={id} name={sentiment}
-                  handleSentimentSelected={this.handleSentimentSelected}/>
-                )
-            : outcomeFilter() === "defeat"
-              ? GameReportsTemplate[2].defeat.sentiments
-                  .map((sentiment, id) =>
-                  <SentimentSelector key={id} name={sentiment}
-                    handleSentimentSelected={this.handleSentimentSelected}/>
-                  )
-              : "Game report cannot be processed"
-          } */}
 
       </div>
     );

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { GameReportsTemplate } from '../data/game-reports';
 
 
-
+const apiURL = 'http://localhost:3001/api/v1/teams';
 
 export default class GameReport extends Component {
 
@@ -23,7 +23,25 @@ export default class GameReport extends Component {
   //   });
   // }
 
+  constructor(props){
+    super(props);
+    this.state = {
+      playerStats: {}
+    }
+  }
+
+  componentWillMount(){
+    fetch(apiURL)
+    .then(data => data.json())
+    .then(data => {
+      this.setState({
+      playerStats: data.players
+      })
+    });
+  }
+
   render() {
+    console.log("Player Stats", this.state.playerStats[1], this.state.playerStats[0]);
 
     const outcomeFilter = () => {
       if (this.props.beyondScore > this.props.oppScore) {
@@ -50,7 +68,7 @@ export default class GameReport extends Component {
 
 
     var sentimentKey = this.props.sentiment;
-    console.log(sentimentKey, GameReportsTemplate[0].win[sentimentKey]);
+    // console.log(sentimentKey, GameReportsTemplate[0].win[sentimentKey]);
 
 
     const reportVersions = sentimentFilter[sentimentKey].length
@@ -73,7 +91,12 @@ export default class GameReport extends Component {
           <div className="report-titles">
             Assists
           </div>
-          <img src="BFC_CSL_Jerseys_new.jpg" alt="report_img" />
+          <div>
+            Response from API call
+            Loading...
+
+          </div>
+          {/* <img src="BFC_CSL_Jerseys_new.jpg" alt="report_img" /> */}
           <div className="copy-report">Copy game report to clip board</div>
         </div>
       </div>

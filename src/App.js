@@ -4,6 +4,7 @@ import {
   Route,
   Redirect
 } from 'react-router-dom';
+import axios from 'axios';
 
 //app components
 import BFCLive from './bfc-live';
@@ -19,10 +20,14 @@ import { PlayerStats } from './data/player-stats';
 import { findById, togglePlayer, updatePlayer } from './lib/rosterHelpers'
 
 var timer;
+const apiURL = 'http://localhost:3001/api/v1/teams';
+
 
 class App extends Component {
 
-  state = {
+  constructor(props){
+    super(props);
+    this.state = {
       roster: [],
       timeLive : 0,
       clockState: false,
@@ -36,17 +41,41 @@ class App extends Component {
       lister:[],
       format: "11v11",
       sentiment: "inputNeeded",
+      data: [],
+      pollInterval: 2000
+    }
+    this.loadTeamsFromServer = this.loadTeamsFromServer.bind(this);
+    this.handleTeamSubmit = this.handleTeamSubmit.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     var arrayKickoff = this.state.lister;
     arrayKickoff.unshift(
       [<TimerState timeLive={this.state.timeLive} currentButtonState={-1}/>]
     );
-    this.setState({ lister: arrayKickoff })
-    this.setState({ roster: PlayerStats })
+    this.setState({ lister: arrayKickoff });
+    this.setState({ roster: PlayerStats });
+
+    this.loadTeamsFromServer();
+    setInterval(this.loadTeamsFromServer, this.state.pollInterval);
   }
 
+
+/********************************
+------------ API -----------
+********************************/
+
+
+loadTeamsFromServer() {
+ axios.get(apiURL)
+   .then(res => {
+     this.setState({ data: res.data });
+   })
+ }
+
+ handleTeamSubmit(team) {
+   //add POST request
+ }
 
 /********************************
 ------------ SETTINGS -----------
@@ -54,7 +83,7 @@ class App extends Component {
 
 
   setBFCTeam(e){
-    this.setState({teamBFC: e.target.value});
+    this.setState({teamBFC: e.target.name});
   }
 
   setOPPTeam(e){
@@ -315,6 +344,8 @@ class App extends Component {
                 teamBFC={this.state.teamBFC}
                 teamOPP={this.state.teamOPP}
                 format={this.state.format}
+                data={this.state.data}
+                pollInterval={this.state.pollInterval}
                 lengthOfHalf={this.state.lengthOfHalf}
                 handleFormationSelected={this.handleFormationSelected.bind(this)}
                 handleLengthOfHalfSelected={this.handleLengthOfHalfSelected.bind(this)}

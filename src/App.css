@@ -3,6 +3,7 @@
 
 .flex-vh {
   height: 550px;
+  margin: 20px 0;
 }
 
 .flex-con {
@@ -11,7 +12,7 @@
 
 .flex-dir-col {
   flex-direction: column;
-  padding: 0 10px;
+  padding: 0px 10px;
 }
 
 .flex-dir-row {
@@ -20,6 +21,7 @@
   height: 40px;
   flex-wrap: wrap;
   align-content: flex-start;
+  margin-top: 20px;
 }
 
 .flex-items-align {
@@ -45,7 +47,7 @@
 
 .setting-h {
   color: #00b2ee;
-  padding: 0 10px;
+  padding: 20px 10px;
 }
 
 .roster-hint {
@@ -371,7 +373,7 @@ input:focus {
 .footer {
   display: flex;
   width: 100%;
-  height: 3em;
+  height: 4em;
   margin: 0 auto;
   background: #262c42;
   font-weight: lighter;
@@ -384,7 +386,7 @@ input:focus {
 .footer-col {
   flex-grow: 1;
   min-width: 30%;
-  padding: 10px;
+  padding-top: 15px;
   margin: 0;
   cursor: pointer;
   text-decoration: none;
@@ -406,7 +408,7 @@ a:active {
 
 .footer-live {
   font-size: 1.2em;
-  padding: 8px;
+  padding: 14px;
   box-shadow: 0 -2px 0px 1px orange;
   border-top-right-radius: 3px;
   border-top-left-radius: 3px;

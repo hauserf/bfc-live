@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Dropdown } from 'semantic-ui-react';
 
 export const FormationSelector = (props) => {
     const handleFormationSelected = props.handleFormationSelected.bind(null, props.name + 'v' + props.name)
@@ -42,6 +43,14 @@ export default class Settings extends Component {
 
     render() {
 
+      console.log("Teams", this.props.data);
+
+      // mapping teams from database via API
+      let teams = this.props.data.map(team => {
+        return <p> {team.name} </p>
+      })
+
+
         //const format = Format[this.props.format];
         const lengthOfHalf = Math.ceil(this.props.lengthOfHalf / 60) + "'"
 
@@ -51,9 +60,10 @@ export default class Settings extends Component {
               <h2 className="setting-h">Settings</h2>
               <div className="flex-con flex-dir-col">
                   <p>BFC Team:</p>
-                  <input
-                      value={this.props.teamBFC}
-                      onChange={this.setBFCTeam.bind(this)} />
+                  <Dropdown placeholder='Select a team' fluid selection options={this.props.data} onChange={this.setBFCTeam.bind(this)}/>
+                  {/* <input
+                     value={this.props.teamBFC}
+                     onChange={this.setBFCTeam.bind(this)} />  */}
               </div>
               <div className="flex-con flex-dir-col">
                   <p>Opponent:</p>

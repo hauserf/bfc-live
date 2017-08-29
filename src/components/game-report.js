@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { GameReportsTemplate } from '../data/game-reports';
 
-
-const apiURL = 'http://localhost:3001/api/v1/teams';
-
 export default class GameReport extends Component {
 
   // componentWillMount() {
@@ -23,25 +20,19 @@ export default class GameReport extends Component {
   //   });
   // }
 
-  constructor(props){
-    super(props);
-    this.state = {
-      playerStats: {}
-    }
-  }
 
-  componentWillMount(){
-    fetch(apiURL)
-    .then(data => data.json())
-    .then(data => {
-      this.setState({
-      playerStats: data.players
-      })
-    });
-  }
+  // getting data from database via API using fetch
+  // componentDidMount(){
+  //   fetch(apiURL)
+  //   .then(data => data.json())
+  //   .then(data => {
+  //     this.setState({
+  //     teams: data
+  //     })
+  //   });
+  // }
 
   render() {
-    console.log("Player Stats", this.state.playerStats[1], this.state.playerStats[0]);
 
     const outcomeFilter = () => {
       if (this.props.beyondScore > this.props.oppScore) {
@@ -74,7 +65,6 @@ export default class GameReport extends Component {
     const reportVersions = sentimentFilter[sentimentKey].length
     const report = sentimentFilter[sentimentKey][Math.floor(Math.random() * reportVersions)]
 
-
     return (
       <div>
         <h2 className="setting-h">Game Report</h2>
@@ -92,11 +82,8 @@ export default class GameReport extends Component {
             Assists
           </div>
           <div>
-            Response from API call
-            Loading...
-
+            {/* <img src="BFC_CSL_Jerseys_new.jpg" alt="report_img" /> */}
           </div>
-          {/* <img src="BFC_CSL_Jerseys_new.jpg" alt="report_img" /> */}
           <div className="copy-report">Copy game report to clip board</div>
         </div>
       </div>

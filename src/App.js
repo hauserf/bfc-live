@@ -18,6 +18,19 @@ import Fixture from './components/fixture';
 import { PlayerStats } from './data/player-stats';
 import { findById, togglePlayer, updatePlayer } from './lib/rosterHelpers'
 
+//redux imports
+import BFCreducer from "./Redux-Reducers/BFC-Reducer";
+import {Provider} from "react-redux";
+import {createStore} from "redux";
+
+
+//Creates a store from the reducers
+const store = createStore(BFCreducer)
+
+//Listens to when the store changes
+store.subscribe(()=>{
+})
+
 var timer;
 
 class App extends Component {
@@ -281,6 +294,8 @@ class App extends Component {
     this.setState({ lister: arrayGoalOPP })
   }
 
+
+//
   handleSentimentSelected = (sentiment) => {
 
     const sentimentSplit = sentiment.split(" ");
@@ -291,9 +306,12 @@ class App extends Component {
   }
 
 
+
+
   render() {
 
     return(
+      <Provider store={store}>
       <BrowserRouter>
         <div className="container">
           <div className="row">
@@ -381,6 +399,7 @@ class App extends Component {
           </div>
         </div>
       </BrowserRouter>
+      </Provider>
     )
   }
 }

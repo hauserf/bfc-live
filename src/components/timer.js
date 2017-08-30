@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import Timecounter from './subcomponents/timecounter';
-import {TimerEvents} from '../data/timer-events';
-import SentimentBox from './sentiment-box';
-
+import TimeCounter from './timecounter';
+// import SentimentBox from './sentiment-box';
+import StartButton from './timer-start-button';
+import ExtraMinsButton from './timer-extramins-button';
+import GameEnded from './game-ended';
 
 
 export default class Timer extends Component {
@@ -24,38 +25,26 @@ export default class Timer extends Component {
   }
 
   render() {
-
-    const buttonName = TimerEvents[this.props.currentButtonState].btnName
     return (
       <div className="stopwatch">
-        <Timecounter time={this.props.currentTime}/>
+        <TimeCounter time={this.props.currentTime}/>
         {this.props.currentButtonState < 4
         ?
-        <div>
-          <button className="start-stop" onClick={this.handleClicker.bind(this)}>{buttonName}</button>
-          <button
-            className="fwd-bwd"
-            id="buttonPlusEight"
-            onClick={this.fastForward.bind(this)}>
-            +8
-          </button>
-        </div>
-        : (
-            <div>
-              <div>
-                <div className="game-ended text-danger">Game ended</div>
-              </div>
-              <div>
-                <SentimentBox
-                  handleSentimentSelected={this.handleSentimentSelected}
-                  oppScore={this.props.oppScore}
-                  beyondScore={this.props.beyondScore}
-                />
-              </div>
-            </div>
-          )
-        }
-
+          <div>
+            <StartButton
+              currentButtonState={this.props.currentButtonState}
+              handleClicker={this.handleClicker.bind(this)}
+            />
+            <ExtraMinsButton
+              fastForward={this.props.fastForward.bind(this)}
+            />
+          </div>
+        :
+          <GameEnded
+            handleSentimentSelected={this.handleSentimentSelected}
+            oppScore={this.props.oppScore}
+            beyondScore={this.props.beyondScore}
+          />}
       </div>
     );
   }

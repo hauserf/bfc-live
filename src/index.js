@@ -7,7 +7,8 @@
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-import './App.css';
+// import './App.css';
+// import '../public/css/App.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';

@@ -7,12 +7,12 @@ import {
 import axios from 'axios';
 
 //app components
-import BFCLive from './bfc-live';
+import BFCLive from './components/bfc-live';
 import Footer from './components/footer';
 import Roster from './components/roster';
 import Settings from './components/settings';
 import TimerState from './components/highlights_timer-state';
-import GoalsBFC from './components/highlights_goalsBFC';
+import GoalsBFC from './components/highlights_BFC';
 import GoalsOPP from './components/highlights_goalsOPP';
 import GameReport from './components/game-report';
 import Fixture from './components/fixture';
@@ -337,7 +337,7 @@ loadTeamsFromServer() {
                 addGoalOPP={this.addGoalOPP.bind(this)}
               />
 
-              <Route exact path="/" render={() => <Redirect to="/bfc-live" />} />
+              <Route exact path="/" render={() => <Redirect to="/settings" />} />
               <Route path="/settings" render={() => <Settings
                 setBFCTeam={this.setBFCTeam.bind(this)}
                 setOPPTeam={this.setOPPTeam.bind(this)}
@@ -398,12 +398,6 @@ loadTeamsFromServer() {
                 currentButtonState={this.state.currentButtonState}
                 lengthOfHalf={this.state.lengthOfHalf}
                 lengthOfGame={this.state.lengthOfGame}
-                addGoalBFC={this.addGoalBFC.bind(this)}
-                addGoalOPP={this.addGoalOPP.bind(this)}
-                startStopMatch={this.startStopMatch.bind(this)}
-                fastForward={this.fastForward.bind(this)}
-                snapGoalsBFC={this.snapGoalsBFC.bind(this)}
-                snapGoalsOPP={this.snapGoalsOPP.bind(this)}
                 sentiment={this.state.sentiment}
                 />}
               />

@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
-import SentimentSelector from './sentiment-selector';
 import { GameReportsTemplate } from '../data/game-reports';
 
-export default class SentimentBox extends Component {
-
-  handleSentimentSelected = (sentiment) => {
-    this.props.handleSentimentSelected(sentiment);
-  }
-
+export default class GameReportSummary extends Component {
   render() {
 
     const outcomeFilter = () => {
@@ -31,22 +25,26 @@ export default class SentimentBox extends Component {
     }
 
     const templates = GameReportsTemplate;
-    const sentimentFilter = templates[outcomeFilterIndex()][outcomeFilter()].sentiments;
+    const sentimentFilter = templates[outcomeFilterIndex()][outcomeFilter()]
+
+
+    var sentimentKey = this.props.sentiment;
+    // console.log(sentimentKey, GameReportsTemplate[0].win[sentimentKey]);
+
+
+    const reportVersions = sentimentFilter[sentimentKey].length
+    const report = sentimentFilter[sentimentKey][Math.floor(Math.random() * reportVersions)]
+
 
     return (
       <div>
-        <div className="sentiment-list-title">How would you characterize the {outcomeFilter()}?</div>
-
-        {sentimentFilter
-            .map((sentiment, id) =>
-            <SentimentSelector key={id} name={sentiment}
-              handleSentimentSelected={this.handleSentimentSelected}/>
-            )
-
-          }
-
-
+        <div className="report-titles">
+          Summary
+        </div>
+        <div className="report-summary">
+        {report}
+        </div>
       </div>
     );
-  }
+  };
 }

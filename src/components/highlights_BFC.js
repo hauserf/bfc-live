@@ -15,10 +15,11 @@ import React, { Component } from 'react';
 
 export default class GoalsBFC extends Component {
   render() {
+    
     const lengthOfHalf = this.props.lengthOfHalf;
     const lengthOfGame = lengthOfHalf * 2;
     const scorer = this.props.scorer
-    const playerName = scorer.firstName + " " + scorer.lastName
+    const playerName = `${scorer.firstName} ${scorer.lastName}`
 
     return (
       <div className="highlight">
@@ -53,7 +54,3 @@ export default class GoalsBFC extends Component {
     );
   }
 }
-
-//   <div>Score:{this.props.score}</div>
-// <div className="timestamp">{Math.floor(this.props.time / 60) + ":" + ("0" + this.props.time).slice(-2)} </div>
-// {Math.ceil(this.props.time / 60)}'

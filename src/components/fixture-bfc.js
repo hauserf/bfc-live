@@ -3,10 +3,6 @@ import { Link } from 'react-router-dom';
 
 export default class FixtureBFC extends Component {
 
-  // increaseScore(e) {
-  //   this.props.scoreChange();
-  // }
-
   render() {
 
     const teamName = this.props.teamBFC;
@@ -28,5 +24,3 @@ export default class FixtureBFC extends Component {
     );
   }
 }
-
-            // (teamName.slice(0, 9) + "…" ) onClick={this.increaseScore.bind(this)}

@@ -71,12 +71,12 @@ background: linear-gradient(to right, #FFC837, #FF8008); /* W3C, IE 10+/ Edge, F
 }
 
 .roster-hint {
-  color: orange;
+  color: #fff;
   padding: 0 10px;
 }
 
 div > div > p {
-  color: #05518a;
+  /*color: #05518a;*/
   flex-grow: 1;
 }
 
@@ -198,7 +198,8 @@ input:focus {
   display: flex;
   flex-direction: row;
   background: #181e32;
-  color: #324c60;
+  /*color: #324c60;*/
+  color: #fff;
   border-bottom: solid 1px #324c60;
   cursor: pointer;
 }
@@ -220,6 +221,9 @@ input:focus {
   text-align: right;
   font-size: 1.2em;
   }
+.player-col-darker {
+  color: #324c60;
+}
 
   .player-stats {
     width: 40px;
@@ -237,6 +241,10 @@ input:focus {
     background: #000;
     opacity: 0.4;
     /*color: #be0000;*/
+  }
+
+  .player-bg {
+    background: #fff;
   }
 
 /*.player {
@@ -304,6 +312,10 @@ input:focus {
   /*background-color: red;*/
   color: #fff;
   background-image: url("bg-images/redCard.png");
+}
+
+.card-wrapper {
+  display: flex;
 }
 
 .roster-icon {
@@ -849,86 +861,3 @@ a:active {
   margin: 15px 15px 30px;
   font-weight: 200;
 }
-/*
-
- .remove-player {
-   visibility: hidden;
-   margin-right: 10px;
-   color: #e57373;
-   cursor: pointer;
- }
-
- .player-name:hover .remove-player {
-   visibility: visible;
- }
-
-*/
-
-/*
-.add-player-form form {
- display: flex;
- background-color: #222;
- border-radius: 0 0 20px 20px
-}
-
- .add-player-form input[type=text] {
-   flex-grow: 1;
-   border-width: 0 0 1px 0;
-   margin: 15px 10px 15px 15px;
-   padding: 10px;
-   border-radius: 5px;
-   background-color: #333;
-   border-style: none;
-   text-shadow: none;
-   text-transform: uppercase;
-   color: #999;
-   letter-spacing: 2px;
-   outline: none;
- }
-
- .add-player-form input[type=text]::-webkit-input-placeholder{
-   color: #666;
-   letter-spacing: 2px;
- }
-
- .add-player-form input[type=text]:focus{
-   background-color: #444;
- }
-
- .add-player-form input[type=submit] {
-   display: block;
-   font-size: .6em;
-   margin: 15px 15px 15px 0;
-   padding: 10px;
-   background-color: #333;
-   border-radius: 5px;
-   border: none;
-   color: #999;
-   letter-spacing: 2px;
-   font-weight: bold;
-   text-shadow: none;
-   text-transform: uppercase;
- }
-
- .add-player-form input[type=submit]:hover{
-   background: #4b71b5;
-   color: #fafafa;
-   cursor: pointer;
- }
-
- .stats {
-  margin-top: 0;
-  font-weight: normal;
- }
-
-  .stats td:first-child {
-    text-align: right;
-    font-weight: normal;
-    letter-spacing: 2px;
-    color: #666;
-    font-size: .7em;
-  }
-
-  .stats td:last-child {
-    text-align: left;
-  }*/

@@ -56,8 +56,8 @@ class App extends Component {
     this.setState({ lister: arrayKickoff });
     this.setState({ roster: PlayerStats });
 
-    this.loadTeamsFromServer();
-    setInterval(this.loadTeamsFromServer, this.state.pollInterval);
+    // this.loadTeamsFromServer();
+    // setInterval(this.loadTeamsFromServer, this.state.pollInterval);
   }
 
 

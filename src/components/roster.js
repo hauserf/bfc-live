@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { Player } from './player';
+import Player from './player';
 
 class Roster extends Component {
 
@@ -49,13 +49,12 @@ class Roster extends Component {
                 {`(${numberOfPlayersPlaying})`}
               </h3>
 
-            {this.props.clockState === true
-            ? <Link to="/bfc-live"><button className="back-to-live flex-align-self-center">Go to BFC Live >>> </button></Link>
-            : null }
+            <Link to="/bfc-live"><button className="back-to-live flex-align-self-center">Go Live >>> </button></Link>
+
           </div>
             <p className="roster-hint">
               {this.props.roster.filter((player, id) => player.playerActive).length === 0
-              ? `Select players from the "Available Roster" by tapping the player's name. Then, "Go Live" to start/resume the game, add scores and track time.`
+              ? `Select players from "Available Roster" by tapping the player's name. Then, "Go Live" to start/resume the game, add scores and track time.`
               : null}
             </p>
 

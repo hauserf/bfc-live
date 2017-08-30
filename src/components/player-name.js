@@ -1,13 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class PlayerName extends Component {
-  render() {
-    const handleToggle = this.props.handleToggle.bind(null, this.props.id);
+const PlayerName = (props) => {
+
+    const handleToggle = props.handleToggle.bind(null, props.id);
 
     return (
       <div className="player-names" onClick={handleToggle}>
-          {this.props.player.firstName}
+          {props.firstName}
       </div>
     );
-  }
 }
+
+export default PlayerName;
+
+//
+// <div className="player-names" onClick={handleToggle}>
+//     {props.firstName}
+// </div>

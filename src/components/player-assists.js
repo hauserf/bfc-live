@@ -1,9 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class PlayerAssists extends Component {
-  render() {
-    return (
+const PlayerAssists = (props) => {
 
-    );
-  }
+  const handlePlayerAssists = props.handlePlayerAssists.bind(null, props.id);
+
+  return (
+    <div
+      className="player-stats record-assists"
+      onClick={handlePlayerAssists}>
+    </div>
+  );
 }
+
+export default PlayerAssists;

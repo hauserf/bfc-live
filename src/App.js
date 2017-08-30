@@ -310,6 +310,8 @@ loadTeamsFromServer() {
     this.setState({ lister: arrayGoalOPP })
   }
 
+
+//
   handleSentimentSelected = (sentiment) => {
 
     const sentimentSplit = sentiment.split(" ");
@@ -318,6 +320,8 @@ loadTeamsFromServer() {
 
     this.setState({ sentiment: sentimentKey });
   }
+
+
 
 
   render() {

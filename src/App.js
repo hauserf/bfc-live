@@ -33,7 +33,7 @@ class App extends Component {
       clockState: false,
       lengthOfHalf: 2700,
       lengthOfGame: 5400,
-      teamBFC: "BFC Team",
+      teamBFC: "Beyond FC",
       teamOPP: "Opponent",
       beyondScore: 0,
       oppScore: 0,
@@ -403,6 +403,7 @@ loadTeamsFromServer() {
                 lengthOfHalf={this.state.lengthOfHalf}
                 lengthOfGame={this.state.lengthOfGame}
                 sentiment={this.state.sentiment}
+                roster={this.state.roster}
                 />}
               />
               <Footer />

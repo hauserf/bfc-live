@@ -46,7 +46,7 @@ class Roster extends Component {
               {this.props.currentButtonState < 1
                 ? "Starting Players"
                 : "Playing"}
-                {`(${numberOfPlayersPlaying})`}
+                { numberOfPlayersPlaying}
               </h3>
 
             <Link to="/bfc-live"><button className="back-to-live flex-align-self-center">Go Live >>> </button></Link>

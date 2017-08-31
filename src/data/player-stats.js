@@ -15,6 +15,9 @@ export const PlayerStats = [
     ownGoals: [],
     subIns: [],
     subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    }
   },
   {
     id: 102,
@@ -32,6 +35,9 @@ export const PlayerStats = [
     ownGoals: [],
     subIns: [],
     subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    }
   },
   {
     id: 103,
@@ -49,6 +55,9 @@ export const PlayerStats = [
     ownGoals: [],
     subIns: [],
     subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    }
   },
   {
     id: 104,
@@ -66,6 +75,9 @@ export const PlayerStats = [
     ownGoals: [],
     subIns: [],
     subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    }
   },
   {
     id: 105,
@@ -83,6 +95,9 @@ export const PlayerStats = [
     ownGoals: [],
     subIns: [],
     subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    }
   },
   {
     id: 106,
@@ -100,6 +115,9 @@ export const PlayerStats = [
     ownGoals: [],
     subIns: [],
     subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    }
   },
   {
     id: 107,
@@ -117,6 +135,9 @@ export const PlayerStats = [
     ownGoals: [],
     subIns: [],
     subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    }
   },
   {
     id: 108,
@@ -134,6 +155,9 @@ export const PlayerStats = [
     ownGoals: [],
     subIns: [],
     subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    }
   },
   {
     id: 109,
@@ -151,6 +175,9 @@ export const PlayerStats = [
     ownGoals: [],
     subIns: [],
     subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    }
   },
   {
     id: 110,
@@ -168,6 +195,9 @@ export const PlayerStats = [
     ownGoals: [],
     subIns: [],
     subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    }
   },
   {
     id: 111,
@@ -185,5 +215,8 @@ export const PlayerStats = [
     ownGoals: [],
     subIns: [],
     subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    }
   },
 ];

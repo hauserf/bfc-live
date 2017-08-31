@@ -44,9 +44,9 @@ class Roster extends Component {
           <div className="flex-con flex-items-align mr-2">
             <h3 className="setting-h mx-2">
               {this.props.currentButtonState < 1
-                ? "Starting Players"
-                : "Playing"}
-                { numberOfPlayersPlaying}
+                ? "Starting Players "
+                : "Playing "}
+                ({numberOfPlayersPlaying})
               </h3>
 
             <Link to="/bfc-live"><button className="back-to-live flex-align-self-center">Go Live >>> </button></Link>
@@ -87,8 +87,8 @@ class Roster extends Component {
             <h3 className="setting-h">
 
               {this.props.roster.filter((player, id) => player.playerActive).length === 0
-              ? "Available Roster"
-              : "Subs"}
+              ? "Available Roster "
+              : "Subs "}
               ({numberOfSubs})
 
             </h3>

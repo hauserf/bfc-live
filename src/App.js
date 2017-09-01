@@ -244,6 +244,28 @@ loadTeamsFromServer() {
           alert("Game ended!");
     } else {
         this.setState({ oppScore: score + 1 })
+
+        const urlParams = new URLSearchParams(window.location.search);
+
+        const tweet = urlParams.get('tweet') || 'The opponent has scored a goal!';
+
+        const backend = 'https://nodejavascript.herokuapp.com';
+        // const backend = 'http://localhost:3100';
+        fetch(`${backend}/api/tweet`, {
+          method: 'POST',
+          mode: 'cors',
+
+          headers: new Headers({
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }),
+
+          body: JSON.stringify({ tweet })
+        }).then(response => response.json()).then((data) => {
+          console.log({ data });
+        });
+
+
         this.snapGoalsOPP();
       }
   }

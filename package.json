@@ -6,6 +6,7 @@
     "axios": "^0.16.2",
     "body-parser": "^1.17.2",
     "bootstrap": "^3.3.7",
+    "dotenv": "^4.0.0",
     "express": "^4.15.4",
     "foreman": "^2.0.0",
     "jimp": "^0.2.28",
@@ -19,7 +20,8 @@
     "react-dom": "^15.6.1",
     "react-emojione": "^3.1.10",
     "react-router-dom": "^4.1.1",
-    "semantic-ui-react": "^0.71.4"
+    "semantic-ui-react": "^0.71.4",
+    "twit": "^2.2.9"
   },
   "devDependencies": {
     "react-scripts": "1.0.7"

@@ -6,12 +6,27 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var Team = require('./model/teams');
 
+// import twitter dependencies
+var dotenv = require('dotenv');
+var Twit = require('twit');
+dotenv.load();
+
 // create instances
 var app = express();
 var router = express.Router();
 
-//set port to either a predetermined port number or 3001
-var port = process.env.API_PORT || 3001;
+/* eslint-disable key-spacing */
+const twitter = new Twit({
+  consumer_key:         process.env.TWITTER_CONSUMER_KEY,
+  consumer_secret:      process.env.TWITTER_CONSUMER_SECRET,
+  access_token:         process.env.TWITTER_ACCESS_TOKEN,
+  access_token_secret:  process.env.TWITTER_ACCESS_TOKEN_SECRET,
+  timeout_ms:           60 * 1000,  // optional HTTP request timeout to apply to all requests.
+});
+/* eslint-enable */
+
+//set port to either a predetermined port number or 3100
+var port = process.env.API_PORT || 3100;
 
 //db config
 var mongoDB = 'mongodb://frank:frank123@ds119682.mlab.com:19682/bfc-app';
@@ -39,6 +54,42 @@ app.use(function(req, res, next) {
 router.get('/', function(req, res) {
   res.json({message: 'API Initialized'});
 });
+
+
+///////////////////////// twitter ///////////////////////////////
+
+app.get('/api/tweet', (req, res) => {
+  console.log({ origin: req.headers, body: req.body });
+  const tweet = `Hello ${Math.random()}`;
+
+  twitter.post('statuses/update', { status: tweet }, (err, data, response) => {
+    if (err) throw Error(err);
+    console.log({ data, response });
+
+    res.header('Content-Type', 'application/json');
+    res.json(JSON.stringify({ tweet, success: true }));
+  });
+});
+
+app.post('/api/tweet', (req, res) => {
+  console.log({ origin: req.headers, body: req.body });
+  const tweet = `${req.body.tweet} ${Math.random()}`;
+
+  twitter.post('statuses/update', { status: tweet }, (err, data, response) => {
+    if (err) throw Error(err);
+    console.log({ data, response });
+
+    res.header('Content-Type', 'application/json');
+    res.json(JSON.stringify({ tweet, success: true }));
+  });
+});
+
+
+
+
+///////////////////////// END ///////////////////////////////
+
+
 
 // adding the /teams route to our /api router
 router.route('/teams')

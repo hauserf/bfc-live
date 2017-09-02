@@ -17,6 +17,7 @@ import GoalsOPP from './components/highlights_goalsOPP';
 import GameReport from './components/game-report';
 import Fixture from './components/fixture';
 import { PlayerStats } from './data/player-stats';
+import { Tweets } from './data/tweets';
 import { findById, togglePlayer, updatePlayer } from './lib/rosterHelpers'
 
 var timer;
@@ -34,7 +35,7 @@ class App extends Component {
       lengthOfHalf: 2700,
       lengthOfGame: 5400,
       teamBFC: "Beyond FC",
-      teamOPP: "Opponent",
+      teamOPP: "Opponent FC",
       beyondScore: 0,
       oppScore: 0,
       currentButtonState: 0,
@@ -191,6 +192,10 @@ loadTeamsFromServer() {
     const playerGoals = roster[roster.indexOf(player)].goals;
     updatePlayer(roster, playerGoals.push(this.state.timeLive))
     this.setState({ roster })
+
+    const tweetKey = "BFCTeamScored"
+    this.triggerTweet(tweetKey, player);
+
     this.addGoalBFC();
     this.snapGoalsBFC(player, event);
   }
@@ -245,30 +250,67 @@ loadTeamsFromServer() {
     } else {
         this.setState({ oppScore: score + 1 })
 
-        const urlParams = new URLSearchParams(window.location.search);
-
-        const tweet = urlParams.get('tweet') || 'The opponent has scored a goal!';
-
-        const backend = 'https://nodejavascript.herokuapp.com';
+        // // const urlParams = new URLSearchParams(window.location.search);
+        //
+        // // const tweet = urlParams.get('tweet') || 'The opponent has scored a goal!';
+        // const tweet = `${this.state.teamOPP} has scored a goal!`;
+        //
+        //
+        // // const backend = 'https://nodejavascript.herokuapp.com';
         // const backend = 'http://localhost:3100';
-        fetch(`${backend}/api/tweet`, {
-          method: 'POST',
-          mode: 'cors',
-
-          headers: new Headers({
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          }),
-
-          body: JSON.stringify({ tweet })
-        }).then(response => response.json()).then((data) => {
-          console.log({ data });
-        });
-
+        // fetch(`${backend}/api/tweet`, {
+        //   method: 'POST',
+        //   mode: 'cors',
+        //
+        //   headers: new Headers({
+        //     'Accept': 'application/json',
+        //     'Content-Type': 'application/json'
+        //   }),
+        //
+        //   body: JSON.stringify({ tweet })
+        // }).then(response => response.json()).then((data) => {
+        //   console.log({ data });
+        // });
+        const tweetKey = "opponentScored"
+        this.triggerTweet(tweetKey);
 
         this.snapGoalsOPP();
       }
   }
+
+///////////// Twitter function ////////////////
+
+
+// const urlParams = new URLSearchParams(window.location.search);
+
+// const tweet = urlParams.get('tweet') || 'The opponent has scored a goal!';
+triggerTweet(tweetKey, player) {
+
+    // const tweet = `${this.state.teamOPP} has scored a goal!`;
+    const tweet = Tweets[tweetKey];
+
+  // const backend = 'https://nodejavascript.herokuapp.com';
+  const backend = 'http://localhost:3100';
+  fetch(`${backend}/api/tweet`, {
+    method: 'POST',
+    mode: 'cors',
+
+    headers: new Headers({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }),
+
+    body: JSON.stringify({ tweet })
+  }).then(response => response.json()).then((data) => {
+    console.log({ data });
+  });
+}
+
+
+
+///////////// end ////////////////////
+
+
 
   startStopMatch(e){
     var buttonStateCounter = this.state.currentButtonState;

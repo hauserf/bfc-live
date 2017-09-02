@@ -9,7 +9,7 @@ var Team = require('./model/teams');
 // import twitter dependencies
 var dotenv = require('dotenv');
 var Twit = require('twit');
-dotenv.load();
+dotenv.config();
 
 // create instances
 var app = express();
@@ -76,7 +76,7 @@ app.post('/api/tweet', (req, res) => {
   const tweet = `${req.body.tweet} ${Math.random()}`;
 
   twitter.post('statuses/update', { status: tweet }, (err, data, response) => {
-    if (err) throw Error(err);
+      if (err) throw Error(err);
     console.log({ data, response });
 
     res.header('Content-Type', 'application/json');
@@ -126,18 +126,18 @@ app.listen(port, function() {
   console.log(`api running on port ${port}`);
 });
 
-// catch 404 and forward to error handler
-app.use((req, res, next) => {
-    var err = new Error("Not Found");
-    err.status = 404;
-    next(err)
-})
-
-// error handler
-app.use((err, req, res, next)=>{
-    res.status(err.status || 500);
-    res.json({
-        message: err.message
-    })
-
-})
+// // catch 404 and forward to error handler
+// app.use((req, res, next) => {
+//     var err = new Error("Not Found");
+//     err.status = 404;
+//     next(err)
+// })
+//
+// // error handler
+// app.use((err, req, res, next)=>{
+//     res.status(err.status || 500);
+//     res.json({
+//         message: err.message
+//     })
+//
+// })

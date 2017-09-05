@@ -5,10 +5,13 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var Team = require('./model/teams');
+var Jimp = require ('jimp');
 
 // import twitter dependencies
 var dotenv = require('dotenv');
 var Twit = require('twit');
+var fs = require('fs');
+// var path = require('path');
 dotenv.config();
 
 // create instances
@@ -57,31 +60,77 @@ router.get('/', function(req, res) {
 
 
 ///////////////////////// twitter ///////////////////////////////
+// post a tweet
+//
+// app.post('/api/tweet', (req, res) => {
+//   console.log({ origin: req.headers, body: req.body });
+//
+//   const tweet = `${req.body.tweet} ${Math.random()}`;
+//
+//   twitter.post('statuses/update', { status: tweet }, (err, data, response) => {
+//       if (err) throw Error(err);
+//     // console.log({ data, response });
+//     //
+//     // res.header('Content-Type', 'application/json');
+//     // res.json(JSON.stringify({ tweet, success: true }));
+//   });
+// });
 
-app.get('/api/tweet', (req, res) => {
-  console.log({ origin: req.headers, body: req.body });
-  const tweet = `Hello ${Math.random()}`;
 
-  twitter.post('statuses/update', { status: tweet }, (err, data, response) => {
-    if (err) throw Error(err);
-    console.log({ data, response });
-
-    res.header('Content-Type', 'application/json');
-    res.json(JSON.stringify({ tweet, success: true }));
-  });
-});
 
 app.post('/api/tweet', (req, res) => {
   console.log({ origin: req.headers, body: req.body });
-  const tweet = `${req.body.tweet} ${Math.random()}`;
 
-  twitter.post('statuses/update', { status: tweet }, (err, data, response) => {
-      if (err) throw Error(err);
-    console.log({ data, response });
+  // create jimp image
+  const savedImagePath = "./public/BFC_CSL_Jerseys_new.jpg";
+  const jimpData = req.body.jimpData;
+  const scorer = jimpData.scorer;
+  const min = jimpData.min;
+  const teamBFC = jimpData.teamBFC;
+  const headline = `Goal for Beyond!!!`
 
-    res.header('Content-Type', 'application/json');
-    res.json(JSON.stringify({ tweet, success: true }));
+  Jimp.read("./public/BFC_CSL_Jerseys.png", function (err, img) {
+      if (err) throw err;
+      Jimp.loadFont( Jimp.FONT_SANS_64_WHITE ).then(function (font) { // load font from .fnt file
+      img.print(font, 50, 50, headline)
+      img.print(font, 50, 110, min)
+      img.print(font, 50, 170, scorer)
+      img.scaleToFit( 400, 400)
+            .write(savedImagePath); // save
+      // image.print(font, x, y, str, width); // print a message on an image with text wrapped at width
   });
+  });
+
+
+  // post a tweet with media
+
+  // var b64content = fs.readFileSync('./public/goal.png', { encoding: 'base64' })
+  // var imagePath = req.body.imagePath
+  var b64content = fs.readFileSync(savedImagePath, { encoding: 'base64' })
+
+  // first we must post the media to Twitter
+  twitter.post('media/upload', { media_data: b64content }, function (err, data, response) {
+    // now we can assign alt text to the media, for use by screen readers and
+    // other text-based presentations and interpreters
+    var mediaIdStr = data.media_id_string
+    var altText = "BFC game updates"
+    var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
+
+    twitter.post('media/metadata/create', meta_params, function (err, data, response) {
+      if (!err) {
+        // now we can reference the media and post a tweet (media will attach to the tweet)
+
+        const tweet = `${req.body.tweet} ${Math.random()}`;
+        var params = { status: tweet, media_ids: [mediaIdStr] }
+
+        twitter.post('statuses/update', params, (err, data, response) => {
+          console.log(data)
+          if (err) throw Error(err);
+        });
+      }
+    })
+  })
+
 });
 
 

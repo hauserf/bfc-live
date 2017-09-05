@@ -193,8 +193,14 @@ loadTeamsFromServer() {
     updatePlayer(roster, playerGoals.push(this.state.timeLive))
     this.setState({ roster })
 
-    const tweetKey = "BFCTeamScored"
-    this.triggerTweet(tweetKey, player);
+    const tweetKey = "playerScored";
+    const scorer = `${player.firstName} ${player.lastName}`;
+    const scorerHandle = "@twitterHandle"
+    const min = (Math.ceil(this.state.timeLive / 60)) + "'";
+    const teamBFC = this.state.teamBFC;
+    const teamOPP = this.state.teamOPP;
+    this.triggerTweet(tweetKey, scorer, scorerHandle, min, teamBFC, teamOPP);
+    console.log(player, scorer);
 
     this.addGoalBFC();
     this.snapGoalsBFC(player, event);
@@ -250,27 +256,6 @@ loadTeamsFromServer() {
     } else {
         this.setState({ oppScore: score + 1 })
 
-        // // const urlParams = new URLSearchParams(window.location.search);
-        //
-        // // const tweet = urlParams.get('tweet') || 'The opponent has scored a goal!';
-        // const tweet = `${this.state.teamOPP} has scored a goal!`;
-        //
-        //
-        // // const backend = 'https://nodejavascript.herokuapp.com';
-        // const backend = 'http://localhost:3100';
-        // fetch(`${backend}/api/tweet`, {
-        //   method: 'POST',
-        //   mode: 'cors',
-        //
-        //   headers: new Headers({
-        //     'Accept': 'application/json',
-        //     'Content-Type': 'application/json'
-        //   }),
-        //
-        //   body: JSON.stringify({ tweet })
-        // }).then(response => response.json()).then((data) => {
-        //   console.log({ data });
-        // });
         const tweetKey = "opponentScored"
         this.triggerTweet(tweetKey);
 
@@ -284,10 +269,12 @@ loadTeamsFromServer() {
 // const urlParams = new URLSearchParams(window.location.search);
 
 // const tweet = urlParams.get('tweet') || 'The opponent has scored a goal!';
-triggerTweet(tweetKey, player) {
+triggerTweet(tweetKey, scorer, scorerHandle, min, teamBFC, teamOPP) {
 
-    // const tweet = `${this.state.teamOPP} has scored a goal!`;
-    const tweet = Tweets[tweetKey];
+  // const tweet = `${this.state.teamOPP} has scored a goal!`;
+  const tweet = Tweets(tweetKey, scorer, scorerHandle, min, teamBFC, teamOPP);
+  const jimpData = {tweetKey, scorer, scorerHandle, min, teamBFC, teamOPP}
+  const imagePath = './public/field.png'
 
   // const backend = 'https://nodejavascript.herokuapp.com';
   const backend = 'http://localhost:3100';
@@ -300,7 +287,7 @@ triggerTweet(tweetKey, player) {
       'Content-Type': 'application/json'
     }),
 
-    body: JSON.stringify({ tweet })
+    body: JSON.stringify({ tweet, imagePath, jimpData })
   }).then(response => response.json()).then((data) => {
     console.log({ data });
   });

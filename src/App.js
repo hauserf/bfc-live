@@ -199,7 +199,7 @@ loadTeamsFromServer() {
     const min = (Math.ceil(this.state.timeLive / 60)) + "'";
     const teamBFC = this.state.teamBFC;
     const teamOPP = this.state.teamOPP;
-    this.triggerTweet(tweetKey, scorer, scorerHandle, min, teamBFC, teamOPP);
+    this.triggerTweet(tweetKey, teamOPP, scorer, scorerHandle, min, teamBFC);
     console.log(player, scorer);
 
     this.addGoalBFC();
@@ -257,7 +257,8 @@ loadTeamsFromServer() {
         this.setState({ oppScore: score + 1 })
 
         const tweetKey = "opponentScored"
-        this.triggerTweet(tweetKey);
+        const teamOPP = this.state.teamOPP;
+        this.triggerTweet(tweetKey, teamOPP);
 
         this.snapGoalsOPP();
       }
@@ -269,11 +270,11 @@ loadTeamsFromServer() {
 // const urlParams = new URLSearchParams(window.location.search);
 
 // const tweet = urlParams.get('tweet') || 'The opponent has scored a goal!';
-triggerTweet(tweetKey, scorer, scorerHandle, min, teamBFC, teamOPP) {
+triggerTweet(tweetKey, teamOPP, scorer, scorerHandle, min, teamBFC) {
 
   // const tweet = `${this.state.teamOPP} has scored a goal!`;
-  const tweet = Tweets(tweetKey, scorer, scorerHandle, min, teamBFC, teamOPP);
-  const jimpData = {tweetKey, scorer, scorerHandle, min, teamBFC, teamOPP}
+  const tweet = Tweets(tweetKey, teamOPP, scorer, scorerHandle, min, teamBFC);
+  const jimpData = {tweetKey, teamOPP, scorer, scorerHandle, min, teamBFC}
   const imagePath = './public/field.png'
 
   // const backend = 'https://nodejavascript.herokuapp.com';

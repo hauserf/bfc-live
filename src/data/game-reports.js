@@ -56,7 +56,7 @@ export const GameReportsTemplate = [
       inputNeeded: ["Input Needed"],
       fairResult: [
         "It was a fair result and we are defeated, defeated, defeated.",
-        "A fair result for both team. We are now looking to the next game",
+        "A fair result for both teams. We are now looking to the next game",
         "Considering the bigger pitcure, it's a fair result"],
       prettyUnlucky: [
         "Super unlucky",

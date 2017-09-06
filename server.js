@@ -82,54 +82,59 @@ app.post('/api/tweet', (req, res) => {
   console.log({ origin: req.headers, body: req.body });
 
   // create jimp image
-  const savedImagePath = "./public/BFC_CSL_Jerseys_new.jpg";
+  const savedImagePath = "./public/BFCLive_template_new.jpg";
   const jimpData = req.body.jimpData;
   const scorer = jimpData.scorer;
   const min = jimpData.min;
   const teamBFC = jimpData.teamBFC;
   const headline = `Goal for Beyond!!!`
 
-  Jimp.read("./public/BFC_CSL_Jerseys.png", function (err, img) {
+  Jimp.read("./public/BFCLive_template.png", function (err, img) {
       if (err) throw err;
-      Jimp.loadFont( Jimp.FONT_SANS_64_WHITE ).then(function (font) { // load font from .fnt file
-      img.print(font, 50, 50, headline)
-      img.print(font, 50, 110, min)
-      img.print(font, 50, 170, scorer)
-      img.scaleToFit( 400, 400)
+      Jimp.loadFont( Jimp.FONT_SANS_32_WHITE ).then(function (font) { // load font from .fnt file
+      img.print(font, 20, 20, headline)
+      img.print(font, 20, 100, scorer)
+      img.print(font, 20, 140, `${min} minute`)
+      img.scaleToFit( 400, 300)
             .write(savedImagePath); // save
       // image.print(font, x, y, str, width); // print a message on an image with text wrapped at width
   });
   });
 
+  setTimeout(() => {
 
-  // post a tweet with media
+    // post a tweet with media
 
-  // var b64content = fs.readFileSync('./public/goal.png', { encoding: 'base64' })
-  // var imagePath = req.body.imagePath
-  var b64content = fs.readFileSync(savedImagePath, { encoding: 'base64' })
+    // var b64content = fs.readFileSync('./public/goal.png', { encoding: 'base64' })
+    // var imagePath = req.body.imagePath
 
-  // first we must post the media to Twitter
-  twitter.post('media/upload', { media_data: b64content }, function (err, data, response) {
-    // now we can assign alt text to the media, for use by screen readers and
-    // other text-based presentations and interpreters
-    var mediaIdStr = data.media_id_string
-    var altText = "BFC game updates"
-    var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
+    var b64content = fs.readFileSync(savedImagePath, { encoding: 'base64' })
 
-    twitter.post('media/metadata/create', meta_params, function (err, data, response) {
-      if (!err) {
-        // now we can reference the media and post a tweet (media will attach to the tweet)
+    // first we must post the media to Twitter
+    twitter.post('media/upload', { media_data: b64content }, function (err, data, response) {
+      // now we can assign alt text to the media, for use by screen readers and
+      // other text-based presentations and interpreters
+      var mediaIdStr = data.media_id_string
+      var altText = "BFC game updates"
+      var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
 
-        const tweet = `${req.body.tweet} ${Math.random()}`;
-        var params = { status: tweet, media_ids: [mediaIdStr] }
+      twitter.post('media/metadata/create', meta_params, function (err, data, response) {
+        if (!err) {
+          // now we can reference the media and post a tweet (media will attach to the tweet)
 
-        twitter.post('statuses/update', params, (err, data, response) => {
-          console.log(data)
-          if (err) throw Error(err);
-        });
-      }
+          const tweet = `${req.body.tweet}`;
+          var params = { status: tweet, media_ids: [mediaIdStr] }
+
+          twitter.post('statuses/update', params, (err, data, response) => {
+            console.log(data)
+            if (err) throw Error(err);
+          });
+        }
+      })
     })
-  })
+
+
+  }, 10000)
 
 });
 

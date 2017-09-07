@@ -82,24 +82,73 @@ app.post('/api/tweet', (req, res) => {
   console.log({ origin: req.headers, body: req.body });
 
   // create jimp image
-  const savedImagePath = "./public/BFCLive_template_new.jpg";
   const jimpData = req.body.jimpData;
+  const tweetKey = jimpData.tweetKey;
   const scorer = jimpData.scorer;
   const min = jimpData.min;
   const teamBFC = jimpData.teamBFC;
-  const headline = `Goal for Beyond!!!`
+  const teamOPP = jimpData.teamOPP;
+  const oppScore = jimpData.oppScore;
+  const beyondScore = jimpData.beyondScore;
 
-  Jimp.read("./public/BFCLive_template.png", function (err, img) {
+
+  const jimpText = {
+    playerScored: {
+      headline: "Goal for Beyond!!!",
+      subHeadline: scorer,
+      text: `${min} minute`,
+      templateImage: "./public/BFCLive_score_template.png"
+    },
+    gameStarted: {
+      headline: "Game on!",
+      subHeadline: `${teamBFC} vs`,
+      text: `${teamOPP}`,
+      templateImage: "./public/BFCLive_events_template.png"
+    },
+    halfTime: {
+      headline: `${beyondScore} : ${oppScore} at halftime`,
+      subHeadline: ``,
+      text: ``,
+      templateImage: "./public/BFCLive_events_template.png"
+    },
+    secondHalf: {
+      headline: `Second half is underway`,
+      subHeadline: `${teamBFC} ${beyondScore}`,
+      text: `${teamOPP} ${oppScore}`,
+      templateImage: "./public/BFCLive_events_template.png"
+    },
+    finalScore: {
+      headline: "Game ended",
+      subHeadline: `${teamBFC} ${beyondScore}`,
+      text: `${teamOPP} ${oppScore}`,
+      templateImage: "./public/BFCLive_events_template.png"
+    }
+  };
+
+  const headline = jimpText[tweetKey].headline;
+  const subHeadline = jimpText[tweetKey].subHeadline;
+  const text = jimpText[tweetKey].text;
+
+  var date = new Date();
+  var timestamp = date.getTime();
+
+  const templateImage = jimpText[tweetKey].templateImage;
+  const savedImagePath = `./public/jimps/BFCLive_${timestamp}.jpg`;
+
+
+
+  Jimp.read(templateImage, function (err, img) {
       if (err) throw err;
       Jimp.loadFont( Jimp.FONT_SANS_32_WHITE ).then(function (font) { // load font from .fnt file
       img.print(font, 20, 20, headline)
-      img.print(font, 20, 100, scorer)
-      img.print(font, 20, 140, `${min} minute`)
+      img.print(font, 20, 100, subHeadline)
+      img.print(font, 20, 140, text)
       img.scaleToFit( 400, 300)
             .write(savedImagePath); // save
       // image.print(font, x, y, str, width); // print a message on an image with text wrapped at width
   });
   });
+
 
   setTimeout(() => {
 

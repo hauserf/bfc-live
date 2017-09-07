@@ -193,17 +193,26 @@ loadTeamsFromServer() {
     updatePlayer(roster, playerGoals.push(this.state.timeLive))
     this.setState({ roster })
 
+    console.log(player, scorer);
+
+    this.addGoalBFC();
+    this.snapGoalsBFC(player, event);
+
     const tweetKey = "playerScored";
     const scorer = `${player.firstName} ${player.lastName}`;
     const scorerHandle = "@twitterHandle"
     const min = (Math.ceil(this.state.timeLive / 60)) + "'";
     const teamBFC = this.state.teamBFC;
     const teamOPP = this.state.teamOPP;
-    this.triggerTweet(tweetKey, teamOPP, scorer, scorerHandle, min, teamBFC);
-    console.log(player, scorer);
 
-    this.addGoalBFC();
-    this.snapGoalsBFC(player, event);
+    setTimeout(() => {
+
+      const beyondScore = this.state.beyondScore;
+      const oppScore = this.state.oppScore;
+
+      this.triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle)
+
+    }, 3000);
   }
 
   handlePlayerAssists = (id) => {
@@ -237,7 +246,7 @@ loadTeamsFromServer() {
       alert("Start the game first!");
     } else if (this.state.currentButtonState === 2){
         alert("Restart game first!");
-      } else if (this.state.currentButtonState === 4){
+      } else if (this.state.currentButtonState === 5){
           alert("Game ended!");
     } else {
         this.setState({ beyondScore: score + 1 })
@@ -256,9 +265,13 @@ loadTeamsFromServer() {
     } else {
         this.setState({ oppScore: score + 1 })
 
-        const tweetKey = "opponentScored"
-        const teamOPP = this.state.teamOPP;
-        this.triggerTweet(tweetKey, teamOPP);
+        // const tweetKey = "opponentScored"
+        // const min = (Math.ceil(this.state.timeLive / 60)) + "'";
+        // const teamBFC = this.state.teamBFC;
+        // const teamOPP = this.state.teamOPP;
+        // const beyondScore = this.state.beyondScore;
+        // const oppScore = this.state.oppScore;
+        // this.triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore);
 
         this.snapGoalsOPP();
       }
@@ -270,12 +283,11 @@ loadTeamsFromServer() {
 // const urlParams = new URLSearchParams(window.location.search);
 
 // const tweet = urlParams.get('tweet') || 'The opponent has scored a goal!';
-triggerTweet(tweetKey, teamOPP, scorer, scorerHandle, min, teamBFC) {
+triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle) {
 
   // const tweet = `${this.state.teamOPP} has scored a goal!`;
-  const tweet = Tweets(tweetKey, teamOPP, scorer, scorerHandle, min, teamBFC);
-  const jimpData = {tweetKey, teamOPP, scorer, scorerHandle, min, teamBFC}
-  const imagePath = './public/field.png'
+  const tweet = Tweets(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle);
+  const jimpData = {tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle}
 
   // const backend = 'https://nodejavascript.herokuapp.com';
   const backend = 'http://localhost:3100';
@@ -288,7 +300,7 @@ triggerTweet(tweetKey, teamOPP, scorer, scorerHandle, min, teamBFC) {
       'Content-Type': 'application/json'
     }),
 
-    body: JSON.stringify({ tweet, imagePath, jimpData })
+    body: JSON.stringify({ tweet, jimpData })
   }).then(response => response.json()).then((data) => {
     console.log({ data });
   });
@@ -299,9 +311,9 @@ triggerTweet(tweetKey, teamOPP, scorer, scorerHandle, min, teamBFC) {
 ///////////// end ////////////////////
 
 
-
   startStopMatch(e){
     var buttonStateCounter = this.state.currentButtonState;
+
     if (this.state.clockState === false){
       this.setState({clockState: true, currentButtonState: buttonStateCounter + 1});
       timer = setInterval(()=>{this.setState({timeLive: this.state.timeLive+1})},1000);
@@ -322,7 +334,31 @@ triggerTweet(tweetKey, teamOPP, scorer, scorerHandle, min, teamBFC) {
       );
       this.setState({ lister: arrayTimerState })
     }
+
+    if (buttonStateCounter < 4) {
+      var tweetKey = "";
+
+      if (buttonStateCounter === 0) {
+        tweetKey = "gameStarted"
+      } else if (buttonStateCounter === 1) {
+        tweetKey = "halfTime"
+      } else if (buttonStateCounter === 2) {
+        tweetKey = "secondHalf"
+      } else if (buttonStateCounter === 3) {
+        tweetKey = "finalScore"
+      }
+
+      const min = (Math.ceil(this.state.timeLive / 60)) + "'";
+      const teamBFC = this.state.teamBFC;
+      const teamOPP = this.state.teamOPP;
+      const beyondScore = this.state.beyondScore;
+      const oppScore = this.state.oppScore;
+
+      this.triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore);
+    }
+
     snapTimerState();
+
   }
 
   fastForward(e){

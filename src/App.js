@@ -190,17 +190,15 @@ loadTeamsFromServer() {
     const roster = this.state.roster;
     const event = "goal"
     const playerGoals = roster[roster.indexOf(player)].goals;
-    updatePlayer(roster, playerGoals.push(this.state.timeLive))
-    this.setState({ roster })
-
-    console.log(player, scorer);
+    updatePlayer(roster, playerGoals.push(this.state.timeLive));  
+    this.setState({ roster });
 
     this.addGoalBFC();
     this.snapGoalsBFC(player, event);
 
     const tweetKey = "playerScored";
     const scorer = `${player.firstName} ${player.lastName}`;
-    const scorerHandle = "@twitterHandle"
+    const scorerHandle = "";
     const min = (Math.ceil(this.state.timeLive / 60)) + "'";
     const teamBFC = this.state.teamBFC;
     const teamOPP = this.state.teamOPP;

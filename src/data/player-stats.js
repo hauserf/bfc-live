@@ -1,6 +1,6 @@
 export const PlayerStats = [
   {
-    id: 101,
+    id: "101",
     firstName: "Frank",
     lastName: "Hauser",
     playerActive: false,
@@ -17,10 +17,11 @@ export const PlayerStats = [
     subOuts: [],
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
-    }
+    },
+    teamID: ["1234", "12345"]
   },
   {
-    id: 102,
+    id: "102",
     firstName: "Jeremy",
     lastName: "Rampon",
     playerActive: false,
@@ -37,10 +38,11 @@ export const PlayerStats = [
     subOuts: [],
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
-    }
+    },
+    teamID: "12345"
   },
   {
-    id: 103,
+    id: "103",
     firstName: "Varun",
     lastName: "Rangaraj",
     playerActive: false,
@@ -57,10 +59,11 @@ export const PlayerStats = [
     subOuts: [],
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
-    }
+    },
+    teamID: "12345"
   },
   {
-    id: 104,
+    id: "104",
     firstName: "Ali",
     lastName: "Reza",
     playerActive: false,
@@ -77,10 +80,11 @@ export const PlayerStats = [
     subOuts: [],
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
-    }
+    },
+    teamID: "12345"
   },
   {
-    id: 105,
+    id: "105",
     firstName: "Jesse",
     lastName: "James",
     playerActive: false,
@@ -97,10 +101,11 @@ export const PlayerStats = [
     subOuts: [],
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
-    }
+    },
+    teamID: "12345"
   },
   {
-    id: 106,
+    id: "106",
     firstName: "Finley",
     lastName: "McFinny",
     playerActive: false,
@@ -117,10 +122,11 @@ export const PlayerStats = [
     subOuts: [],
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
-    }
+    },
+    teamID: "12345"
   },
   {
-    id: 107,
+    id: "107",
     firstName: "Marc",
     lastName: "Lemcke",
     playerActive: false,
@@ -137,10 +143,11 @@ export const PlayerStats = [
     subOuts: [],
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
-    }
+    },
+    teamID: "23456"
   },
   {
-    id: 108,
+    id: "108",
     firstName: "James",
     lastName: "Leavy",
     playerActive: false,
@@ -157,10 +164,11 @@ export const PlayerStats = [
     subOuts: [],
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
-    }
+    },
+    teamID: "23456"
   },
   {
-    id: 109,
+    id: "109",
     firstName: "Kia",
     lastName: "Kianoosh",
     playerActive: false,
@@ -177,10 +185,11 @@ export const PlayerStats = [
     subOuts: [],
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
-    }
+    },
+    teamID: "23456"
   },
   {
-    id: 110,
+    id: "110",
     firstName: "Deepak",
     lastName: "Packman",
     playerActive: false,
@@ -197,10 +206,11 @@ export const PlayerStats = [
     subOuts: [],
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
-    }
+    },
+    teamID: "23456"
   },
   {
-    id: 111,
+    id: "111",
     firstName: "Obi",
     lastName: "ObiMan",
     playerActive: false,
@@ -217,6 +227,7 @@ export const PlayerStats = [
     subOuts: [],
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
-    }
+    },
+    teamID: "23456"
   },
 ];

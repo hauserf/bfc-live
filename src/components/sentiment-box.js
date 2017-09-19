@@ -35,7 +35,7 @@ export default class SentimentBox extends Component {
 
     return (
       <div>
-        <div className="sentiment-list-title">How would you characterize the {outcomeFilter()}?</div>
+        <div className="sentiment-list-title">What do you think of the {outcomeFilter()}?</div>
 
         {sentimentFilter
             .map((sentiment, id) =>

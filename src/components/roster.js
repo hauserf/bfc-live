@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Player from './player';
+import Fixture from './fixture';
+import Timer from './timer';
+import Footer from './footer';
+import { Alert } from 'react-bootstrap';
 
 class Roster extends Component {
 
@@ -33,30 +36,80 @@ class Roster extends Component {
       this.props.handlePlayerOwnGoals(id);
   }
 
+  addGoalBFC = (e) => {
+    this.props.addGoalBFC();
+  }
+
+  addGoalOPP = (e) => {
+    this.props.addGoalOPP();
+  }
+
+  startStopMatch(e){
+    this.props.startStopMatch();
+  }
+
+  fastForward(e){
+    this.props.fastForward();
+  }
+
+  snapGoalsBFC(e){
+    this.props.snapGoalsBFC();
+  }
+
+  snapGoalsOPP(e){
+    this.props.snapGoalsOPP();
+  }
+
+  handleSentimentSelected = (sentiment) => {
+    this.props.handleSentimentSelected(sentiment);
+  }
+
+  toggleTweetUpdates = (e) => {
+    this.props.toggleTweetUpdates();
+  }
+
   render() {
 
     const numberOfPlayersPlaying = this.props.roster.filter((player, id) => player.playerActive).length;
-    const numberOfSubs = this.props.roster.filter((player, id) => !player.playerActive).length;
+    // const numberOfSubs = this.props.roster.filter((player, id) => !player.playerActive).length;
 
     return (
       <div>
+        <Fixture
+          teamBFC={this.props.teamBFC}
+          beyondScore={this.props.beyondScore}
+          addGoalBFC={this.addGoalBFC}
+          teamOPP={this.props.teamOPP}
+          oppScore={this.props.oppScore}
+          addGoalOPP={this.addGoalOPP}
+        />
+        <Timer
+          currentState={this.props.currentState}
+          currentTime={this.props.timeLive}
+          onOff={this.startStopMatch.bind(this)}
+          currentButtonState={this.props.currentButtonState}
+          fastForward={this.fastForward.bind(this)}
+          handleSentimentSelected={this.handleSentimentSelected.bind(this)}
+          sentiment={this.props.sentiment}
+          oppScore={this.props.oppScore}
+          beyondScore={this.props.beyondScore}
+        />
         <div>
-          <div className="flex-con flex-items-align mr-2">
-            <h3 className="setting-h mx-2">
-              {this.props.currentButtonState < 1
-                ? "Starting Players "
-                : "Playing "}
-                ({numberOfPlayersPlaying})
-              </h3>
+          <h3 className="roster-title">
+            {this.props.currentButtonState < 1
+              ? "Starting Players "
+              : "Playing "
+            }
+              ({numberOfPlayersPlaying})
+          </h3>
 
-            <Link to="/bfc-live"><button className="back-to-live flex-align-self-center">Go Live >>> </button></Link>
+            {this.props.roster.filter((player, id) => player.playerActive).length === 0
+            ? <p className="roster-hint">Select players from "Available Roster" to track playing time and record goals and assists.</p>
+            : null
+            }
 
-          </div>
-            <p className="roster-hint">
-              {this.props.roster.filter((player, id) => player.playerActive).length === 0
-              ? `Select players from "Available Roster" by tapping the player's name. Then, "Go Live" to start/resume the game, add scores and track time.`
-              : null}
-            </p>
+
+
 
             <ReactCSSTransitionGroup
               transitionName="slide"
@@ -84,12 +137,12 @@ class Roster extends Component {
 
             </ReactCSSTransitionGroup>
 
-            <h3 className="setting-h">
+            <h3 className="roster-title">
 
               {this.props.roster.filter((player, id) => player.playerActive).length === 0
               ? "Available Roster "
               : "Subs "}
-              ({numberOfSubs})
+              {/* ({numberOfSubs}) */}
 
             </h3>
             <ReactCSSTransitionGroup
@@ -98,6 +151,7 @@ class Roster extends Component {
               transitionLeaveTimeout={1}>
 
             {this.props.roster
+                .filter((player, id) => player.teamID === this.props.teamCode)
                 .filter((player, id) => !player.playerActive)
                 .map((player, id) =>
                     <Player
@@ -115,6 +169,23 @@ class Roster extends Component {
                 )}
             </ReactCSSTransitionGroup>
         </div>
+        <div className="pt-4">
+        {this.props.tweetUpdates === false
+          ? (<Alert bsStyle="warning">
+              <strong>Automatic twitter updates</strong> are turned off by default. Click 'ACTIVATE' to activate updates using the club's official Twitter account @BFCNY.
+              <div className="text-right">
+                <button className="btn btn-info mt-3" onClick={this.toggleTweetUpdates}> ACTIVATE </button>
+              </div>
+            </Alert>)
+          : (<Alert bsStyle="warning">
+              <strong>Automatic twitter updates</strong> are currently turned on. Click 'DEACTIVATE' to deactivate twitter updates.
+              <div className="text-right">
+                <button className="btn btn-danger mt-3" onClick={this.toggleTweetUpdates}> DEACTIVATE </button>
+              </div>
+            </Alert>)
+        }
+      </div>
+        <Footer />
       </div>
     )
   }

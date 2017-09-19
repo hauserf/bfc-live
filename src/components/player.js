@@ -1,11 +1,14 @@
 import React,  { Component } from 'react';
 // import PropTypes from 'prop-types';
 import PlayerName from './player-name';
+import PlayerMore from './player-more';
+import PlayerSubIn from './player-subin';
+import PlayerSubOut from './player-subout';
 import PlayerAssists from './player-assists';
 import PlayerGoals from './player-goals';
-import PlayerFirstYellow from './player-first-yellow';
-import PlayerSecondYellow from './player-second-yellow';
-import PlayerRed from './player-red';
+// import PlayerFirstYellow from './player-first-yellow';
+// import PlayerSecondYellow from './player-second-yellow';
+// import PlayerRed from './player-red';
 import PlayerMinsTotal from './player-mins-total';
 import PlayerMinsInterval from './player-mins-interval';
 import PlayerGoalsAssists from './player-goals-assists';
@@ -50,6 +53,12 @@ export default class Player extends Component {
             ? "player red-carded"
             : "player"
           }>
+
+          { this.props.playerActive === true
+            ? <PlayerSubOut {...this.props}/>
+            : <PlayerSubIn {...this.props}/>
+          }
+
           <PlayerName
             handleToggle={this.handleToggle}
             {...this.props}
@@ -67,20 +76,27 @@ export default class Player extends Component {
             : null
           }
 
-          <PlayerFirstYellow
-            {...this.props}
-          />
-          <PlayerSecondYellow
+          {/* { this.props.playerActive === true && this.props.clockState === true
+            ? <PlayerFirstYellow {...this.props} />
+            : null
+          } */}
+
+          {/* <PlayerSecondYellow
             {...this.props}
           />
           <PlayerRed
             {...this.props}
-          />
+          /> */}
+
           <PlayerMinsInterval
             {...this.props}
           />
 
           <PlayerMinsTotal
+            {...this.props}
+          />
+
+          <PlayerMore
             {...this.props}
           />
         </div>

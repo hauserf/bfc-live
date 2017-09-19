@@ -70,9 +70,38 @@ background: linear-gradient(to right, #FFC837, #FF8008); /* W3C, IE 10+/ Edge, F
   padding: 20px 10px;
 }
 
-.roster-hint {
-  color: #fff;
-  padding: 0 10px;
+.title-start {
+  margin: 0 auto 30px;
+  padding-top: 3em;
+  color: #00b2ee;
+  font-family: 'Roboto', sans-serif;
+}
+
+.title-welcome {
+  margin: 0 auto 30px;
+  padding-top: 1em;
+  color: #00b2ee;
+  font-family: 'Roboto', sans-serif;
+}
+
+.intro-welcome {
+  margin: 20px auto;
+  font-family: 'Roboto', sans-serif;
+  color: lightgrey;
+}
+
+.branding-welcome {
+  margin: 20px auto;
+  color: grey;
+  font-size: 0.8em;
+}
+
+.pitch-welcome {
+  margin: 20px auto;
+  color: lightgrey;
+  width: 75%;
+  font-size: 0.8em;
+  text-align: center;
 }
 
 div > div > p {
@@ -81,25 +110,28 @@ div > div > p {
 }
 
 input {
-  flex-grow: 2;
+  /*flex-grow: 2;*/
+  width: 60%;
   background: #262c42;
   border: none;
   color: #00b2ee;
   padding: 10px;
-  font-size: 1.2em;
+  margin: 0 auto;
+  font-size: 1.5em;
   font-weight: 100;
   font-family: arial, sans-serif;
+  text-align: center;
 }
 
 input:focus {
-  flex-grow: 2;
-  background: #262c42;
+  /*flex-grow: 2;
+  background: #262c42;*/
   border: 5px solid orange ;
-  color: #00b2ee;
+  /*color: #00b2ee;
   padding: 10px;
   font-size: 1.2em;
   font-weight: 100;
-  font-family: arial, sans-serif;
+  font-family: arial, sans-serif;*/
 }
 
 .sentiment-list-title {
@@ -150,6 +182,35 @@ input:focus {
     text-decoration: none;
 }
 
+/*.welcome-button {
+  background: #262c42;
+  border: none;
+  color: orange;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 1em;
+  font-weight: 100;
+  font-family: arial, sans-serif;
+  border-radius: 5%;
+  cursor: pointer;
+
+}*/
+
+.input-btn {
+  width: 60%;
+  background: #00b2ee;
+  border: none;
+  color: #fff;
+  padding: 10px;
+  margin: 10px auto;
+  font-size: 1.2em;
+  font-weight: 100;
+  font-family: arial, sans-serif;
+  border-radius: 5%;
+  cursor: pointer;
+  /*text-transform: uppercase;*/
+}
+
 .back-to-live {
   background: #262c42;
   border: none;
@@ -161,6 +222,31 @@ input:focus {
   font-family: arial, sans-serif;
   border-radius: 5%;
   cursor: pointer;
+}
+
+.back-to-live:hover {
+  background: orange;
+  border: none;
+  color: #fff;
+  padding: 10px;
+  font-size: 1em;
+  font-weight: 100;
+  font-family: arial, sans-serif;
+  border-radius: 5%;
+  cursor: pointer;
+}
+
+.roster-title {
+  color: #00b2ee;
+  padding: 10px 15px 0;
+  text-transform: uppercase;
+  font-size: 0.8em;
+}
+
+.roster-hint {
+  color: lightgrey;
+  padding: 10px 15px;
+  font-style: italic;
 }
 
 /************* PLAYER COMPONENT *************/
@@ -204,6 +290,17 @@ input:focus {
   cursor: pointer;
 }
 
+.player-x {
+  display: flex;
+  flex-direction: row;
+  /*justify-content: space-between;*/
+  background: #fff;
+  /*color: #324c60;*/
+  color: #181e32;
+  border-bottom: solid 1px #324c60;
+  cursor: pointer;
+}
+
 .player-names {
   /*position: relative;*/
   /*flex-grow: 1;*/
@@ -213,39 +310,84 @@ input:focus {
   font-size: 1.2em;
   }
 
-.player-minutes {
-  /*width: 50px;*/
-  max-width: 60px;
+.player-names-x {
+  /*position: relative;*/
   /*flex-grow: 1;*/
+  width: 80px;
+  padding: 10px 0px;
+  text-align: left;
+  font-size: 1.2em;
+  /*color: #181e32;*/
+  }
+
+.player-minutes {
+  width: 50px;
+  display: flex;
+  align-self: flex-end;
   padding: 10px;
   text-align: right;
   font-size: 1.2em;
   }
+
 .player-col-darker {
   color: #324c60;
 }
 
-  .player-stats {
+.player-stats {
+  width: 40px;
+  /*flex-grow: 1;*/
+  margin: 1px 1px;
+  padding: 6px 0px 0px 3px;
+  text-align: center;
+  /*justify-content: center;*/
+  font-weight: bolder;
+  font-size: 0.9em;
+  }
+
+  .stats-more {
     width: 40px;
     /*flex-grow: 1;*/
     margin: 1px 1px;
     padding: 6px 0px 0px 3px;
     text-align: center;
     /*justify-content: center;*/
-    font-weight: bolder;
-    font-size: 0.9em;
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #fff;
     }
 
-  .red-carded {
-    /*text-decoration: line-through;*/
-    background: #000;
-    opacity: 0.4;
-    /*color: #be0000;*/
-  }
+  .player-subs {
+    width: 20px;
+    padding: 6px 4px 0px 6px;
+    text-align: center;
+    }
 
-  .player-bg {
-    background: #fff;
-  }
+  .player-subso {
+    width: 20px;
+    padding: 12px 5px 0px 5px;
+    text-align: center;
+    }
+
+.red-carded {
+  /*text-decoration: line-through;*/
+  background: #000;
+  opacity: 0.4;
+  /*color: #be0000;*/
+}
+
+.player-bg {
+  background: #fff;
+}
+
+.vert-dots {
+  width: 30px;
+  display: flex;
+  align-self: flex-end;
+}
+
+.subs {
+  width: 20px;
+}
 
 /*.player {
   flex-grow: 16;
@@ -258,7 +400,7 @@ input:focus {
   background-size: 30px 30px;
   background-position: center center;
   background-repeat: no-repeat;
-  opacity: 0.2;
+  opacity: 0.5;
 }
 
 .record-assists {
@@ -266,13 +408,13 @@ input:focus {
   background-size: 30px 30px;
   background-position: center center;
   background-repeat: no-repeat;
-  opacity: 0.2;
+  opacity: 0.5;
 }
 
 .first-yellow {
   /*background-color: yellow;*/
   background-image: url("bg-images/yellowCard.png");
-  opacity: 0.1;
+  opacity: 0.3;
 }
 
 .first-yellow-active {
@@ -365,18 +507,6 @@ input:focus {
 
 /************* END OF TRANSITION *************/
 
-.back-to-live:hover {
-  background: orange;
-  border: none;
-  color: #fff;
-  padding: 10px;
-  font-size: 1em;
-  font-weight: 100;
-  font-family: arial, sans-serif;
-  border-radius: 5%;
-  cursor: pointer;
-}
-
 .settings-data {
   border: 1px solid #262c42;
   padding: 10px;
@@ -384,11 +514,25 @@ input:focus {
   align-content: space-around;
 }
 
+.stat-counter {
+  border: 1px solid #262c42;
+  padding: 10px;
+  /*min-width: 50%;
+  align-content: space-around;*/
+}
+
 .main {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
 
+.nav-banner-top {
+  width: 100%;
+  padding: 5px 10px;
+  font-size: 0.9em;
+  font-weight: bold;
+  background: #00b2ee;
 }
 
 .navbar-footer {
@@ -832,7 +976,7 @@ a:active {
 }
 
 .bfc-logo-wrapper {
-  margin: 40% auto 20px;
+  margin: 10% auto 0px;
   display: flex;
 }
 
@@ -840,7 +984,7 @@ a:active {
   flex-align: center;
   margin: auto;
   width: 80px;
-  height: 80px;
+  /*height: 80px;*/
 }
 
 .checklist-wrapper {

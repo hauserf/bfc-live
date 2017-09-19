@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 // import FixtureOPP from './components/fixture-opp';
 import Timer from './timer';
 import HighlightsContainer from './highlights-container';
+import Fixture from './fixture';
+import Footer from './footer';
 
 export default class BFCLive extends Component {
 
@@ -39,6 +41,14 @@ export default class BFCLive extends Component {
 
     return (
       <div>
+        <Fixture
+          teamBFC={this.props.teamBFC}
+          beyondScore={this.props.beyondScore}
+          addGoalBFC={this.addGoalBFC.bind(this)}
+          teamOPP={this.props.teamOPP}
+          oppScore={this.props.oppScore}
+          addGoalOPP={this.addGoalOPP.bind(this)}
+        />
         <Timer
           currentState={this.props.currentState}
           currentTime={this.props.timeLive}
@@ -54,6 +64,7 @@ export default class BFCLive extends Component {
           lister={this.props.lister}
           currentButtonState={this.props.currentButtonState}
         />
+        <Footer />
       </div>
     );
   }

@@ -8,14 +8,18 @@ import axios from 'axios';
 
 //app components
 import BFCLive from './components/bfc-live';
-import Footer from './components/footer';
+import Fanview from './components/fanview';
 import Roster from './components/roster';
+import PlayerDetailsPage from './components/player-details-page';
 import Settings from './components/settings';
+import Start from './components/start';
+import Welcome from './components/welcome';
 import TimerState from './components/highlights_timer-state';
 import GoalsBFC from './components/highlights_BFC';
 import GoalsOPP from './components/highlights_goalsOPP';
 import GameReport from './components/game-report';
-import Fixture from './components/fixture';
+import { teamApi } from './api/teamApi';
+import { scheduleApi } from './api/scheduleApi';
 import { PlayerStats } from './data/player-stats';
 import { Tweets } from './data/tweets';
 import { findById, togglePlayer, updatePlayer } from './lib/rosterHelpers'
@@ -23,19 +27,21 @@ import { findById, togglePlayer, updatePlayer } from './lib/rosterHelpers'
 var timer;
 const apiURL = 'http://localhost:3001/api/v1/teams';
 
-
 class App extends Component {
 
   constructor(props){
     super(props);
     this.state = {
+      teamCode: "",
+      teamCodeMatched: false,
+      scheduleID: "321",
       roster: [],
       timeLive : 0,
       clockState: false,
       lengthOfHalf: 2700,
       lengthOfGame: 5400,
       teamBFC: "Beyond FC",
-      teamOPP: "Opponent FC",
+      teamOPP: "Opponent",
       beyondScore: 0,
       oppScore: 0,
       currentButtonState: 0,
@@ -43,7 +49,8 @@ class App extends Component {
       format: "11v11",
       sentiment: "inputNeeded",
       data: [],
-      pollInterval: 2000
+      pollInterval: 2000,
+      tweetUpdates: false,
     }
     this.loadTeamsFromServer = this.loadTeamsFromServer.bind(this);
     this.handleTeamSubmit = this.handleTeamSubmit.bind(this);
@@ -78,17 +85,68 @@ loadTeamsFromServer() {
    //add POST request
  }
 
+ /********************************
+ ------------  START  ------------
+ ********************************/
+
+setTeamCode(e){
+   const teamCode = e.target.value;
+   this.setState({ teamCode });
+
+   setTimeout(() => {
+     const teams = teamApi.teams;
+     const team = teams.filter((team) => team.id === this.state.teamCode);
+     if (team.length !== 0)  {
+     this.setScheduleID(team);
+     this.matchBFCTeam(team);
+   }}, 10);
+ }
+
+setScheduleID(team){
+
+  // const teams = teamApi.teams;
+  // const team = teams.filter((team) => team.id === this.state.teamCode);
+  const scheduleID = team.map((team) => team.league.scheduleID)[0];
+  this.setState({ scheduleID });
+  if (this.state.teamCode.length === 5) {
+  setTimeout(() => {
+    this.matchOPPTeam();
+  }, 2000);
+};
+};
+
+matchBFCTeam(team) {
+  // const teams = teamApi.teams;
+  // const team = teams.filter((team) => {return this.state.teamCode === team.id})
+  const teamBFC = team.map((team) => team.name);
+  this.setState({ teamBFC });
+  if (team.length !== 0) {
+    this.setState({ teamCodeMatched: true })
+  }
+};
+
+matchOPPTeam() {
+  const schedules = scheduleApi;
+  const scheduleID = this.state.scheduleID;
+  const schedule = schedules.filter((schedule) => schedule.id === scheduleID);
+  const teamOPP = schedule[0].games.filter((game) => game.gameDay === 2).map((game) => game.opponent);
+  this.setState({ teamOPP });
+};
+
+
 /********************************
 ------------ SETTINGS -----------
 ********************************/
 
 
-  setBFCTeam(e){
-    this.setState({teamBFC: e.target.name});
-  }
+  // setBFCTeam(e){
+  //   const teamBFC = e.target.value;
+  //   this.setState({ teamBFC });
+  // }
 
   setOPPTeam(e){
-    this.setState({teamOPP: e.target.value});
+    const teamOPP = e.target.value;
+    this.setState({ teamOPP });
   }
 
   handleFormationSelected = (formationName) => {
@@ -190,7 +248,7 @@ loadTeamsFromServer() {
     const roster = this.state.roster;
     const event = "goal"
     const playerGoals = roster[roster.indexOf(player)].goals;
-    updatePlayer(roster, playerGoals.push(this.state.timeLive));  
+    updatePlayer(roster, playerGoals.push(this.state.timeLive));
     this.setState({ roster });
 
     this.addGoalBFC();
@@ -262,20 +320,30 @@ loadTeamsFromServer() {
           alert("Game ended!");
     } else {
         this.setState({ oppScore: score + 1 })
-
-        // const tweetKey = "opponentScored"
-        // const min = (Math.ceil(this.state.timeLive / 60)) + "'";
-        // const teamBFC = this.state.teamBFC;
-        // const teamOPP = this.state.teamOPP;
-        // const beyondScore = this.state.beyondScore;
-        // const oppScore = this.state.oppScore;
-        // this.triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore);
-
         this.snapGoalsOPP();
+
+        const tweetKey = "opponentScored"
+        const min = (Math.ceil(this.state.timeLive / 60)) + "'";
+        const teamBFC = this.state.teamBFC;
+        const teamOPP = this.state.teamOPP;
+
+        setTimeout(() => {
+
+          const beyondScore = this.state.beyondScore;
+          const oppScore = this.state.oppScore;
+
+          this.triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore)
+
+        }, 3000);
       }
   }
 
 ///////////// Twitter function ////////////////
+
+toggleTweetUpdates(e) {
+  const tweets = !this.state.tweetUpdates
+  this.setState({ tweetUpdates: tweets })
+}
 
 
 // const urlParams = new URLSearchParams(window.location.search);
@@ -283,6 +351,9 @@ loadTeamsFromServer() {
 // const tweet = urlParams.get('tweet') || 'The opponent has scored a goal!';
 triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle) {
 
+  const tweetUpdates = this.state.tweetUpdates;
+
+  if (tweetUpdates) {
   // const tweet = `${this.state.teamOPP} has scored a goal!`;
   const tweet = Tweets(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle);
   const jimpData = {tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle}
@@ -302,6 +373,8 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
   }).then(response => response.json()).then((data) => {
     console.log({ data });
   });
+
+} else null
 }
 
 
@@ -418,16 +491,22 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
           <div className="row">
             <div className="col-md-4 "></div>
             <div className="col-sm-4 bfc-live">
-              <Fixture
+              {/* <Fixture
                 teamBFC={this.state.teamBFC}
                 beyondScore={this.state.beyondScore}
                 addGoalBFC={this.addGoalBFC.bind(this)}
                 teamOPP={this.state.teamOPP}
                 oppScore={this.state.oppScore}
                 addGoalOPP={this.addGoalOPP.bind(this)}
-              />
-
-              <Route exact path="/" render={() => <Redirect to="/settings" />} />
+              /> */}
+              <Route exact path="/" render={() => <Redirect to="/welcome" />} />
+              <Route path="/welcome" render={() => <Welcome />} />
+              <Route path="/start" render={() => <Start
+                setTeamCode={this.setTeamCode.bind(this)}
+                teamCode={this.state.teamCode}
+                teams={this.state.teams}
+                teamCodeMatched={this.state.teamCodeMatched}
+              />} />
               <Route path="/settings" render={() => <Settings
                 setBFCTeam={this.setBFCTeam.bind(this)}
                 setOPPTeam={this.setOPPTeam.bind(this)}
@@ -462,8 +541,30 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
                 sentiment={this.state.sentiment}
                 />}
               />
+              <Route path="/fanview" render={() => <Fanview
+                lister={this.state.lister}
+                timeLive={this.state.timeLive}
+                clockState={this.state.clockState}
+                teamBFC={this.state.teamBFC}
+                teamOPP={this.state.teamOPP}
+                beyondScore={this.state.beyondScore}
+                oppScore={this.state.oppScore}
+                currentButtonState={this.state.currentButtonState}
+                lengthOfHalf={this.state.lengthOfHalf}
+                lengthOfGame={this.state.lengthOfGame}
+                addGoalBFC={this.addGoalBFC.bind(this)}
+                addGoalOPP={this.addGoalOPP.bind(this)}
+                startStopMatch={this.startStopMatch.bind(this)}
+                fastForward={this.fastForward.bind(this)}
+                snapGoalsBFC={this.snapGoalsBFC.bind(this)}
+                snapGoalsOPP={this.snapGoalsOPP.bind(this)}
+                handleSentimentSelected={this.handleSentimentSelected.bind(this)}
+                sentiment={this.state.sentiment}
+                />}
+              />
               <Route path="/roster" render={() => <Roster
                 roster={this.state.roster}
+                teamCode={this.state.teamCode}
                 handlePlayerToggle={this.handleToggle.bind(this)}
                 handleFirstYellow={this.handleFirstYellow.bind(this)}
                 handleSecondYellow={this.handleSecondYellow.bind(this)}
@@ -475,7 +576,29 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
                 format={this.props.format}
                 currentButtonState={this.state.currentButtonState}
                 timeLive={this.state.timeLive}
+                teamBFC={this.state.teamBFC}
+                beyondScore={this.state.beyondScore}
+                addGoalBFC={this.addGoalBFC.bind(this)}
+                teamOPP={this.state.teamOPP}
+                oppScore={this.state.oppScore}
+                addGoalOPP={this.addGoalOPP.bind(this)}
+                lengthOfHalf={this.state.lengthOfHalf}
+                lengthOfGame={this.state.lengthOfGame}
+                startStopMatch={this.startStopMatch.bind(this)}
+                fastForward={this.fastForward.bind(this)}
+                snapGoalsBFC={this.snapGoalsBFC.bind(this)}
+                snapGoalsOPP={this.snapGoalsOPP.bind(this)}
+                handleSentimentSelected={this.handleSentimentSelected.bind(this)}
+                sentiment={this.state.sentiment}
+                tweetUpdates={this.state.tweetUpdates}
+                toggleTweetUpdates={this.toggleTweetUpdates.bind(this)}
                 /> }
+              />
+              <Route path="/players/:id" render={(props) => <PlayerDetailsPage
+                roster={this.state.roster}
+                handleToggle={this.handleToggle}
+                {...props}
+                />}
               />
               <Route path="/game-report" render={() => <GameReport
                 lister={this.state.lister}
@@ -492,7 +615,8 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
                 roster={this.state.roster}
                 />}
               />
-              <Footer />
+
+              {/* <Footer /> */}
             </div>
           </div>
         </div>

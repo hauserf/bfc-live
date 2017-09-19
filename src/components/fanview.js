@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 // import FixtureOPP from './components/fixture-opp';
 import TimerFanview from './timer-fanview';
 import HighlightsContainer from './highlights-container';
-import Fixture from './fixture';
+import FixtureFanview from './fixture-fanview';
 
 export default class Fanview extends Component {
 
@@ -40,7 +40,7 @@ export default class Fanview extends Component {
 
     return (
       <div>
-        <Fixture
+        <FixtureFanview
           teamBFC={this.props.teamBFC}
           beyondScore={this.props.beyondScore}
           addGoalBFC={this.addGoalBFC.bind(this)}

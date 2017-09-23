@@ -18,11 +18,13 @@ import TimerState from './components/highlights_timer-state';
 import GoalsBFC from './components/highlights_BFC';
 import GoalsOPP from './components/highlights_goalsOPP';
 import GameReport from './components/game-report';
-import { teamApi } from './api/teamApi';
+//import { teamApi } from './api/teamApi';
 import { scheduleApi } from './api/scheduleApi';
 import { PlayerStats } from './data/player-stats';
 import { Tweets } from './data/tweets';
 import { findById, togglePlayer, updatePlayer } from './lib/rosterHelpers'
+
+const backend = 'http://localhost:3100';
 
 var timer;
 const apiURL = 'http://localhost:3001/api/v1/teams';
@@ -33,6 +35,10 @@ class App extends Component {
     super(props);
     this.state = {
       teamCode: "",
+      teamBFC: "Beyond FC",
+      teamOPP: "Opponent"
+    }
+    /*
       teamCodeMatched: false,
       scheduleID: "321",
       roster: [],
@@ -51,18 +57,27 @@ class App extends Component {
       data: [],
       pollInterval: 2000,
       tweetUpdates: false,
-    }
+    }*/
     this.loadTeamsFromServer = this.loadTeamsFromServer.bind(this);
     this.handleTeamSubmit = this.handleTeamSubmit.bind(this);
   }
 
+  componentWillMount() {
+    fetch(`${backend}/api/state`)
+      .then(response => response.json())
+      .then((state) => {
+          this.setState(state);
+          var arrayKickoff = this.state.lister;
+          arrayKickoff.unshift(
+            [<TimerState timeLive={this.state.timeLive} currentButtonState={-1}/>]
+          );
+          this.setState({ lister: arrayKickoff });
+          this.setState({ roster: PlayerStats });
+      });
+  }
+
   componentDidMount() {
-    var arrayKickoff = this.state.lister;
-    arrayKickoff.unshift(
-      [<TimerState timeLive={this.state.timeLive} currentButtonState={-1}/>]
-    );
-    this.setState({ lister: arrayKickoff });
-    this.setState({ roster: PlayerStats });
+
 
     // this.loadTeamsFromServer();
     // setInterval(this.loadTeamsFromServer, this.state.pollInterval);
@@ -93,45 +108,70 @@ setTeamCode(e){
    const teamCode = e.target.value;
    this.setState({ teamCode });
 
-   setTimeout(() => {
-     const teams = teamApi.teams;
-     const team = teams.filter((team) => team.id === this.state.teamCode);
-     if (team.length !== 0)  {
-     this.setScheduleID(team);
-     this.matchBFCTeam(team);
-   }}, 10);
+  //  setTimeout(() => {
+   //
+   fetch(`${backend}/api/state`, {
+      method: 'POST',
+       mode: 'cors',
+       headers: new Headers({
+         'Accept': 'application/json',
+         'Content-Type': 'application/json'
+       }),
+       body: JSON.stringify({state: this.state})
+     });
+
+//    }, 1000);
+//
+  setTimeout(() => {
+    // const teams = teamApi.teams;
+      fetch(`${backend}/api/teams/${teamCode}`)
+        .then(response => response.json())
+        .then((team) => {
+          console.log(team);
+          if (team.length === 0)  {
+            this.setScheduleID(team);
+            this.matchBFCTeam(team);
+          }
+        });
+   }, 1000);
  }
 
 setScheduleID(team){
-
-  // const teams = teamApi.teams;
-  // const team = teams.filter((team) => team.id === this.state.teamCode);
   const scheduleID = team.map((team) => team.league.scheduleID)[0];
+  const schedules = scheduleApi;
+  const schedule = schedules.filter((schedule) => schedule.id === scheduleID);
   this.setState({ scheduleID });
   if (this.state.teamCode.length === 5) {
   setTimeout(() => {
-    this.matchOPPTeam();
+    this.matchOPPTeam(schedule);
+    this.matchLengthOfHalf(schedule);
   }, 2000);
 };
 };
 
 matchBFCTeam(team) {
-  // const teams = teamApi.teams;
-  // const team = teams.filter((team) => {return this.state.teamCode === team.id})
-  const teamBFC = team.map((team) => team.name);
+  const teamBFC = team.map((team) => team.name)[0];
   this.setState({ teamBFC });
   if (team.length !== 0) {
     this.setState({ teamCodeMatched: true })
   }
 };
 
-matchOPPTeam() {
-  const schedules = scheduleApi;
-  const scheduleID = this.state.scheduleID;
-  const schedule = schedules.filter((schedule) => schedule.id === scheduleID);
-  const teamOPP = schedule[0].games.filter((game) => game.gameDay === 2).map((game) => game.opponent);
+matchOPPTeam(schedule) {
+  // const schedules = scheduleApi;
+  // const scheduleID = this.state.scheduleID;
+  // const schedule = schedules.filter((schedule) => schedule.id === scheduleID);
+  const teamOPP = schedule[0].games.filter((game) => game.gameDay === 1).map((game) => game.opponent)[0];
   this.setState({ teamOPP });
+  console.log(schedule);
 };
+
+matchLengthOfHalf(schedule) {
+  // const schedule = schedules.filter((schedule) => schedule.id === scheduleID);
+  const lengthOfHalf = schedule[0].lengthOfHalfs;
+  this.setState({ lengthOfHalf });
+  console.log(lengthOfHalf);
+}
 
 
 /********************************
@@ -233,10 +273,11 @@ matchOPPTeam() {
     this.setState({ roster });
 
     // sub out and grey out red carded player
-    const playerActive = roster[roster.indexOf(player)].playerActive;
-    playerActive === true && redCard.length === 1
-    ? this.handleToggle(id)
-    : null
+    //const playerActive = roster[roster.indexOf(player)].playerActive;
+
+    //somethign = playerActive === true && redCard.length === 1
+    //  ? this.handleToggle(id)
+    //    : null
 
     this.snapGoalsBFC(player, event);
 
@@ -359,7 +400,7 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
   const jimpData = {tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle}
 
   // const backend = 'https://nodejavascript.herokuapp.com';
-  const backend = 'http://localhost:3100';
+
   fetch(`${backend}/api/tweet`, {
     method: 'POST',
     mode: 'cors',
@@ -432,9 +473,10 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
 
   }
 
-  fastForward(e){
-    var currentTime = this.state.timeLive;
-    this.setState({ timeLive: currentTime + 480 })
+  fastForward(mins){
+    const currentTime = this.state.timeLive;
+    const adjustedTime = currentTime + mins;
+    this.setState({ timeLive: adjustedTime });
   }
 
   snapGoalsBFC(player, event){

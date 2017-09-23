@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var Team = require('./model/teams');
 var Jimp = require ('jimp');
+var teamApi = require('./src/api/teamApi');
 
 // import twitter dependencies
 var dotenv = require('dotenv');
@@ -58,20 +59,62 @@ router.get('/', function(req, res) {
   res.json({message: 'API Initialized'});
 });
 
-
 ///////////////////////// twitter ///////////////////////////////
 // post a tweet
 //
 
 ////////////////////////////////////////////////////////
-              //TWEET TEXT Only//
+              // STATE API //
 ////////////////////////////////////////////////////////
 
+var game_data = {};
 
-app.post('/api/tweet', (req, res) => {
-  console.log({ origin: req.headers, body: req.body });
+app.get('/api/teams/:id', function(req, res) {
+  res.json(teamApi.teams.filter((team) => team.id === req.params.id));
+});
 
-  const tweet = `${req.body.tweet}`;
+var state = {
+  teamCode: "",
+  teamCodeMatched: false,
+  scheduleID: "321",
+  roster: [],
+  timeLive : 0,
+  clockState: false,
+  lengthOfHalf: 2700,
+  lengthOfGame: 5400,
+  teamBFC: "Beyond FC",
+  teamOPP: "Opponent",
+  beyondScore: 0,
+  oppScore: 0,
+  currentButtonState: 0,
+  lister:[],
+  format: "11v11",
+  sentiment: "inputNeeded",
+  data: [],
+  pollInterval: 2000,
+  tweetUpdates: false
+}
+
+app.get('/api/state', (req, res) => {
+  console.log(req.get('User-Agent'));
+  res.json(state);
+});
+
+app.post('/api/state', (req, res) => {
+  console.log(req.body);
+  const newState = req.body;
+  state = { ...state, ...newState }
+});
+
+
+  ////////////////////////////////////////////////////////
+                // TWEET TEXT ONLY //
+  ////////////////////////////////////////////////////////
+
+  app.post('/api/tweet', (req, res) => {
+    console.log({ origin: req.headers, body: req.body });
+
+    const tweet = `${req.body.tweet}`;
 
   twitter.post('statuses/update', { status: tweet }, (err, data, response) => {
       if (err) throw Error(err);

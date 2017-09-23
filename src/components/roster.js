@@ -48,8 +48,8 @@ class Roster extends Component {
     this.props.startStopMatch();
   }
 
-  fastForward(e){
-    this.props.fastForward();
+  fastForward(mins){
+    this.props.fastForward(mins);
   }
 
   snapGoalsBFC(e){
@@ -66,6 +66,10 @@ class Roster extends Component {
 
   toggleTweetUpdates = (e) => {
     this.props.toggleTweetUpdates();
+  }
+
+  matchTeamID = (element) => {
+    return element === this.props.teamCode
   }
 
   render() {
@@ -151,7 +155,8 @@ class Roster extends Component {
               transitionLeaveTimeout={1}>
 
             {this.props.roster
-                .filter((player, id) => player.teamID === this.props.teamCode)
+                // .filter((player, id) => player.teamID === this.props.teamCode)
+                .filter((player, id) => this.props.teamCode === (player.teamID).find(this.matchTeamID))
                 .filter((player, id) => !player.playerActive)
                 .map((player, id) =>
                     <Player

@@ -839,7 +839,8 @@ a:active {
 
 .fwd-bwd {
   background-color: #103154;
-  color: #324c60;
+  /*color: #324c60;*/
+  color: lightgrey;
 }
 
 .highlights-container {

@@ -9,7 +9,7 @@ export const scheduleApi = [
         gameDay: 1,
         date: "",
         kickoff: "",
-        opponent: "SF United",
+        opponent: "Polonia Gwardia NY",
       },
       {
         id: "002",
@@ -37,7 +37,7 @@ export const scheduleApi = [
         gameDay: 1,
         date: "",
         kickoff: "",
-        opponent: "SFU Reserve",
+        opponent: "Polonia Gwardia NY",
       },
       {
         id: "002",

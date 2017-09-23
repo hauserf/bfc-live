@@ -5,17 +5,17 @@ export default class FixtureBFC extends Component {
 
   render() {
 
-    const teamName = this.props.teamBFC;
+    const teamName = this.props.teamBFC.toUpperCase();
     return (
       <div className="fixture-teams">
         <div className="fixture-bfc">
           <div className="team-bfc">
-            {teamName}
-            {/* {teamName.length > 11
+            {/* {teamName} */}
+            {teamName.length > 11
             ?
             teamName.slice(0, 9) + "…"
             :
-            teamName} */}
+            teamName}
           </div>
           <div className="score-bfc"> {this.props.beyondScore} </div>
         </div>

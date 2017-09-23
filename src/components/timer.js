@@ -8,8 +8,9 @@ import GameEnded from './game-ended';
 
 export default class Timer extends Component {
 
-  fastForward(e){
-    this.props.fastForward();
+  fastForward(mins){
+    console.log("min: ", mins);
+    this.props.fastForward(mins);
   }
 
   handleClicker(e){
@@ -31,12 +32,19 @@ export default class Timer extends Component {
         {this.props.currentButtonState < 4
         ?
           <div>
-            <StartButton
-              currentButtonState={this.props.currentButtonState}
-              handleClicker={this.handleClicker.bind(this)}
+            <ExtraMinsButton
+              fastForward={this.props.fastForward.bind(this)}
+              name={"-1"}
+              value={-1}
             />
             <ExtraMinsButton
               fastForward={this.props.fastForward.bind(this)}
+              name={"+5"}
+              value={5}
+            />
+            <StartButton
+              currentButtonState={this.props.currentButtonState}
+              handleClicker={this.handleClicker.bind(this)}
             />
           </div>
         :

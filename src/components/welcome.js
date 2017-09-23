@@ -15,7 +15,7 @@ const Welcome = (props) => {
           <Button link="/fanview" css="input-btn bg-secondary" text="Player"/>
         </div>
         <div className="bfc-logo-wrapper flex-con flex-dir-col">
-          <p className="pitch-welcome"> One click live stats, updates and game reports for clubs and leagues. Powered by </p>
+          <p className="pitch-welcome"> One click live stats, social updates and game reports for clubs and leagues. Powered by </p>
           <img className="bfc-logo" src="hellofc_logo.png" alt="BFC logo" />
         </div>
     </div>

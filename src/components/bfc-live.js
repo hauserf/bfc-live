@@ -20,8 +20,8 @@ export default class BFCLive extends Component {
     this.props.startStopMatch();
   }
 
-  fastForward(e){
-    this.props.fastForward();
+  fastForward(mins){
+    this.props.fastForward(mins);
   }
 
   snapGoalsBFC(e){

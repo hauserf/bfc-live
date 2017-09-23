@@ -1,4 +1,4 @@
-export const teamApi = {
+const teamApi = {
   clubName: "Beyond F.C. New York",
   clubLogo: "../bg-images/BFCNY_logo_fullcolor.png",
   clubLocation: "New York",
@@ -38,3 +38,5 @@ export const teamApi = {
     }
   ]
 }
+
+module.exports = teamApi

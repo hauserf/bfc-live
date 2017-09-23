@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
 export default class FixtureBFCFanview extends Component {
 
@@ -10,12 +9,12 @@ export default class FixtureBFCFanview extends Component {
       <div className="fixture-teams">
         <div className="fixture-bfc">
           <div className="team-bfc">
-            {teamName}
-            {/* {teamName.length > 11
+            {/* {teamName} */}
+            {teamName.length > 11
             ?
             teamName.slice(0, 9) + "…"
             :
-            teamName} */}
+            teamName}
           </div>
           <div className="score-bfc"> {this.props.beyondScore} </div>
         </div>

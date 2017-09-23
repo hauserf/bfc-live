@@ -18,7 +18,7 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: ["1234", "12345"]
+    teamID: ["23456", "2345"]
   },
   {
     id: "102",
@@ -39,7 +39,7 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: "12345"
+    teamID: ["12345"]
   },
   {
     id: "103",
@@ -60,7 +60,7 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: "12345"
+    teamID: ["12345"]
   },
   {
     id: "104",
@@ -81,7 +81,7 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: "12345"
+    teamID: ["12345"]
   },
   {
     id: "105",
@@ -102,7 +102,7 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: "12345"
+    teamID: ["12345"]
   },
   {
     id: "106",
@@ -123,7 +123,7 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: "12345"
+    teamID: ["12345"]
   },
   {
     id: "107",
@@ -144,7 +144,7 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: "23456"
+    teamID: ["23456"]
   },
   {
     id: "108",
@@ -165,12 +165,12 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: "23456"
+    teamID: ["23456"]
   },
   {
     id: "109",
-    firstName: "Kia",
-    lastName: "Kianoosh",
+    firstName: "Zach",
+    lastName: "Gottlieb",
     playerActive: false,
     minutesPlayed: 0,
     startingEleven: false,
@@ -186,7 +186,7 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: "23456"
+    teamID: ["12345"]
   },
   {
     id: "110",
@@ -207,7 +207,7 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: "23456"
+    teamID: ["23456"]
   },
   {
     id: "111",
@@ -228,6 +228,6 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: "23456"
+    teamID: ["23456", "12345"]
   },
 ];

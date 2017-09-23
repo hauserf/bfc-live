@@ -4,15 +4,20 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-var Team = require('./model/teams');
-var Jimp = require ('jimp');
-var teamApi = require('./src/api/teamApi');
+var Jimp = require('jimp');
 
 // import twitter dependencies
 var dotenv = require('dotenv');
 var Twit = require('twit');
 var fs = require('fs');
-// var path = require('path');
+
+// Models
+//var Team = require('./model/teams');
+
+// Api
+var teamApi = require('./src/api/teamApi');
+var scheduleApi = require('./src/api/scheduleApi');
+
 dotenv.config();
 
 // create instances
@@ -20,280 +25,116 @@ var app = express();
 var router = express.Router();
 
 /* eslint-disable key-spacing */
+/*
 const twitter = new Twit({
-  consumer_key:         process.env.TWITTER_CONSUMER_KEY,
-  consumer_secret:      process.env.TWITTER_CONSUMER_SECRET,
-  access_token:         process.env.TWITTER_ACCESS_TOKEN,
-  access_token_secret:  process.env.TWITTER_ACCESS_TOKEN_SECRET,
-  timeout_ms:           60 * 1000,  // optional HTTP request timeout to apply to all requests.
+    consumer_key: process.env.TWITTER_CONSUMER_KEY,
+    consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+    access_token: process.env.TWITTER_ACCESS_TOKEN,
+    access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
+    timeout_ms: 60 * 1000,  // optional HTTP request timeout to apply to all requests.
 });
+*/
 /* eslint-enable */
 
-//set port to either a predetermined port number or 3100
-var port = process.env.API_PORT || 3100;
-
-//db config
+// db config
+/*
 var mongoDB = 'mongodb://frank:frank123@ds119682.mlab.com:19682/bfc-app';
 mongoose.connect(mongoDB, { useMongoClient: true })
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+*/
 
 // configure API to use bodyParser and look for Json data in the request body
-app.use(bodyParser.urlencoded({extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // prevent errors from Cross Origin Resource Sharing, set headers to allow CORS with middleware
-app.use(function(req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
 
-  //remove cacheing so we get the most recent data
-  res.setHeader('Cache-Control', 'no-cache');
-  next();
+    //remove cacheing so we get the most recent data
+    res.setHeader('Cache-Control', 'no-cache');
+    next();
 });
 
-// set root/route(?) path and initialize API
-router.get('/', function(req, res) {
-  res.json({message: 'API Initialized'});
-});
-
-///////////////////////// twitter ///////////////////////////////
-// post a tweet
-//
-
-////////////////////////////////////////////////////////
-              // STATE API //
-////////////////////////////////////////////////////////
-
-var game_data = {};
-
-app.get('/api/teams/:id', function(req, res) {
-  res.json(teamApi.teams.filter((team) => team.id === req.params.id));
-});
-
-var state = {
-  teamCode: "",
-  teamCodeMatched: false,
-  scheduleID: "321",
-  roster: [],
-  timeLive : 0,
-  clockState: false,
-  lengthOfHalf: 2700,
-  lengthOfGame: 5400,
-  teamBFC: "Beyond FC",
-  teamOPP: "Opponent",
-  beyondScore: 0,
-  oppScore: 0,
-  currentButtonState: 0,
-  lister:[],
-  format: "11v11",
-  sentiment: "inputNeeded",
-  data: [],
-  pollInterval: 2000,
-  tweetUpdates: false
+var initialState = {
+    teamCode: "",
+    teamCodeMatched: false,
+    scheduleID: "321",
+    roster: [],
+    timeLive: 0,
+    clockState: false,
+    lengthOfHalf: 2700,
+    lengthOfGame: 5400,
+    teamBFC: "Beyond FC",
+    teamOPP: "Opponent",
+    beyondScore: 0,
+    oppScore: 0,
+    currentButtonState: 0,
+    lister: [],
+    format: "11v11",
+    sentiment: "inputNeeded",
+    data: [],
+    pollInterval: 2000,
+    tweetUpdates: false
 }
 
+var initialized = false
+var runningState = {}
+
+////////////////////////////////////////////////////////
+// STATE API //
+////////////////////////////////////////////////////////
+
+app.get('/api/teams/:id', (req, res) => {
+    res.json(teamApi.teams.filter((team) => team.id === req.params.id));
+});
+
+app.get('/api/schedules/:id', (req, res) => {
+    res.json(scheduleApi.filter((schedule) => schedule.id === req.params.id));
+});
+
 app.get('/api/state', (req, res) => {
-  console.log(req.get('User-Agent'));
-  res.json(state);
+    if (!initialized) {
+        runningState = initialState;
+        initialized = true;
+    }
+    res.json(runningState);
 });
 
 app.post('/api/state', (req, res) => {
-  console.log(req.body);
-  const newState = req.body;
-  state = { ...state, ...newState }
+    const newState = req.body;
+    if (!initialized) {
+        runningState = initialState;
+        initialized = true;
+    }
+    console.log(newState);
+    runningState = { ...runningState, ...newState }
 });
 
 
-  ////////////////////////////////////////////////////////
-                // TWEET TEXT ONLY //
-  ////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+// TWEET TEXT ONLY //
+////////////////////////////////////////////////////////
 
-  app.post('/api/tweet', (req, res) => {
+app.post('/api/tweet', (req, res) => {
     console.log({ origin: req.headers, body: req.body });
 
     const tweet = `${req.body.tweet}`;
 
-  twitter.post('statuses/update', { status: tweet }, (err, data, response) => {
-      if (err) throw Error(err);
-    // console.log({ data, response });
-    //
-    // res.header('Content-Type', 'application/json');
-    // res.json(JSON.stringify({ tweet, success: true }));
-  });
+    twitter.post('statuses/update', { status: tweet }, (err, data, response) => {
+        if (err) throw Error(err);
+        // console.log({ data, response });
+        //
+        // res.header('Content-Type', 'application/json');
+        // res.json(JSON.stringify({ tweet, success: true }));
+    });
 });
 
-
-////////////////////////////////////////////////////////
-              //TWEET WITH MEDIA//
-////////////////////////////////////////////////////////
-
-
-// app.post('/api/tweet', (req, res) => {
-//   console.log({ origin: req.headers, body: req.body });
-//
-//   // create jimp image
-//   const jimpData = req.body.jimpData;
-//   const tweetKey = jimpData.tweetKey;
-//   const scorer = jimpData.scorer;
-//   const min = jimpData.min;
-//   const teamBFC = jimpData.teamBFC;
-//   const teamOPP = jimpData.teamOPP;
-//   const oppScore = jimpData.oppScore;
-//   const beyondScore = jimpData.beyondScore;
-//
-//
-//   const jimpText = {
-//     playerScored: {
-//       headline: "Goal for Beyond!!!",
-//       subHeadline: scorer,
-//       text: `${min} minute`,
-//       templateImage: "./public/BFCLive_score_template.png"
-//     },
-//     gameStarted: {
-//       headline: "Game on!",
-//       subHeadline: `${teamBFC} vs`,
-//       text: `${teamOPP}`,
-//       templateImage: "./public/BFCLive_events_template.png"
-//     },
-//     halfTime: {
-//       headline: `${beyondScore} : ${oppScore} at halftime`,
-//       subHeadline: ``,
-//       text: ``,
-//       templateImage: "./public/BFCLive_events_template.png"
-//     },
-//     secondHalf: {
-//       headline: `Second half is underway`,
-//       subHeadline: `${teamBFC} ${beyondScore}`,
-//       text: `${teamOPP} ${oppScore}`,
-//       templateImage: "./public/BFCLive_events_template.png"
-//     },
-//     finalScore: {
-//       headline: "Game ended",
-//       subHeadline: `${teamBFC} ${beyondScore}`,
-//       text: `${teamOPP} ${oppScore}`,
-//       templateImage: "./public/BFCLive_events_template.png"
-//     }
-//   };
-//
-//   const headline = jimpText[tweetKey].headline;
-//   const subHeadline = jimpText[tweetKey].subHeadline;
-//   const text = jimpText[tweetKey].text;
-//
-//   var date = new Date();
-//   var timestamp = date.getTime();
-//
-//   const templateImage = jimpText[tweetKey].templateImage;
-//   const savedImagePath = `./public/jimps/BFCLive_${timestamp}.jpg`;
-//
-//
-//
-//   Jimp.read(templateImage, function (err, img) {
-//       if (err) throw err;
-//       Jimp.loadFont( Jimp.FONT_SANS_32_WHITE ).then(function (font) { // load font from .fnt file
-//       img.print(font, 20, 20, headline)
-//       img.print(font, 20, 100, subHeadline)
-//       img.print(font, 20, 140, text)
-//       img.scaleToFit( 400, 300)
-//             .write(savedImagePath); // save
-//       // image.print(font, x, y, str, width); // print a message on an image with text wrapped at width
-//   });
-//   });
-//
-//
-//   setTimeout(() => {
-//
-//     // post a tweet with media
-//
-//     // var b64content = fs.readFileSync('./public/goal.png', { encoding: 'base64' })
-//     // var imagePath = req.body.imagePath
-//
-//     var b64content = fs.readFileSync(savedImagePath, { encoding: 'base64' })
-//
-//     // first we must post the media to Twitter
-//     twitter.post('media/upload', { media_data: b64content }, function (err, data, response) {
-//       // now we can assign alt text to the media, for use by screen readers and
-//       // other text-based presentations and interpreters
-//       var mediaIdStr = data.media_id_string
-//       var altText = "BFC game updates"
-//       var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
-//
-//       twitter.post('media/metadata/create', meta_params, function (err, data, response) {
-//         if (!err) {
-//           // now we can reference the media and post a tweet (media will attach to the tweet)
-//
-//           const tweet = `${req.body.tweet}`;
-//           var params = { status: tweet, media_ids: [mediaIdStr] }
-//
-//           twitter.post('statuses/update', params, (err, data, response) => {
-//             console.log(data)
-//             if (err) throw Error(err);
-//           });
-//         }
-//       })
-//     })
-//
-//
-//   }, 10000)
-//
-// });
-
-
-
-
-///////////////////////// END ///////////////////////////////
-
-
-
-// adding the /teams route to our /api router
-router.route('/teams')
-  // retrieve all teams from the database
-  .get(function(req, res) {
-    // looks at our Team Schema
-    Team.find(function(err, teams) {
-      if (err)
-        res.send(err);
-      // responds wigh a json object of our database teams
-      res.json(teams)
-    });
-  })
-
-  // post new team to database
-  .post(function(req, res) {
-    var team = new Team();
-    // body parser lets us use the req.body
-    team.name = req.body.name;
-    // team.manager = req.body.text;
-
-    team.save(function(err) {
-      if (err)
-      res.send(err);
-      res.json({ message: 'Team successfully added!'})
-    });
-  });
-
-// use router configuration when we call /api
-app.use('/api/v1', router);
-
-//starts the server and listens for requests
-app.listen(port, function() {
-  console.log(`api running on port ${port}`);
+const port = process.env.PORT || 3100;
+app.listen(port, () => {
+    console.log(`api running on port ${port}`);
 });
-
-// // catch 404 and forward to error handler
-// app.use((req, res, next) => {
-//     var err = new Error("Not Found");
-//     err.status = 404;
-//     next(err)
-// })
-//
-// // error handler
-// app.use((err, req, res, next)=>{
-//     res.status(err.status || 500);
-//     res.json({
-//         message: err.message
-//     })
-//
-// })

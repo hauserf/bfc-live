@@ -8,192 +8,188 @@ import { Alert } from 'react-bootstrap';
 
 class Roster extends Component {
 
-  handleToggle = (id) => {
-      this.props.handlePlayerToggle(id);
-  }
+    handleToggle = (id) => {
+        this.props.handlePlayerToggle(id);
+    }
 
-  handleFirstYellow = (id) => {
-      this.props.handleFirstYellow(id);
-  }
+    handleFirstYellow = (id) => {
+        this.props.handleFirstYellow(id);
+    }
 
-  handleSecondYellow = (id) => {
-      this.props.handleSecondYellow(id);
-  }
+    handleSecondYellow = (id) => {
+        this.props.handleSecondYellow(id);
+    }
 
-  handleRed = (id) => {
-      this.props.handleRed(id);
-  }
+    handleRed = (id) => {
+        this.props.handleRed(id);
+    }
 
-  handlePlayerGoals = (id) => {
-      this.props.handlePlayerGoals(id);
-  }
+    handlePlayerGoals = (id) => {
+        this.props.handlePlayerGoals(id);
+    }
 
-  handlePlayerAssists = (id) => {
-      this.props.handlePlayerAssists(id);
-  }
+    handlePlayerAssists = (id) => {
+        this.props.handlePlayerAssists(id);
+    }
 
-  handlePlayerOwnGoals = (id) => {
-      this.props.handlePlayerOwnGoals(id);
-  }
+    handlePlayerOwnGoals = (id) => {
+        this.props.handlePlayerOwnGoals(id);
+    }
 
-  addGoalBFC = (e) => {
-    this.props.addGoalBFC();
-  }
+    addGoalBFC = (e) => {
+        this.props.addGoalBFC();
+    }
 
-  addGoalOPP = (e) => {
-    this.props.addGoalOPP();
-  }
+    addGoalOPP = (e) => {
+        this.props.addGoalOPP();
+    }
 
-  startStopMatch(e){
-    this.props.startStopMatch();
-  }
+    startStopMatch(e) {
+        this.props.startStopMatch();
+    }
 
-  fastForward(mins){
-    this.props.fastForward(mins);
-  }
+    fastForward(mins) {
+        this.props.fastForward(mins);
+    }
 
-  snapGoalsBFC(e){
-    this.props.snapGoalsBFC();
-  }
+    snapGoalsBFC(e) {
+        this.props.snapGoalsBFC();
+    }
 
-  snapGoalsOPP(e){
-    this.props.snapGoalsOPP();
-  }
+    snapGoalsOPP(e) {
+        this.props.snapGoalsOPP();
+    }
 
-  handleSentimentSelected = (sentiment) => {
-    this.props.handleSentimentSelected(sentiment);
-  }
+    handleSentimentSelected = (sentiment) => {
+        this.props.handleSentimentSelected(sentiment);
+    }
 
-  toggleTweetUpdates = (e) => {
-    this.props.toggleTweetUpdates();
-  }
+    toggleTweetUpdates = (e) => {
+        this.props.toggleTweetUpdates();
+    }
 
-  matchTeamID = (element) => {
-    return element === this.props.teamCode
-  }
+    matchTeamID = (element) => {
+        return element === this.props.teamCode
+    }
 
-  render() {
+    render() {
 
-    const numberOfPlayersPlaying = this.props.roster.filter((player, id) => player.playerActive).length;
-    // const numberOfSubs = this.props.roster.filter((player, id) => !player.playerActive).length;
+        const numberOfPlayersPlaying = this.props.roster ? this.props.roster.filter((player, id) => player.playerActive).length : 0;
+        // const numberOfSubs = this.props.roster.filter((player, id) => !player.playerActive).length;
 
-    return (
-      <div>
-        <Fixture
-          teamBFC={this.props.teamBFC}
-          beyondScore={this.props.beyondScore}
-          addGoalBFC={this.addGoalBFC}
-          teamOPP={this.props.teamOPP}
-          oppScore={this.props.oppScore}
-          addGoalOPP={this.addGoalOPP}
-        />
-        <Timer
-          currentState={this.props.currentState}
-          currentTime={this.props.timeLive}
-          onOff={this.startStopMatch.bind(this)}
-          currentButtonState={this.props.currentButtonState}
-          fastForward={this.fastForward.bind(this)}
-          handleSentimentSelected={this.handleSentimentSelected.bind(this)}
-          sentiment={this.props.sentiment}
-          oppScore={this.props.oppScore}
-          beyondScore={this.props.beyondScore}
-        />
-        <div>
-          <h3 className="roster-title">
-            {this.props.currentButtonState < 1
-              ? "Starting Players "
-              : "Playing "
-            }
-              ({numberOfPlayersPlaying})
+        return (
+            <div>
+                <Fixture
+                    teamBFC={this.props.teamBFC}
+                    beyondScore={this.props.beyondScore}
+                    addGoalBFC={this.addGoalBFC}
+                    teamOPP={this.props.teamOPP}
+                    oppScore={this.props.oppScore}
+                    addGoalOPP={this.addGoalOPP}
+                />
+                <Timer
+                    currentState={this.props.currentState}
+                    currentTime={this.props.timeLive}
+                    onOff={this.startStopMatch.bind(this)}
+                    currentButtonState={this.props.currentButtonState}
+                    fastForward={this.fastForward.bind(this)}
+                    handleSentimentSelected={this.handleSentimentSelected.bind(this)}
+                    sentiment={this.props.sentiment}
+                    oppScore={this.props.oppScore}
+                    beyondScore={this.props.beyondScore}
+                />
+                <div>
+                    <h3 className="roster-title">
+                        {this.props.currentButtonState < 1
+                            ? "Starting Players "
+                            : "Playing "
+                        }
+                        ({numberOfPlayersPlaying})
           </h3>
 
-            {this.props.roster.filter((player, id) => player.playerActive).length === 0
-            ? <p className="roster-hint">Select players from "Available Roster" to track playing time and record goals and assists.</p>
-            : null
-            }
+                    {this.props.roster.filter((player, id) => player.playerActive).length === 0
+                        && <p className="roster-hint">Select players from "Available Roster" to track playing time and record goals and assists.</p>
+                    }
 
+                    <ReactCSSTransitionGroup
+                        transitionName="slide"
+                        transitionEnterTimeout={500}
+                        transitionLeaveTimeout={1}>
 
+                        {this.props.roster
+                            .filter((player, id) => player.playerActive)
+                            .map((player, id) =>
+                                <Player
+                                    key={player.id}
+                                    handleToggle={this.handleToggle}
+                                    handleFirstYellow={this.handleFirstYellow}
+                                    handleSecondYellow={this.handleSecondYellow}
+                                    handleRed={this.handleRed}
+                                    handlePlayerGoals={this.handlePlayerGoals}
+                                    handlePlayerAssists={this.handlePlayerAssists}
+                                    handlePlayerOwnGoals={this.handlePlayerOwnGoals}
+                                    timeLive={this.props.timeLive}
+                                    clockState={this.props.clockState}
 
+                                    {...player}
+                                />
+                            )}
 
-            <ReactCSSTransitionGroup
-              transitionName="slide"
-              transitionEnterTimeout={500}
-              transitionLeaveTimeout={1}>
+                    </ReactCSSTransitionGroup>
 
-            {this.props.roster
-                .filter((player, id) => player.playerActive)
-                .map((player, id) =>
-                    <Player
-                        key={player.id}
-                        handleToggle={this.handleToggle}
-                        handleFirstYellow={this.handleFirstYellow}
-                        handleSecondYellow={this.handleSecondYellow}
-                        handleRed={this.handleRed}
-                        handlePlayerGoals={this.handlePlayerGoals}
-                        handlePlayerAssists={this.handlePlayerAssists}
-                        handlePlayerOwnGoals={this.handlePlayerOwnGoals}
-                        timeLive={this.props.timeLive}
-                        clockState={this.props.clockState}
+                    <h3 className="roster-title">
 
-                        {...player}
-                    />
-                )}
+                        {this.props.roster.filter((player, id) => player.playerActive).length === 0
+                            ? "Available Roster "
+                            : "Subs "}
+                        {/* ({numberOfSubs}) */}
 
-            </ReactCSSTransitionGroup>
+                    </h3>
+                    <ReactCSSTransitionGroup
+                        transitionName="slide"
+                        transitionEnterTimeout={500}
+                        transitionLeaveTimeout={1}>
 
-            <h3 className="roster-title">
-
-              {this.props.roster.filter((player, id) => player.playerActive).length === 0
-              ? "Available Roster "
-              : "Subs "}
-              {/* ({numberOfSubs}) */}
-
-            </h3>
-            <ReactCSSTransitionGroup
-              transitionName="slide"
-              transitionEnterTimeout={500}
-              transitionLeaveTimeout={1}>
-
-            {this.props.roster
-                // .filter((player, id) => player.teamID === this.props.teamCode)
-                .filter((player, id) => this.props.teamCode === (player.teamID).find(this.matchTeamID))
-                .filter((player, id) => !player.playerActive)
-                .map((player, id) =>
-                    <Player
-                        key={player.id}
-                        handleToggle={this.handleToggle}
-                        handleFirstYellow={this.handleFirstYellow}
-                        handleSecondYellow={this.handleSecondYellow}
-                        handleRed={this.handleRed}
-                        handlePlayerGoals={this.handlePlayerGoals}
-                        handlePlayerAssists={this.handlePlayerAssists}
-                        handlePlayerOwnGoals={this.handlePlayerOwnGoals}
-                        timeLive={this.props.timeLive}
-                        {...player}
-                    />
-                )}
-            </ReactCSSTransitionGroup>
-        </div>
-        <div className="pt-4">
-        {this.props.tweetUpdates === false
-          ? (<Alert bsStyle="warning">
-              <strong>Automatic twitter updates</strong> are turned off by default. Click 'ACTIVATE' to activate updates using the club's official Twitter account @BFCNY.
+                        {this.props.roster
+                            // .filter((player, id) => player.teamID === this.props.teamCode)
+                            .filter((player, id) => this.props.teamCode === (player.teamID).find(this.matchTeamID))
+                            .filter((player, id) => !player.playerActive)
+                            .map((player, id) =>
+                                <Player
+                                    key={player.id}
+                                    handleToggle={this.handleToggle}
+                                    handleFirstYellow={this.handleFirstYellow}
+                                    handleSecondYellow={this.handleSecondYellow}
+                                    handleRed={this.handleRed}
+                                    handlePlayerGoals={this.handlePlayerGoals}
+                                    handlePlayerAssists={this.handlePlayerAssists}
+                                    handlePlayerOwnGoals={this.handlePlayerOwnGoals}
+                                    timeLive={this.props.timeLive}
+                                    {...player}
+                                />
+                            )}
+                    </ReactCSSTransitionGroup>
+                </div>
+                <div className="pt-4">
+                    {this.props.tweetUpdates === false
+                        ? (<Alert bsStyle="warning">
+                            <strong>Automatic twitter updates</strong> are turned off by default. Click 'ACTIVATE' to activate updates using the club's official Twitter account @BFCNY.
               <div className="text-right">
-                <button className="btn btn-info mt-3" onClick={this.toggleTweetUpdates}> ACTIVATE </button>
-              </div>
-            </Alert>)
-          : (<Alert bsStyle="warning">
-              <strong>Automatic twitter updates</strong> are currently turned on. Click 'DEACTIVATE' to deactivate twitter updates.
+                                <button className="btn btn-info mt-3" onClick={this.toggleTweetUpdates}> ACTIVATE </button>
+                            </div>
+                        </Alert>)
+                        : (<Alert bsStyle="warning">
+                            <strong>Automatic twitter updates</strong> are currently turned on. Click 'DEACTIVATE' to deactivate twitter updates.
               <div className="text-right">
-                <button className="btn btn-danger mt-3" onClick={this.toggleTweetUpdates}> DEACTIVATE </button>
-              </div>
-            </Alert>)
-        }
-      </div>
-        <Footer />
-      </div>
-    )
-  }
+                                <button className="btn btn-danger mt-3" onClick={this.toggleTweetUpdates}> DEACTIVATE </button>
+                            </div>
+                        </Alert>)
+                    }
+                </div>
+                <Footer />
+            </div>
+        )
+    }
 }
 
 export default Roster;

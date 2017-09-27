@@ -5,7 +5,7 @@ export default class FixtureBFC extends Component {
 
   render() {
 
-    const teamName = this.props.teamBFC.toUpperCase();
+    const teamName = this.props.teamBFC[0].toUpperCase();
     return (
       <div className="fixture-teams">
         <div className="fixture-bfc">

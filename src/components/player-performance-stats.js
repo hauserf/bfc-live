@@ -1,22 +1,22 @@
 import React from 'react';
-import PlayerStatsItem from './player-stats-item';
+import PlayerHealthItem from './player-health-item';
 
 const PlayerPerformanceStats = (props) => {
   return (
     <div className="flex-con flex-dir-col">
-      <PlayerStatsItem
+      <PlayerHealthItem
         name="Heart rate"
       />
-      <PlayerStatsItem
+      <PlayerHealthItem
         name="Distance"
       />
-      <PlayerStatsItem
+      <PlayerHealthItem
         name="# of Sprints"
       />
-      <PlayerStatsItem
+      <PlayerHealthItem
         name="Max speed"
       />
-    
+
     </div>
   )
 };

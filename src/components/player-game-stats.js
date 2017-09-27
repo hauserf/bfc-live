@@ -11,9 +11,6 @@ const PlayerGameStats = (props) => {
         name="Assists"
       />
       <PlayerStatsItem
-        name="Cards"
-      />
-      <PlayerStatsItem
         name="Passes"
       />
       <PlayerStatsItem
@@ -24,12 +21,6 @@ const PlayerGameStats = (props) => {
       />
       <PlayerStatsItem
         name="Shots"
-      />
-      <PlayerStatsItem
-        name="Fouls conceded"
-      />
-      <PlayerStatsItem
-        name="Fouls won"
       />
     </div>
   )

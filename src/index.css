@@ -159,8 +159,8 @@ input:focus {
     background: #262c42;
     border: none;
     color: #00b2ee;
-    padding: 10px;
-    font-size: 1.2em;
+    padding: 5px 40px;
+    font-size: 1.5em;
     font-weight: 100;
     font-family: arial, sans-serif;
     border-radius: 20%;
@@ -171,15 +171,16 @@ input:focus {
 .length-btn:hover,
 .sentiment:hover {
     background: orange;
-    border: none;
     color: #fff;
+    /*border: none;
+
     padding: 10px;
     font-size: 1.2em;
     font-weight: 100;
     font-family: arial, sans-serif;
     border-radius: 20%;
     cursor: pointer;
-    text-decoration: none;
+    text-decoration: none;*/
 }
 
 /*.welcome-button {
@@ -355,6 +356,46 @@ input:focus {
     font-size: 1.2em;
     color: #fff;
     }
+
+  .share-stats {
+    padding-left: 20px;
+    width: 50px;
+    height: 20px;
+  }
+
+  .stats-value {
+    color: #fff;
+    font-size: 1.4em;
+    padding-top: 5px;
+  }
+
+  .stats-item {
+    flex-grow: 16;
+    padding: 0;
+    font-size: 0.8em;
+    text-align: center;
+    color: #00b2ee;
+    /*border-bottom: solid 1px #324c60;*/
+    text-transform: uppercase;
+  }
+
+  .stats-btn {
+        background: #262c42;
+        border: none;
+        color: #00b2ee;
+        padding: 10px 40px;
+        font-size: 1.5em;
+        font-weight: 100;
+        font-family: arial, sans-serif;
+        border-radius: 10%;
+        font-weight: bold;
+        cursor: pointer;
+  }
+
+  .stats-btn:hover {
+        background: orange;
+        color: #fff;
+  }
 
   .player-subs {
     width: 20px;
@@ -984,13 +1025,14 @@ a:active {
 .bfc-logo {
   flex-align: center;
   margin: auto;
+  padding-bottom: 20px;
   width: 80px;
   /*height: 80px;*/
 }
 
 .checklist-wrapper {
   max-width: 90%;
-  margin: 0 auto;
+  margin: 0px auto;
   color: #324c60;
   /*border: solid 1px #324c60;*/
   text-align: center;

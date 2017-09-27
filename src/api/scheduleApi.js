@@ -2,7 +2,7 @@ export const scheduleApi = [
   {
     id: "321",
     extraTime: false,
-    lengthOfHalfs: "2700",
+    lengthOfHalfs: 2700,
     games: [
       {
         id: "001",
@@ -30,7 +30,7 @@ export const scheduleApi = [
   {
     id: "432",
     extraTime: false,
-    lengthOfHalfs: "2700",
+    lengthOfHalfs: 2700,
     games: [
       {
         id: "001",

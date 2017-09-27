@@ -9,7 +9,7 @@ const Welcome = (props) => {
           <img className="bfc-logo" src="BFCNY_logo_fullcolor.png" alt="BFC logo" />
         </div>
         <h2 className="title-welcome text-center">Beyond F.C. <span className="font-italic font-weight-normal text-secondary"> live </span></h2>
-        <p className="intro-welcome"> Access as</p>
+        <p className="intro-welcome text-center"> Access as</p>
         <div className="text-center">
           <Button link="/start" css="input-btn" text="Manager"/>
           <Button link="/fanview" css="input-btn bg-secondary" text="Player"/>

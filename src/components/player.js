@@ -58,7 +58,7 @@ export default class Player extends Component {
             ? <PlayerSubOut {...this.props}/>
             : <PlayerSubIn {...this.props}/>
           }
-
+      
           <PlayerName
             handleToggle={this.handleToggle}
             {...this.props}

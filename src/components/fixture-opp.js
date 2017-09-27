@@ -8,7 +8,7 @@ export default class FixtureOPP extends Component {
 
   render() {
 
-    const teamName = this.props.teamOPP.toUpperCase();
+    const teamName = this.props.teamOPP[0].toUpperCase();
 
     return (
     <div>

@@ -10,6 +10,7 @@ import axios from 'axios';
 import BFCLive from './components/bfc-live';
 import Fanview from './components/fanview';
 import Roster from './components/roster';
+import TeamStats from './components/team-stats';
 import PlayerDetailsPage from './components/player-details-page';
 import Settings from './components/settings';
 import Start from './components/start';
@@ -40,8 +41,8 @@ class App extends Component {
       clockState: false,
       lengthOfHalf: 2700,
       lengthOfGame: 5400,
-      teamBFC: "Beyond FC",
-      teamOPP: "Opponent",
+      teamBFC: ["Beyond FC"],
+      teamOPP: ["Opponent"],
       beyondScore: 0,
       oppScore: 0,
       currentButtonState: 0,
@@ -103,21 +104,17 @@ setTeamCode(e){
  }
 
 setScheduleID(team){
-
-  // const teams = teamApi.teams;
-  // const team = teams.filter((team) => team.id === this.state.teamCode);
   const scheduleID = team.map((team) => team.league.scheduleID)[0];
   this.setState({ scheduleID });
   if (this.state.teamCode.length === 5) {
   setTimeout(() => {
-    this.matchOPPTeam();
+    this.matchLengthOfHalf(scheduleID)
+    this.matchOPPTeam(scheduleID);
   }, 2000);
 };
 };
 
 matchBFCTeam(team) {
-  // const teams = teamApi.teams;
-  // const team = teams.filter((team) => {return this.state.teamCode === team.id})
   const teamBFC = team.map((team) => team.name);
   this.setState({ teamBFC });
   if (team.length !== 0) {
@@ -125,13 +122,20 @@ matchBFCTeam(team) {
   }
 };
 
-matchOPPTeam() {
+matchOPPTeam(scheduleID) {
   const schedules = scheduleApi;
-  const scheduleID = this.state.scheduleID;
   const schedule = schedules.filter((schedule) => schedule.id === scheduleID);
   const teamOPP = schedule[0].games.filter((game) => game.gameDay === 2).map((game) => game.opponent);
   this.setState({ teamOPP });
 };
+
+matchLengthOfHalf(scheduleID) {
+  const schedules = scheduleApi;
+  const schedule = schedules.filter((schedule) => schedule.id === scheduleID);
+  const lengthOfHalf = schedule[0].lengthOfHalfs;
+  this.setState({ lengthOfHalf });
+  console.log(lengthOfHalf);
+}
 
 
 /********************************
@@ -154,7 +158,7 @@ matchOPPTeam() {
   }
 
   handleLengthOfHalfSelected(lengthAdjuster) {
-    this.setState({ lengthOfHalf: this.state.lengthOfHalf + (lengthAdjuster * 60)})
+    // this.setState({ lengthOfHalf: this.state.lengthOfHalf + (lengthAdjuster * 60)})
   }
 
 /********************************
@@ -386,10 +390,10 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
     var buttonStateCounter = this.state.currentButtonState;
 
     if (this.state.clockState === false){
-      this.setState({clockState: true, currentButtonState: buttonStateCounter + 1});
-      timer = setInterval(()=>{this.setState({timeLive: this.state.timeLive+1})},1000);
+      this.setState({ clockState: true, currentButtonState: buttonStateCounter + 1 });
+      timer = setInterval( () => { this.setState({ timeLive: this.state.timeLive + 1 }) },1000);
     } else if(this.state.clockState === true && this.state.currentButtonState === 1){
-        this.setState({clockState:false, currentButtonState: buttonStateCounter + 1, timeLive: this.state.lengthOfHalf})
+        this.setState({clockState: false, currentButtonState: buttonStateCounter + 1, timeLive: this.state.lengthOfHalf})
         clearInterval(timer);
       } else if(this.state.clockState){
         this.setState({ clockState: false, currentButtonState: buttonStateCounter + 1 })
@@ -432,9 +436,9 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
 
   }
 
-  fastForward(e){
+  fastForward(mins){
     var currentTime = this.state.timeLive;
-    this.setState({ timeLive: currentTime + 480 })
+    this.setState({ timeLive: currentTime + mins })
   }
 
   snapGoalsBFC(player, event){
@@ -592,6 +596,39 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
                 sentiment={this.state.sentiment}
                 tweetUpdates={this.state.tweetUpdates}
                 toggleTweetUpdates={this.toggleTweetUpdates.bind(this)}
+                /> }
+              />
+              <Route path="/team-stats" render={() => <TeamStats
+                roster={this.state.roster}
+                teamCode={this.state.teamCode}
+                handlePlayerToggle={this.handleToggle.bind(this)}
+                handleFirstYellow={this.handleFirstYellow.bind(this)}
+                handleSecondYellow={this.handleSecondYellow.bind(this)}
+                handleRed={this.handleRed.bind(this)}
+                handlePlayerGoals={this.handlePlayerGoals}
+                handlePlayerAssists={this.handlePlayerAssists}
+                handlePlayerOwnGoals={this.handlePlayerOwnGoals}
+                clockState={this.state.clockState}
+                format={this.props.format}
+                currentButtonState={this.state.currentButtonState}
+                timeLive={this.state.timeLive}
+                teamBFC={this.state.teamBFC}
+                beyondScore={this.state.beyondScore}
+                addGoalBFC={this.addGoalBFC.bind(this)}
+                teamOPP={this.state.teamOPP}
+                oppScore={this.state.oppScore}
+                addGoalOPP={this.addGoalOPP.bind(this)}
+                lengthOfHalf={this.state.lengthOfHalf}
+                lengthOfGame={this.state.lengthOfGame}
+                startStopMatch={this.startStopMatch.bind(this)}
+                fastForward={this.fastForward.bind(this)}
+                snapGoalsBFC={this.snapGoalsBFC.bind(this)}
+                snapGoalsOPP={this.snapGoalsOPP.bind(this)}
+                handleSentimentSelected={this.handleSentimentSelected.bind(this)}
+                sentiment={this.state.sentiment}
+                tweetUpdates={this.state.tweetUpdates}
+                toggleTweetUpdates={this.toggleTweetUpdates.bind(this)}
+                {...this.props}
                 /> }
               />
               <Route path="/players/:id" render={(props) => <PlayerDetailsPage

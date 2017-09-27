@@ -4,6 +4,7 @@ import React,  { Component } from 'react';
 import PlayerGameStats from './player-game-stats';
 import PlayerPerformanceStats from './player-performance-stats';
 import { Link } from 'react-router-dom';
+import { Alert } from 'react-bootstrap';
 
 
 
@@ -17,7 +18,7 @@ export default class PlayerDetailsPage extends Component {
     return (
         <div >
           <Link to="/roster"><div className="nav-banner-top"><img alt="< Back" /> </div></Link>
-          <p className="text-warning pull-right mx-4">...coming soon</p>
+          {/* <p className="text-warning pull-right mx-4">...coming soon</p> */}
           <h1 className="setting-h"> {playerName} </h1>
           <h4 className="roster-title"> Player Game Stats </h4>
           {player.map((player) =>
@@ -28,6 +29,12 @@ export default class PlayerDetailsPage extends Component {
                 />
               )}
           <h4 className="roster-title"> Health & Performance </h4>
+          <Alert className="mt-3" bsStyle="warning">
+            To import health and performance data, first connect your tracking device.
+            <div className="text-right">
+              <button className="btn btn-secondary mt-3"> Connect device </button>
+            </div>
+          </Alert>
           {player.map((player) =>
                 <PlayerPerformanceStats
                   key={player.id}

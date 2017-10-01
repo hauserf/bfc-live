@@ -13,7 +13,7 @@ export const teamApi = {
   },
   teams: [
     {
-      id: "12345",
+      id: "11111",
       name: "Beyond FC First",
       season: "2017/18",
       league: {
@@ -25,7 +25,7 @@ export const teamApi = {
       }
     },
     {
-      id: "23456",
+      id: "12345",
       name: "Beyond FC Reserve",
       season: "2017/18",
       league: {

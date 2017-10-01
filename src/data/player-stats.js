@@ -1,8 +1,8 @@
 export const PlayerStats = [
   {
     id: "101",
-    firstName: "Frank",
-    lastName: "Hauser",
+    firstName: "Andres",
+    lastName: "Guarneros",
     playerActive: false,
     minutesPlayed: 0,
     startingEleven: false,
@@ -18,10 +18,115 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: ["23456", "2345"]
+    teamID: ["11111", "2345"]
   },
   {
     id: "102",
+    firstName: "Bryant",
+    lastName: "Gutierrez",
+    playerActive: false,
+    minutesPlayed: 0,
+    startingEleven: false,
+    firstYellow: false,
+    secondYellow: false,
+    yellowCards: [],
+    redCard: [],
+    goals: [],
+    assists: [],
+    ownGoals: [],
+    subIns: [],
+    subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    },
+    teamID: ["11111"]
+  },
+  {
+    id: "103",
+    firstName: "Dane",
+    lastName: "Arpino",
+    playerActive: false,
+    minutesPlayed: 0,
+    startingEleven: false,
+    firstYellow: false,
+    secondYellow: false,
+    yellowCards: [],
+    redCard: [],
+    goals: [],
+    assists: [],
+    ownGoals: [],
+    subIns: [],
+    subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    },
+    teamID: ["11111"]
+  },
+  {
+    id: "104",
+    firstName: "Daniel",
+    lastName: "Weisberger",
+    playerActive: false,
+    minutesPlayed: 0,
+    startingEleven: false,
+    firstYellow: false,
+    secondYellow: false,
+    yellowCards: [],
+    redCard: [],
+    goals: [],
+    assists: [],
+    ownGoals: [],
+    subIns: [],
+    subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    },
+    teamID: ["11111"]
+  },
+  {
+    id: "105",
+    firstName: "Deepak",
+    lastName: "Mangwani",
+    playerActive: false,
+    minutesPlayed: 0,
+    startingEleven: false,
+    firstYellow: false,
+    secondYellow: false,
+    yellowCards: [],
+    redCard: [],
+    goals: [],
+    assists: [],
+    ownGoals: [],
+    subIns: [],
+    subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    },
+    teamID: ["11111"]
+  },
+  {
+    id: "106",
+    firstName: "James",
+    lastName: "Cousins",
+    playerActive: false,
+    minutesPlayed: 0,
+    startingEleven: false,
+    firstYellow: false,
+    secondYellow: false,
+    yellowCards: [],
+    redCard: [],
+    goals: [],
+    assists: [],
+    ownGoals: [],
+    subIns: [],
+    subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    },
+    teamID: ["11111"]
+  },
+  {
+    id: "107",
     firstName: "Jeremy",
     lastName: "Rampon",
     playerActive: false,
@@ -39,117 +144,12 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: ["12345"]
-  },
-  {
-    id: "103",
-    firstName: "Varun",
-    lastName: "Rangaraj",
-    playerActive: false,
-    minutesPlayed: 0,
-    startingEleven: false,
-    firstYellow: false,
-    secondYellow: false,
-    yellowCards: [],
-    redCard: [],
-    goals: [],
-    assists: [],
-    ownGoals: [],
-    subIns: [],
-    subOuts: [],
-    twitter: function(){
-      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
-    },
-    teamID: ["12345"]
-  },
-  {
-    id: "104",
-    firstName: "Ali",
-    lastName: "Reza",
-    playerActive: false,
-    minutesPlayed: 0,
-    startingEleven: false,
-    firstYellow: false,
-    secondYellow: false,
-    yellowCards: [],
-    redCard: [],
-    goals: [],
-    assists: [],
-    ownGoals: [],
-    subIns: [],
-    subOuts: [],
-    twitter: function(){
-      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
-    },
-    teamID: ["12345"]
-  },
-  {
-    id: "105",
-    firstName: "Jesse",
-    lastName: "James",
-    playerActive: false,
-    minutesPlayed: 0,
-    startingEleven: false,
-    firstYellow: false,
-    secondYellow: false,
-    yellowCards: [],
-    redCard: [],
-    goals: [],
-    assists: [],
-    ownGoals: [],
-    subIns: [],
-    subOuts: [],
-    twitter: function(){
-      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
-    },
-    teamID: ["12345"]
-  },
-  {
-    id: "106",
-    firstName: "Finley",
-    lastName: "McFinny",
-    playerActive: false,
-    minutesPlayed: 0,
-    startingEleven: false,
-    firstYellow: false,
-    secondYellow: false,
-    yellowCards: [],
-    redCard: [],
-    goals: [],
-    assists: [],
-    ownGoals: [],
-    subIns: [],
-    subOuts: [],
-    twitter: function(){
-      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
-    },
-    teamID: ["12345"]
-  },
-  {
-    id: "107",
-    firstName: "Marc",
-    lastName: "Lemcke",
-    playerActive: false,
-    minutesPlayed: 0,
-    startingEleven: false,
-    firstYellow: false,
-    secondYellow: false,
-    yellowCards: [],
-    redCard: [],
-    goals: [],
-    assists: [],
-    ownGoals: [],
-    subIns: [],
-    subOuts: [],
-    twitter: function(){
-      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
-    },
-    teamID: ["23456"]
+    teamID: ["11111"]
   },
   {
     id: "108",
-    firstName: "James",
-    lastName: "Leavy",
+    firstName: "Jesse",
+    lastName: "Rose",
     playerActive: false,
     minutesPlayed: 0,
     startingEleven: false,
@@ -165,12 +165,12 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: ["23456"]
+    teamID: ["11111"]
   },
   {
     id: "109",
-    firstName: "Zach",
-    lastName: "Gottlieb",
+    firstName: "Juan",
+    lastName: "Srolis",
     playerActive: false,
     minutesPlayed: 0,
     startingEleven: false,
@@ -186,12 +186,12 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: ["12345"]
+    teamID: ["11111"]
   },
   {
     id: "110",
-    firstName: "Deepak",
-    lastName: "Packman",
+    firstName: "Karl",
+    lastName: "Friedrich",
     playerActive: false,
     minutesPlayed: 0,
     startingEleven: false,
@@ -207,12 +207,12 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: ["23456"]
+    teamID: ["11111"]
   },
   {
     id: "111",
-    firstName: "Obi",
-    lastName: "ObiMan",
+    firstName: "Lucas",
+    lastName: "Cattani",
     playerActive: false,
     minutesPlayed: 0,
     startingEleven: false,
@@ -228,6 +228,258 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: ["23456", "12345"]
+    teamID: ["11111", "12345"]
+  },
+  {
+    id: "112",
+    firstName: "Matthew",
+    lastName: "Elleston",
+    playerActive: false,
+    minutesPlayed: 0,
+    startingEleven: false,
+    firstYellow: false,
+    secondYellow: false,
+    yellowCards: [],
+    redCard: [],
+    goals: [],
+    assists: [],
+    ownGoals: [],
+    subIns: [],
+    subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    },
+    teamID: ["11111", "12345"]
+  },
+  {
+    id: "113",
+    firstName: "Mikey",
+    lastName: "Lowell",
+    playerActive: false,
+    minutesPlayed: 0,
+    startingEleven: false,
+    firstYellow: false,
+    secondYellow: false,
+    yellowCards: [],
+    redCard: [],
+    goals: [],
+    assists: [],
+    ownGoals: [],
+    subIns: [],
+    subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    },
+    teamID: ["11111", "12345"]
+  },
+  {
+    id: "114",
+    firstName: "Mitch",
+    lastName: "Rubenstein",
+    playerActive: false,
+    minutesPlayed: 0,
+    startingEleven: false,
+    firstYellow: false,
+    secondYellow: false,
+    yellowCards: [],
+    redCard: [],
+    goals: [],
+    assists: [],
+    ownGoals: [],
+    subIns: [],
+    subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    },
+    teamID: ["11111", "12345"]
+  },
+  {
+    id: "115",
+    firstName: "Ose",
+    lastName: "Okoruwa",
+    playerActive: false,
+    minutesPlayed: 0,
+    startingEleven: false,
+    firstYellow: false,
+    secondYellow: false,
+    yellowCards: [],
+    redCard: [],
+    goals: [],
+    assists: [],
+    ownGoals: [],
+    subIns: [],
+    subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    },
+    teamID: ["11111", "12345"]
+  },
+  {
+    id: "116",
+    firstName: "Ryan",
+    lastName: "Kuiken",
+    playerActive: false,
+    minutesPlayed: 0,
+    startingEleven: false,
+    firstYellow: false,
+    secondYellow: false,
+    yellowCards: [],
+    redCard: [],
+    goals: [],
+    assists: [],
+    ownGoals: [],
+    subIns: [],
+    subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    },
+    teamID: ["11111", "12345"]
+  },
+  {
+    id: "117",
+    firstName: "Sergio",
+    lastName: "Gomez",
+    playerActive: false,
+    minutesPlayed: 0,
+    startingEleven: false,
+    firstYellow: false,
+    secondYellow: false,
+    yellowCards: [],
+    redCard: [],
+    goals: [],
+    assists: [],
+    ownGoals: [],
+    subIns: [],
+    subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    },
+    teamID: ["11111", "12345"]
+  },
+  {
+    id: "118",
+    firstName: "Sherief",
+    lastName: "El-Helaifi",
+    playerActive: false,
+    minutesPlayed: 0,
+    startingEleven: false,
+    firstYellow: false,
+    secondYellow: false,
+    yellowCards: [],
+    redCard: [],
+    goals: [],
+    assists: [],
+    ownGoals: [],
+    subIns: [],
+    subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    },
+    teamID: ["11111", "12345"]
+  },
+  {
+    id: "119",
+    firstName: "Simon",
+    lastName: "Czaplinski",
+    playerActive: false,
+    minutesPlayed: 0,
+    startingEleven: false,
+    firstYellow: false,
+    secondYellow: false,
+    yellowCards: [],
+    redCard: [],
+    goals: [],
+    assists: [],
+    ownGoals: [],
+    subIns: [],
+    subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    },
+    teamID: ["11111", "12345"]
+  },
+  {
+    id: "120",
+    firstName: "Stephen",
+    lastName: "Shloms",
+    playerActive: false,
+    minutesPlayed: 0,
+    startingEleven: false,
+    firstYellow: false,
+    secondYellow: false,
+    yellowCards: [],
+    redCard: [],
+    goals: [],
+    assists: [],
+    ownGoals: [],
+    subIns: [],
+    subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    },
+    teamID: ["11111", "12345"]
+  },
+  {
+    id: "121",
+    firstName: "Veprim",
+    lastName: "Gashi",
+    playerActive: false,
+    minutesPlayed: 0,
+    startingEleven: false,
+    firstYellow: false,
+    secondYellow: false,
+    yellowCards: [],
+    redCard: [],
+    goals: [],
+    assists: [],
+    ownGoals: [],
+    subIns: [],
+    subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    },
+    teamID: ["11111", "12345"]
+  },
+  {
+    id: "122",
+    firstName: "Zack",
+    lastName: "Kady",
+    playerActive: false,
+    minutesPlayed: 0,
+    startingEleven: false,
+    firstYellow: false,
+    secondYellow: false,
+    yellowCards: [],
+    redCard: [],
+    goals: [],
+    assists: [],
+    ownGoals: [],
+    subIns: [],
+    subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    },
+    teamID: ["11111", "12345"]
+  },
+  {
+    id: "123",
+    firstName: "A Guest",
+    lastName: "Player",
+    playerActive: false,
+    minutesPlayed: 0,
+    startingEleven: false,
+    firstYellow: false,
+    secondYellow: false,
+    yellowCards: [],
+    redCard: [],
+    goals: [],
+    assists: [],
+    ownGoals: [],
+    subIns: [],
+    subOuts: [],
+    twitter: function(){
+      return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
+    },
+    teamID: ["11111", "12345"]
   },
 ];

@@ -32,5 +32,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom"
   },
+  "engines": {
+    "node": "8.x",
+    "yarn": "1.x"
+  },
   "proxy": "http://localhost:3100"
 }

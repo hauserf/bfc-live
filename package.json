@@ -30,8 +30,7 @@
     "start": "react-scripts start",
     "start:server": "nodemon --watch server.js server.js",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "heroku-postbuild": "yarn --production=false && yarn build"
+    "test": "react-scripts test --env=jsdom"
   },
   "proxy": "http://localhost:3100"
 }

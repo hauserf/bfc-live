@@ -11,7 +11,7 @@ var Jimp = require ('jimp');
 var dotenv = require('dotenv');
 var Twit = require('twit');
 var fs = require('fs');
-// var path = require('path');
+var path = require('path');
 dotenv.config();
 
 // create instances
@@ -19,23 +19,34 @@ var app = express();
 var router = express.Router();
 
 /* eslint-disable key-spacing */
-const twitter = new Twit({
-  consumer_key:         process.env.TWITTER_CONSUMER_KEY,
-  consumer_secret:      process.env.TWITTER_CONSUMER_SECRET,
-  access_token:         process.env.TWITTER_ACCESS_TOKEN,
-  access_token_secret:  process.env.TWITTER_ACCESS_TOKEN_SECRET,
-  timeout_ms:           60 * 1000,  // optional HTTP request timeout to apply to all requests.
-});
+let twitter = null
+if (process.env.TWITTER_CONSUMER_KEY
+        && process.env.TWITTER_CONSUMER_SECRET
+        && process.env.TWITTER_ACCESS_TOKEN
+        && process.env.TWITTER_ACCESS_TOKEN_SECRET) {
+    console.log('Configuring Twitter...')
+    twitter = new Twit({
+        consumer_key:         process.env.TWITTER_CONSUMER_KEY,
+        consumer_secret:      process.env.TWITTER_CONSUMER_SECRET,
+        access_token:         process.env.TWITTER_ACCESS_TOKEN,
+        access_token_secret:  process.env.TWITTER_ACCESS_TOKEN_SECRET,
+        timeout_ms:           60 * 1000,  // optional HTTP request timeout to apply to all requests.
+    });
+} else {
+    console.log('No Twitter')
+}
 /* eslint-enable */
 
-//set port to either a predetermined port number or 3100
-var port = process.env.API_PORT || 3100;
-
-//db config
-var mongoDB = 'mongodb://frank:frank123@ds119682.mlab.com:19682/bfc-app';
-mongoose.connect(mongoDB, { useMongoClient: true })
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+// DB config
+let db = null
+if (process.env.MONGODB_URI) {
+    console.log('Configuring MongoDB...')
+    mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true })
+    db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+} else {
+    console.log('No MongoDB')
+}
 
 // configure API to use bodyParser and look for Json data in the request body
 app.use(bodyParser.urlencoded({extended: true }));
@@ -53,20 +64,11 @@ app.use(function(req, res, next) {
   next();
 });
 
-// set root/route(?) path and initialize API
-router.get('/', function(req, res) {
-  res.json({message: 'API Initialized'});
-});
+// Serve the static content
 
+app.use(express.static(path.join(__dirname, 'build')));
 
-///////////////////////// twitter ///////////////////////////////
-// post a tweet
-//
-
-////////////////////////////////////////////////////////
-              //TWEET TEXT Only//
-////////////////////////////////////////////////////////
-
+// Serve the APIs
 
 app.post('/api/tweet', (req, res) => {
   console.log({ origin: req.headers, body: req.body });
@@ -82,11 +84,9 @@ app.post('/api/tweet', (req, res) => {
   });
 });
 
-
 ////////////////////////////////////////////////////////
               //TWEET WITH MEDIA//
 ////////////////////////////////////////////////////////
-
 
 // app.post('/api/tweet', (req, res) => {
 //   console.log({ origin: req.headers, body: req.body });
@@ -197,12 +197,7 @@ app.post('/api/tweet', (req, res) => {
 //
 // });
 
-
-
-
 ///////////////////////// END ///////////////////////////////
-
-
 
 // adding the /teams route to our /api router
 router.route('/teams')
@@ -234,23 +229,16 @@ router.route('/teams')
 // use router configuration when we call /api
 app.use('/api/v1', router);
 
-//starts the server and listens for requests
-app.listen(port, function() {
-  console.log(`api running on port ${port}`);
+// Serve the App
+
+app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-// // catch 404 and forward to error handler
-// app.use((req, res, next) => {
-//     var err = new Error("Not Found");
-//     err.status = 404;
-//     next(err)
-// })
-//
-// // error handler
-// app.use((err, req, res, next)=>{
-//     res.status(err.status || 500);
-//     res.json({
-//         message: err.message
-//     })
-//
-// })
+// Start the server
+
+const timestamp = new Date();
+const port = process.env.API_PORT || 3100;
+app.listen(port, function() {
+    console.log(`[${timestamp}] Server/API running on port ${port}`);
+});

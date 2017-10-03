@@ -28,9 +28,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start-dev": "nf start -p 3000",
+    "start:server": "nodemon --watch server.js server.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
-  }
+    "heroku-postbuild": "yarn --production=false && yarn build"
+  },
+  "proxy": "http://localhost:3100"
 }

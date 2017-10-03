@@ -65,18 +65,14 @@ app.use(express.static(path.join(__dirname, 'build')));
 // Serve the APIs
 
 app.post('/api/tweet', (req, res) => {
-    console.log({ origin: req.headers, body: req.body });
     const tweet = req.body.tweet;
-    twitter.post('statuses/update', { status: tweet }, (err, data, response) => {
-        let success = true
-        if (err) {
-            console.log(err.message)
-            success = false
+    twitter.post('statuses/update', { status: tweet }, (error, data, response) => {
+        if (error) {
+            console.log(`[Twitter] ${error.message}`)
+            res.status(200).json({ tweet, error });
+        } else {
+            res.status(200).json({ tweet });
         }
-        // console.log({ data, response });
-        //
-        res.header('Content-Type', 'application/json');
-        res.json({ tweet, success });
     });
 });
 

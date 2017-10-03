@@ -5,7 +5,7 @@ const PlayerMore = (props) => {
 
   const playerID = props.id;
   const playerURL = `/players/${playerID}`;
-  console.log(playerID);
+  //console.log(playerID);
 
   return (
     <div className="stats-more">

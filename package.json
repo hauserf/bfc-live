@@ -8,11 +8,9 @@
     "bootstrap": "^3.3.7",
     "dotenv": "^4.0.0",
     "express": "^4.15.4",
-    "foreman": "^2.0.0",
     "jimp": "^0.2.28",
     "marked": "^0.3.6",
     "mongoose": "^4.11.7",
-    "nodemon": "^1.11.0",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-addons-css-transition-group": "^15.6.0",
@@ -24,13 +22,15 @@
     "twit": "^2.2.9"
   },
   "devDependencies": {
-    "react-scripts": "1.0.7"
+    "react-scripts": "1.0.7",
+    "nodemon": "^1.11.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "start:server": "nodemon --watch server.js server.js",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom"
+    "test": "react-scripts test --env=jsdom",
+    "heroku-postbuild": "yarn build"
   },
   "engines": {
     "node": "8.x",

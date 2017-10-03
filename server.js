@@ -238,7 +238,7 @@ app.get('*', function (req, res) {
 // Start the server
 
 const timestamp = new Date();
-const port = process.env.API_PORT || 3100;
+const port = process.env.PORT || 3100;
 app.listen(port, function() {
     console.log(`[${timestamp}] Server/API running on port ${port}`);
 });

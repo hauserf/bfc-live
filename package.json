@@ -30,7 +30,7 @@
     "start:server": "nodemon --watch server.js server.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "heroku-postbuild": "yarn --production=false && yarn build"
+    "heroku-postbuild": "yarn add react-scripts && yarn build"
   },
   "engines": {
     "node": "8.x",

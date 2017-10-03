@@ -1,12 +1,12 @@
 import React,  { Component } from 'react';
 // import PropTypes from 'prop-types';
 // import PlayerName from './player-name';
-import PlayerGameStats from './player-game-stats';
-import PlayerPerformanceStats from './player-performance-stats';
+//import PlayerGameStats from './player-game-stats';
+//import PlayerPerformanceStats from './player-performance-stats';
 import Fixture from './fixture';
 import Timer from './timer';
 import { Link } from 'react-router-dom';
-import { Alert } from 'react-bootstrap';
+//import { Alert } from 'react-bootstrap';
 
 
 
@@ -42,7 +42,7 @@ export default class TeamStats extends Component {
           <h1 className="setting-h"> Beyond FC</h1>
 
           <h4 className="roster-title"> Health & Performance </h4>
-        
+
         </div>
     );
   };

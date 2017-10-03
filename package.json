@@ -6,10 +6,12 @@
     "axios": "^0.16.2",
     "body-parser": "^1.17.2",
     "bootstrap": "^3.3.7",
+    "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "express": "^4.15.4",
     "jimp": "^0.2.28",
     "marked": "^0.3.6",
+    "moment": "^2.18.1",
     "mongoose": "^4.11.7",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
@@ -22,8 +24,8 @@
     "twit": "^2.2.9"
   },
   "devDependencies": {
-    "react-scripts": "1.0.7",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "react-scripts": "1.0.7"
   },
   "scripts": {
     "start": "react-scripts start",

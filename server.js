@@ -1,22 +1,32 @@
 'use strict'
 
 // import dependencies
-var express = require('express');
-var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
-var Team = require('./model/teams');
-var Jimp = require ('jimp');
+const cors = require('cors');
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const path = require('path');
+const Jimp = require ('jimp');
+const moment = require('moment');
 
 // import twitter dependencies
-var dotenv = require('dotenv');
-var Twit = require('twit');
-var fs = require('fs');
-var path = require('path');
+const dotenv = require('dotenv');
+const Twit = require('twit');
+const fs = require('fs');
+
+const Team = require('./model/teams');
+
 dotenv.config();
 
-// create instances
-var app = express();
-var router = express.Router();
+// Create Express server
+
+const app = express();
+
+// prevent errors from Cross Origin Resource Sharing, set headers to allow CORS with middleware
+app.use(cors())
+// configure API to use bodyParser and look for Json data in the request body
+app.use(bodyParser.urlencoded({extended: true }));
+app.use(bodyParser.json());
 
 /* eslint-disable key-spacing */
 let twitter = null
@@ -48,22 +58,6 @@ if (process.env.MONGODB_URI) {
     console.log('No MongoDB')
 }
 
-// configure API to use bodyParser and look for Json data in the request body
-app.use(bodyParser.urlencoded({extended: true }));
-app.use(bodyParser.json());
-
-// prevent errors from Cross Origin Resource Sharing, set headers to allow CORS with middleware
-app.use(function(req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
-
-  //remove cacheing so we get the most recent data
-  res.setHeader('Cache-Control', 'no-cache');
-  next();
-});
-
 // Serve the static content
 
 app.use(express.static(path.join(__dirname, 'build')));
@@ -71,17 +65,19 @@ app.use(express.static(path.join(__dirname, 'build')));
 // Serve the APIs
 
 app.post('/api/tweet', (req, res) => {
-  console.log({ origin: req.headers, body: req.body });
-
-  const tweet = `${req.body.tweet}`;
-
-  twitter.post('statuses/update', { status: tweet }, (err, data, response) => {
-      if (err) throw Error(err);
-    // console.log({ data, response });
-    //
-    // res.header('Content-Type', 'application/json');
-    // res.json(JSON.stringify({ tweet, success: true }));
-  });
+    console.log({ origin: req.headers, body: req.body });
+    const tweet = req.body.tweet;
+    twitter.post('statuses/update', { status: tweet }, (err, data, response) => {
+        let success = true
+        if (err) {
+            console.log(err.message)
+            success = false
+        }
+        // console.log({ data, response });
+        //
+        res.header('Content-Type', 'application/json');
+        res.json({ tweet, success });
+    });
 });
 
 ////////////////////////////////////////////////////////
@@ -199,36 +195,6 @@ app.post('/api/tweet', (req, res) => {
 
 ///////////////////////// END ///////////////////////////////
 
-// adding the /teams route to our /api router
-router.route('/teams')
-  // retrieve all teams from the database
-  .get(function(req, res) {
-    // looks at our Team Schema
-    Team.find(function(err, teams) {
-      if (err)
-        res.send(err);
-      // responds wigh a json object of our database teams
-      res.json(teams)
-    });
-  })
-
-  // post new team to database
-  .post(function(req, res) {
-    var team = new Team();
-    // body parser lets us use the req.body
-    team.name = req.body.name;
-    // team.manager = req.body.text;
-
-    team.save(function(err) {
-      if (err)
-      res.send(err);
-      res.json({ message: 'Team successfully added!'})
-    });
-  });
-
-// use router configuration when we call /api
-app.use('/api/v1', router);
-
 // Serve the App
 
 app.get('*', function (req, res) {
@@ -237,7 +203,7 @@ app.get('*', function (req, res) {
 
 // Start the server
 
-const timestamp = new Date();
+const timestamp = moment().format('YYYY-MM-DD hh:mm:ss');
 const port = process.env.PORT || 3100;
 app.listen(port, function() {
     console.log(`[${timestamp}] Server/API running on port ${port}`);

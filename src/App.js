@@ -238,9 +238,9 @@ matchLengthOfHalf(scheduleID) {
 
     // sub out and grey out red carded player
     const playerActive = roster[roster.indexOf(player)].playerActive;
-    playerActive === true && redCard.length === 1
-    ? this.handleToggle(id)
-    : null
+    if (playerActive === true && redCard.length === 1) {
+        this.handleToggle(id)
+    }
 
     this.snapGoalsBFC(player, event);
 
@@ -358,27 +358,18 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
   const tweetUpdates = this.state.tweetUpdates;
 
   if (tweetUpdates) {
-  // const tweet = `${this.state.teamOPP} has scored a goal!`;
-  const tweet = Tweets(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle);
-  const jimpData = {tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle}
+    // const tweet = `${this.state.teamOPP} has scored a goal!`;
+    const tweet = Tweets(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle);
+    const jimpData = {tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle}
 
-  // const backend = 'https://nodejavascript.herokuapp.com';
-  const backend = 'http://localhost:3100';
-  fetch(`${backend}/api/tweet`, {
-    method: 'POST',
-    mode: 'cors',
-
-    headers: new Headers({
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }),
-
-    body: JSON.stringify({ tweet, jimpData })
-  }).then(response => response.json()).then((data) => {
-    console.log({ data });
-  });
-
-} else null
+    axios.post('/api/tweet', { tweet, jimpData })
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.log(error)
+        });
+  }
 }
 
 

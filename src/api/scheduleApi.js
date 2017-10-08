@@ -16,7 +16,7 @@ export const scheduleApi = [
         gameDay: 2,
         date: "",
         kickoff: "",
-        opponent: "Hoboken FC 1912",
+        opponent: "Panatha USA",
       },
       {
         id: "003",

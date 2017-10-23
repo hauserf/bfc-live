@@ -52,6 +52,7 @@ class App extends Component {
       data: [],
       pollInterval: 2000,
       tweetUpdates: false,
+      applang: "german"
     }
     this.loadTeamsFromServer = this.loadTeamsFromServer.bind(this);
     this.handleTeamSubmit = this.handleTeamSubmit.bind(this);
@@ -60,7 +61,11 @@ class App extends Component {
   componentDidMount() {
     var arrayKickoff = this.state.lister;
     arrayKickoff.unshift(
-      [<TimerState timeLive={this.state.timeLive} currentButtonState={-1}/>]
+      [<TimerState
+        timeLive={this.state.timeLive}
+        currentButtonState={-1}
+        applang={this.state.applang}
+      />]
     );
     this.setState({ lister: arrayKickoff });
     this.setState({ roster: PlayerStats });
@@ -396,7 +401,9 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
       arrayTimerState.unshift(
         [<TimerState
           timeLive={this.state.timeLive}
-          currentButtonState={this.state.currentButtonState}/>]
+          currentButtonState={this.state.currentButtonState}
+          applang={this.state.applang}
+        />]
       );
       this.setState({ lister: arrayTimerState })
     }
@@ -495,12 +502,15 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
                 addGoalOPP={this.addGoalOPP.bind(this)}
               /> */}
               <Route exact path="/" render={() => <Redirect to="/welcome" />} />
-              <Route path="/welcome" render={() => <Welcome />} />
+              <Route path="/welcome" render={() => <Welcome
+                applang={this.state.applang}
+              />} />
               <Route path="/start" render={() => <Start
                 setTeamCode={this.setTeamCode.bind(this)}
                 teamCode={this.state.teamCode}
                 teams={this.state.teams}
                 teamCodeMatched={this.state.teamCodeMatched}
+                applang={this.state.applang}
               />} />
               <Route path="/settings" render={() => <Settings
                 setBFCTeam={this.setBFCTeam.bind(this)}
@@ -513,6 +523,7 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
                 lengthOfHalf={this.state.lengthOfHalf}
                 handleFormationSelected={this.handleFormationSelected.bind(this)}
                 handleLengthOfHalfSelected={this.handleLengthOfHalfSelected.bind(this)}
+                applang={this.state.applang}
                 />}
               />
               <Route path="/bfc-live" render={() => <BFCLive
@@ -534,6 +545,7 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
                 snapGoalsOPP={this.snapGoalsOPP.bind(this)}
                 handleSentimentSelected={this.handleSentimentSelected.bind(this)}
                 sentiment={this.state.sentiment}
+                applang={this.state.applang}
                 />}
               />
               <Route path="/fanview" render={() => <Fanview
@@ -555,6 +567,7 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
                 snapGoalsOPP={this.snapGoalsOPP.bind(this)}
                 handleSentimentSelected={this.handleSentimentSelected.bind(this)}
                 sentiment={this.state.sentiment}
+                applang={this.state.applang}
                 />}
               />
               <Route path="/roster" render={() => <Roster
@@ -587,6 +600,7 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
                 sentiment={this.state.sentiment}
                 tweetUpdates={this.state.tweetUpdates}
                 toggleTweetUpdates={this.toggleTweetUpdates.bind(this)}
+                applang={this.state.applang}
                 /> }
               />
               <Route path="/team-stats" render={() => <TeamStats
@@ -619,12 +633,14 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
                 sentiment={this.state.sentiment}
                 tweetUpdates={this.state.tweetUpdates}
                 toggleTweetUpdates={this.toggleTweetUpdates.bind(this)}
+                applang={this.state.applang}
                 {...this.props}
                 /> }
               />
               <Route path="/players/:id" render={(props) => <PlayerDetailsPage
                 roster={this.state.roster}
                 handleToggle={this.handleToggle}
+                applang={this.state.applang}
                 {...props}
                 />}
               />
@@ -641,6 +657,7 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
                 lengthOfGame={this.state.lengthOfGame}
                 sentiment={this.state.sentiment}
                 roster={this.state.roster}
+                applang={this.state.applang}
                 />}
               />
 

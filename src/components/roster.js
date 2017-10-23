@@ -5,6 +5,7 @@ import Fixture from './fixture';
 import Timer from './timer';
 import Footer from './footer';
 import { Alert } from 'react-bootstrap';
+import { AppLang } from '../data/applang';
 
 class Roster extends Component {
 
@@ -77,6 +78,9 @@ class Roster extends Component {
     const numberOfPlayersPlaying = this.props.roster.filter((player, id) => player.playerActive).length;
     // const numberOfSubs = this.props.roster.filter((player, id) => !player.playerActive).length;
 
+    const applang = this.props.applang;
+    const copy = AppLang.views.roster;
+
     return (
       <div>
         <Fixture
@@ -97,20 +101,26 @@ class Roster extends Component {
           sentiment={this.props.sentiment}
           oppScore={this.props.oppScore}
           beyondScore={this.props.beyondScore}
+          applang={this.props.applang}
         />
         <div>
           <h3 className="roster-title">
             {this.props.currentButtonState < 1
-              ? "Starting Players "
-              : "Playing "
+              ? copy.titles.startingPlayers[applang]
+              : copy.titles.currentlyPlaying[applang]
+              // ? "Starting Players "
+              // : "Playing "
             }
               ({numberOfPlayersPlaying})
           </h3>
 
             {this.props.roster.filter((player, id) => player.playerActive).length === 0
-            ? <p className="roster-hint">Select players from "Available Roster" to track playing time and record goals and assists.</p>
+            ? <p className="roster-hint">{copy.hints.selectPlayers[applang]}</p>
             : null
             }
+            {/* ? <p className="roster-hint">Select players from "Available Roster" to track playing time and record goals and assists.</p>
+            : null
+            } */}
 
 
 
@@ -144,8 +154,11 @@ class Roster extends Component {
             <h3 className="roster-title">
 
               {this.props.roster.filter((player, id) => player.playerActive).length === 0
-              ? "Available Roster "
-              : "Subs "}
+              ? copy.titles.availableRoster[applang]
+              : copy.titles.subs[applang]
+              }
+              {/* ? "Available Roster "
+              : "Subs "} */}
               {/* ({numberOfSubs}) */}
 
             </h3>
@@ -177,15 +190,17 @@ class Roster extends Component {
         <div className="pt-4">
         {this.props.tweetUpdates === false
           ? (<Alert bsStyle="warning">
-              <strong>Automatic twitter updates</strong> are turned off by default. Click 'ACTIVATE' to activate updates using the club's official Twitter account @BFCNY.
+              {copy.twitterActivation.activate.alert[applang]}
+              {/* <strong>Automatic twitter updates</strong> are turned off by default. Click 'ACTIVATE' to activate updates using the club's official Twitter account @BFCNY. */}
               <div className="text-right">
-                <button className="btn btn-info mt-3" onClick={this.toggleTweetUpdates}> ACTIVATE </button>
+                <button className="btn btn-info mt-3" onClick={this.toggleTweetUpdates}> {copy.twitterActivation.activate.btn[applang]} </button>
               </div>
             </Alert>)
           : (<Alert bsStyle="warning">
-              <strong>Automatic twitter updates</strong> are currently turned on. Click 'DEACTIVATE' to deactivate twitter updates.
+              {copy.twitterActivation.deactivate.alert[applang]}
+              {/* <strong>Automatic twitter updates</strong> are currently turned on. Click 'DEACTIVATE' to deactivate twitter updates. */}
               <div className="text-right">
-                <button className="btn btn-danger mt-3" onClick={this.toggleTweetUpdates}> DEACTIVATE </button>
+                <button className="btn btn-danger mt-3" onClick={this.toggleTweetUpdates}> {copy.twitterActivation.deactivate.btn[applang]} </button>
               </div>
             </Alert>)
         }

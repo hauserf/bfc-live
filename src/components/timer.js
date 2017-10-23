@@ -45,6 +45,7 @@ export default class Timer extends Component {
             <StartButton
               currentButtonState={this.props.currentButtonState}
               handleClicker={this.handleClicker.bind(this)}
+              applang={this.props.applang}
             />
           </div>
         :
@@ -52,6 +53,7 @@ export default class Timer extends Component {
             handleSentimentSelected={this.handleSentimentSelected}
             oppScore={this.props.oppScore}
             beyondScore={this.props.beyondScore}
+            applang={this.props.applang}
           />}
       </div>
     );

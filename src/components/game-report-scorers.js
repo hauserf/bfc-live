@@ -16,7 +16,7 @@ export default class GameReportScorers extends Component {
     const scorerHandles = roster
       .filter((player, id) => player.goals.length > 0)
       .map((player, id) =>
-            `${player.twitter()} `);
+            `${player.twitter()}`);
 
     console.log("Our scorers today: ", scorers);
 

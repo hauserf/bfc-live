@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SentimentSelector from './sentiment-selector';
 import { GameReportsTemplate } from '../data/game-reports';
+import { AppLang } from '../data/applang';
 
 export default class SentimentBox extends Component {
 
@@ -9,6 +10,9 @@ export default class SentimentBox extends Component {
   }
 
   render() {
+
+    const applang = this.props.applang;
+    const copy = AppLang.views.gameEnded;
 
     const outcomeFilter = () => {
       if (this.props.beyondScore > this.props.oppScore) {
@@ -24,14 +28,20 @@ export default class SentimentBox extends Component {
       if (this.props.beyondScore > this.props.oppScore) {
         return 0
       } else if (this.props.beyondScore === this.props.oppScore) {
+          // return 1
           return 1
         } else if (this.props.beyondScore < this.props.oppScore) {
             return 2
-          } else return "Game report cannot be processed"
+          } else return copy.error[applang]
     }
 
     const templates = GameReportsTemplate;
     const sentimentFilter = templates[outcomeFilterIndex()][outcomeFilter()].sentiments;
+
+    // const gameOutcome = outcomeFilter();
+    // const outcomeQuestion = copy.sentimentBox.q(gameOutcome)
+    //
+    // console.log(outcomeQuestion);
 
     return (
       <div>

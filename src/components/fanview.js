@@ -58,10 +58,12 @@ export default class Fanview extends Component {
           sentiment={this.props.sentiment}
           oppScore={this.props.oppScore}
           beyondScore={this.props.beyondScore}
+          applang={this.props.applang}
         />
         <HighlightsContainer
           lister={this.props.lister}
           currentButtonState={this.props.currentButtonState}
+          applang={this.props.applang}
         />
       </div>
     );

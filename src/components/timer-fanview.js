@@ -22,7 +22,10 @@ export default class TimerFanview extends Component {
   render() {
     return (
       <div className="stopwatch">
-        <TimeCounter time={this.props.currentTime}/>
+        <TimeCounter
+          time={this.props.currentTime}
+          applang={this.props.applang}
+        />
       </div>
     );
   }

@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
-import {TimerEvents} from '../data/timer-events'
+// import {TimerEvents} from '../data/timer-events';
+import { AppLang } from '../data/applang';
 
 
 export default class TimerState extends Component {
 
   render() {
-    const timerStateEvent = TimerEvents[this.props.currentButtonState + 1].timerEvent;
+
+    const applang = this.props.applang;
+    const timerStateEvent = AppLang.timerEvents[this.props.currentButtonState + 1].timerEvent[applang];
+    // const timerStateEvent = TimerEvents[this.props.currentButtonState + 1].timerEvent;
+
     return (
       <div className="highlight">
         <div className="timer-event">

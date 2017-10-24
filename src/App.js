@@ -52,7 +52,7 @@ class App extends Component {
       data: [],
       pollInterval: 2000,
       tweetUpdates: false,
-      applang: "german"
+      applang: "englishUS"
     }
     this.loadTeamsFromServer = this.loadTeamsFromServer.bind(this);
     this.handleTeamSubmit = this.handleTeamSubmit.bind(this);
@@ -107,6 +107,10 @@ setTeamCode(e){
      this.matchBFCTeam(team);
    }}, 10);
  }
+
+handleLanguageSelected(language){
+   this.setState({ applang: language })
+ };
 
 setScheduleID(team){
   const scheduleID = team.map((team) => team.league.scheduleID)[0];
@@ -504,6 +508,7 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
               <Route exact path="/" render={() => <Redirect to="/welcome" />} />
               <Route path="/welcome" render={() => <Welcome
                 applang={this.state.applang}
+                handleLanguageSelected={this.handleLanguageSelected.bind(this)}
               />} />
               <Route path="/start" render={() => <Start
                 setTeamCode={this.setTeamCode.bind(this)}

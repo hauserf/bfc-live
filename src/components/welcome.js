@@ -1,4 +1,5 @@
 import React from 'react';
+import Languages from './languages';
 import Button from './commons/button';
 import { AppLang } from '../data/applang';
 
@@ -6,6 +7,10 @@ const Welcome = (props) => {
 
   const applang = props.applang;
   const copy = AppLang.views.welcome;
+
+  const handleLanguageSelected = (language) => {
+    props.handleLanguageSelected(language);
+  }
 
   return (
     <div className="flex-con flex-dir-col">
@@ -24,6 +29,9 @@ const Welcome = (props) => {
           <p className="pitch-welcome">{copy.pitch[applang]}</p>
           <img className="bfc-logo" src="hellofc_logo.png" alt="BFC logo" />
         </div>
+        <Languages
+          handleLanguageSelected={handleLanguageSelected}
+        />
     </div>
 
   );

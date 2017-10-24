@@ -66,7 +66,9 @@ export default class BFCLive extends Component {
           currentButtonState={this.props.currentButtonState}
           applang={this.props.applang}
         />
-        <Footer />
+        <Footer
+          applang={this.props.applang}
+        />
       </div>
     );
   }

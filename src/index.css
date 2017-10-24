@@ -134,6 +134,13 @@ input:focus {
   font-family: arial, sans-serif;*/
 }
 
+.applang {
+  margin: 1em 0;
+}
+.langsel {
+  padding: 0 10px;
+}
+
 .sentiment-list-title {
   margin: 10px auto;
   color: #00b2ee;

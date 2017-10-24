@@ -1,26 +1,31 @@
 import React from 'react';
 import PlayerStatsItem from './player-stats-item';
+import { AppLang } from '../data/applang';
 
 const PlayerGameStats = (props) => {
+
+  const applang = props.applang;
+  const copy = AppLang.views.playerDetails;
+
   return (
     <div className="flex-con flex-dir-col">
       <PlayerStatsItem
-        name="Goals"
+        name={copy.playerGameStats.goals[applang]}
       />
       <PlayerStatsItem
-        name="Assists"
+        name={copy.playerGameStats.assists[applang]}
       />
       <PlayerStatsItem
-        name="Passes"
+        name={copy.playerGameStats.passes[applang]}
       />
       <PlayerStatsItem
-        name="Touches"
+        name={copy.playerGameStats.touches[applang]}
       />
       <PlayerStatsItem
-        name="Crosses"
+        name={copy.playerGameStats.crosses[applang]}
       />
       <PlayerStatsItem
-        name="Shots"
+        name={copy.playerGameStats.shots[applang]}
       />
     </div>
   )

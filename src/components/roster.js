@@ -205,7 +205,9 @@ class Roster extends Component {
             </Alert>)
         }
       </div>
-        <Footer />
+        <Footer
+          applang={this.props.applang}
+        />
       </div>
     )
   }

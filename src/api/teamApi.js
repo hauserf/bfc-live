@@ -1,15 +1,17 @@
 export const teamApi = {
-  clubName: "Beyond F.C. New York",
-  clubLogo: "../bg-images/BFCNY_logo_fullcolor.png",
-  clubLocation: "New York",
-  clubWebsite: "BeyondFC.com",
-  clubSocial: {
-    twitterHandle: "@BFCNY",
-    instaHandle: "@BFCNYC",
-    hashtags: [
-      "#GoBeyond",
-      "#WeAreBeyond"
-    ],
+  club: {
+    name: "Beyond F.C. New York",
+    logo: "../bg-images/BFCNY_logo_fullcolor.png",
+    location: "New York",
+    website: "BeyondFC.com",
+    social: {
+      twitterHandle: "@ BFCNY",
+      instaHandle: "@ BFCNYC",
+      hashtags: [
+        "#GoBeyond",
+        "#WeAreBeyond"
+      ],
+    }
   },
   teams: [
     {
@@ -20,8 +22,8 @@ export const teamApi = {
         name: "Cosmopolitan Soccer League",
         division: "Division 2",
         scheduleID: "321",
-        twitterHandle: "@CSL",
-        hashtag: "Div2"
+        twitterHandle: "@ CosmoLeague",
+        hashtag: "# Div2"
       }
     },
     {
@@ -32,8 +34,8 @@ export const teamApi = {
         name: "Cosmopolitan Soccer League",
         division: "Division 2",
         scheduleID: "432",
-        twitterHandle: "@CSL",
-        hashtag: "Div2R"
+        twitterHandle: "@ CosmoLeague",
+        hashtag: "# Div2R"
       }
     }
   ]

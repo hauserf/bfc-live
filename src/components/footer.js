@@ -15,8 +15,6 @@ export default class Footer extends Component {
     const applang = this.props.applang;
     const copy = AppLang.views.footer;
 
-    console.log(copy, applang);
-
     return(
       <div className="navbar-footer footer">
         <NavLink to="/roster" activeStyle={{ background: 'orange', 'textDecoration': 'none', color: '#fff'}} className="footer-col footer-roster">{copy.manager[applang]}</NavLink>

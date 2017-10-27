@@ -83,87 +83,110 @@ app.use(express.static(path.join(__dirname, 'build')));
 ////////////////////////////////////////////////////////
 
 app.post('/api/tweet', (req, res) => {
-  console.log({ origin: req.headers, body: req.body });
+  // console.log({ origin: req.headers, body: req.body });
 
-  //
-  // // create jimp image
-  // const jimpData = req.body.jimpData;
-  // const tweetKey = jimpData.tweetKey;
-  // const scorer = jimpData.scorer;
-  // const min = jimpData.min;
-  // const teamBFC = jimpData.teamBFC;
-  // const teamOPP = jimpData.teamOPP;
-  // const oppScore = jimpData.oppScore;
-  // const beyondScore = jimpData.beyondScore;
-  //
-  //
-  // const jimpText = {
-  //   playerScored: {
-  //     headline: "Goal for Beyond!!!",
-  //     subHeadline: scorer,
-  //     text: `${min} minute`,
-  //     templateImage: "./public/BFCLive_score_template.png"
-  //   },
-  //   gameStarted: {
-  //     headline: "Game on!",
-  //     subHeadline: `${teamBFC} vs`,
-  //     text: `${teamOPP}`,
-  //     templateImage: "./public/BFCLive_events_template.png"
-  //   },
-  //   halfTime: {
-  //     headline: `${beyondScore} : ${oppScore} at halftime`,
-  //     subHeadline: ``,
-  //     text: ``,
-  //     templateImage: "./public/BFCLive_events_template.png"
-  //   },
-  //   secondHalf: {
-  //     headline: `Second half is underway`,
-  //     subHeadline: `${teamBFC} ${beyondScore}`,
-  //     text: `${teamOPP} ${oppScore}`,
-  //     templateImage: "./public/BFCLive_events_template.png"
-  //   },
-  //   finalScore: {
-  //     headline: "Game ended",
-  //     subHeadline: `${teamBFC} ${beyondScore}`,
-  //     text: `${teamOPP} ${oppScore}`,
-  //     templateImage: "./public/BFCLive_events_template.png"
-  //   }
-  // };
-  //
-  // const headline = jimpText[tweetKey].headline;
-  // const subHeadline = jimpText[tweetKey].subHeadline;
-  // const text = jimpText[tweetKey].text;
-  //
-  // var date = new Date();
-  // var timestamp = date.getTime();
-  //
-  // const templateImage = jimpText[tweetKey].templateImage;
-  // const savedImagePath = `./public/jimps/BFCLive_${timestamp}.jpg`;
-  //
-  //
-  //
-  // Jimp.read(templateImage, function (err, img) {
-  //     if (err) throw err;
-  //     Jimp.loadFont( Jimp.FONT_SANS_32_WHITE ).then(function (font) { // load font from .fnt file
-  //     img.print(font, 20, 20, headline)
-  //     img.print(font, 20, 100, subHeadline)
-  //     img.print(font, 20, 140, text)
-  //     img.scaleToFit( 400, 300)
-  //           .write(savedImagePath); // save
-  //     // image.print(font, x, y, str, width); // print a message on an image with text wrapped at width
-  // });
-  // });
 
-  // Merge images
-  mergeImages([
-    { src: './public/BFCLive_events_template.png', x: 0, y: 0 },
-    { src: './public/BFCNY_logo_fullcolor.png', x: 150, y: 80 },
-    { src: './public/manu.png', x: 350, y: 60 }
-  ], {
-    Canvas: Canvas
+  // use cases affect selection of media templates for tweets
+  // as well as flow of posts (w/ or w/o media)
+  // (1) club: branded templates (BFCNY)
+  // (2) league: branded templates (CSL)
+  // (3) tbd
+
+  // const useCase = "club"
+
+  // create jimp image
+  const jimpData = req.body.jimpData;
+  const tweetKey = jimpData.tweetKey;
+  const scorer = jimpData.scorer;
+  const min = jimpData.min;
+  const teamBFC = jimpData.teamBFC;
+  const teamOPP = jimpData.teamOPP;
+  const oppScore = jimpData.oppScore;
+  const beyondScore = jimpData.beyondScore;
+  var oppLogo = "";
+  var teamID = "";
+
+  console.log(teamOPP);
+
+  if (teamOPP[0] !== "Opponent") {
+    teamID = jimpData.bfcDetails[0].id;
+    oppLogo = jimpData.oppDetails[0].logo;
+  } else {
+    teamID = "00000";
+    oppLogo = "./public/00000/logo_placeholder.png";
+  }
+
+  const playerScoredTemplate = `./public/${teamID}/templates/playerScored_template.png`;
+  const gameStartedTemplate = `./public/${teamID}/templates/gameStarted_template.png`;
+  const halfTimeTemplate = `./public/${teamID}/templates/halfTime_template.png`;
+  const secondHalfTemplate = `./public/${teamID}/templates/secondHalf_template.png`;
+  const finalScoreTemplate = `./public/${teamID}/templates/finalScore_template.png`;
+
+  ////////////MEDIA === JIMP////////////////////////
+
+
+  const jimpText = {
+    playerScored: {
+      headline: "Goal for Beyond!!!",
+      subHeadline: scorer,
+      text: `${min} minute`,
+      templateImage: playerScoredTemplate
+    },
+    gameStarted: {
+      headline: "Game on!",
+      subHeadline: `${teamBFC} vs`,
+      text: `${teamOPP}`,
+      templateImage: gameStartedTemplate
+    },
+    halfTime: {
+      headline: `${beyondScore} : ${oppScore} at halftime`,
+      subHeadline: ``,
+      text: ``,
+      templateImage: halfTimeTemplate
+    },
+    secondHalf: {
+      headline: `Second half is underway`,
+      subHeadline: `${teamBFC} ${beyondScore}`,
+      text: `${teamOPP} ${oppScore}`,
+      templateImage: secondHalfTemplate
+    },
+    finalScore: {
+      headline: "Game ended",
+      subHeadline: `${teamBFC} ${beyondScore}`,
+      text: `${teamOPP} ${oppScore}`,
+      templateImage: finalScoreTemplate
+    }
+  };
+
+  const headline = jimpText[tweetKey].headline;
+  const subHeadline = jimpText[tweetKey].subHeadline;
+  const text = jimpText[tweetKey].text;
+
+  var date = new Date();
+  var timestamp = date.getTime();
+  //
+  const templateImage = jimpText[tweetKey].templateImage;
+  const savedImagePath = `./public/jimps/BFCLive_${timestamp}.jpg`;
+  //
+  //
+  //
+  Jimp.read(templateImage, function (err, img) {
+      if (err) throw err;
+      Jimp.loadFont( Jimp.FONT_SANS_128_WHITE ).then(function (font) { // load font from .fnt file
+      img.print(font, 20, 20, headline)
+      img.print(font, 20, 100, subHeadline)
+      img.print(font, 20, 140, text)
+      // img.scaleToFit( 400, 300)
+            .write(savedImagePath); // save
+      // image.print(font, x, y, str, width); // print a message on an image with text wrapped at width
   })
-  .then(base64String => {
-    const base64Image = base64String.split(';base64,').pop();
+  })
+  // .then(savedImagePath => {
+
+  setTimeout(() => {
+    var base64Image = fs.readFileSync(savedImagePath, { encoding: 'base64' })
+    // const base64Image = base64String.split(';base64,').pop();
+    console.log(base64Image);
     // first we must post the media to Twitter
     twitter.post('media/upload', { media_data: base64Image }, function (err, data, response) {
       if (err) {
@@ -172,7 +195,7 @@ app.post('/api/tweet', (req, res) => {
         // now we can assign alt text to the media, for use by screen readers and
         // other text-based presentations and interpreters
         var mediaIdStr = data.media_id_string
-        var altText = "BFC game updates"
+        var altText = "Updates via HelloFC app"
         var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
 
         twitter.post('media/metadata/create', meta_params, function (err, data, response) {
@@ -190,10 +213,54 @@ app.post('/api/tweet', (req, res) => {
         })
       }
     })
-  })
-  .catch(err => {
-    console.log(err);
-  });
+  }, 3000)
+  // })
+  // .catch(err => {
+  //   console.log(err);
+  // });
+
+  //   ////////////MEDIA === MERGE IMAGES////////////////////////
+  //
+  // // Merge images
+  // mergeImages([
+  //   { src: './public/BFCLive_events_template.png', x: 0, y: 0 },
+  //   { src: './public/field.png', x: 150, y: 80 },
+  //   { src: './public/goal.png', x: 350, y: 60 }
+  // ], {
+  //   Canvas: Canvas
+  // })
+  // .then(base64String => {
+  //   const base64Image = base64String.split(';base64,').pop();
+  //   // first we must post the media to Twitter
+  //   twitter.post('media/upload', { media_data: base64Image }, function (err, data, response) {
+  //     if (err) {
+  //       console.log(err);
+  //     } else {
+  //       // now we can assign alt text to the media, for use by screen readers and
+  //       // other text-based presentations and interpreters
+  //       var mediaIdStr = data.media_id_string
+  //       var altText = "BFC game updates"
+  //       var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
+  //
+  //       twitter.post('media/metadata/create', meta_params, function (err, data, response) {
+  //         if (err) {
+  //             console.log(err);
+  //         } else {
+  //           // now we can reference the media and post a tweet (media will attach to the tweet)
+  //           const tweet = req.body.tweet;
+  //           var params = { status: tweet, media_ids: [mediaIdStr] }
+  //           twitter.post('statuses/update', params, (err, data, response) => {
+  //             console.log(data)
+  //             if (err) console.log(err);
+  //           });
+  //         }
+  //       })
+  //     }
+  //   })
+  // })
+  // .catch(err => {
+  //   console.log(err);
+  // });
 });
 
 ///////////////////////// END ///////////////////////////////

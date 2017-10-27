@@ -27,6 +27,7 @@ import { findById, togglePlayer, updatePlayer } from './lib/rosterHelpers'
 
 var timer;
 const apiURL = 'http://localhost:3001/api/v1/teams';
+const clubDetails = teamApi.club;
 
 class App extends Component {
 
@@ -43,6 +44,8 @@ class App extends Component {
       lengthOfGame: 5400,
       teamBFC: ["Beyond FC"],
       teamOPP: ["Opponent"],
+      bfcDetails: {},
+      oppDetails: {},
       beyondScore: 0,
       oppScore: 0,
       currentButtonState: 0,
@@ -124,8 +127,9 @@ setScheduleID(team){
 };
 
 matchBFCTeam(team) {
+  const bfcDetails = team.map((team) => team);
   const teamBFC = team.map((team) => team.name);
-  this.setState({ teamBFC });
+  this.setState({ teamBFC, bfcDetails });
   if (team.length !== 0) {
     this.setState({ teamCodeMatched: true })
   }
@@ -134,16 +138,18 @@ matchBFCTeam(team) {
 matchOPPTeam(scheduleID) {
   const schedules = scheduleApi;
   const schedule = schedules.filter((schedule) => schedule.id === scheduleID);
-  const teamOPP = schedule[0].games.filter((game) => game.gameDay === 2).map((game) => game.opponent);
-  this.setState({ teamOPP });
+  const oppDetails = schedule[0].games.filter((game) => game.gameDay === 2).map((game) => game.opponent);
+  const teamOPP = schedule[0].games.filter((game) => game.gameDay === 2).map((game) => game.opponent.teamName);
+  this.setState({ teamOPP, oppDetails });
 };
+
+
 
 matchLengthOfHalf(scheduleID) {
   const schedules = scheduleApi;
   const schedule = schedules.filter((schedule) => schedule.id === scheduleID);
   const lengthOfHalf = schedule[0].lengthOfHalfs;
   this.setState({ lengthOfHalf });
-  console.log(lengthOfHalf);
 }
 
 
@@ -278,8 +284,12 @@ matchLengthOfHalf(scheduleID) {
 
       const beyondScore = this.state.beyondScore;
       const oppScore = this.state.oppScore;
+      const bfcDetails = this.state.bfcDetails;
+      const oppDetails = this.state.oppDetails;
 
-      this.triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle)
+      const tweetArgs = [tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle, clubDetails, bfcDetails, oppDetails]
+
+      this.triggerTweet(...tweetArgs)
 
     }, 3000);
   }
@@ -339,13 +349,19 @@ matchLengthOfHalf(scheduleID) {
         const min = (Math.ceil(this.state.timeLive / 60)) + "'";
         const teamBFC = this.state.teamBFC;
         const teamOPP = this.state.teamOPP;
+        const bfcDetails = this.state.bfcDetails;
+        const oppDetails = this.state.oppDetails;
 
         setTimeout(() => {
 
           const beyondScore = this.state.beyondScore;
           const oppScore = this.state.oppScore;
+          const scorer = "";
+          const scorerHandle = "";
 
-          this.triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore)
+          const tweetArgs = [tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle, clubDetails, bfcDetails, oppDetails]
+
+          this.triggerTweet(...tweetArgs)
 
         }, 3000);
       }
@@ -362,14 +378,17 @@ toggleTweetUpdates(e) {
 // const urlParams = new URLSearchParams(window.location.search);
 
 // const tweet = urlParams.get('tweet') || 'The opponent has scored a goal!';
-triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle) {
+triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle, clubDetails, bfcDetails, oppDetails) {
 
+
+  console.log(teamBFC);
   const tweetUpdates = this.state.tweetUpdates;
 
   if (tweetUpdates) {
     // const tweet = `${this.state.teamOPP} has scored a goal!`;
-    const tweet = Tweets(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle);
-    const jimpData = {tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle}
+    const tweet = Tweets(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle, clubDetails, bfcDetails, oppDetails);
+    // const jimpData = "";
+    const jimpData = {tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle, clubDetails, bfcDetails, oppDetails}
 
     axios.post('/api/tweet', { tweet, jimpData })
         .then(response => {
@@ -430,8 +449,15 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
       const teamOPP = this.state.teamOPP;
       const beyondScore = this.state.beyondScore;
       const oppScore = this.state.oppScore;
+      const bfcDetails = this.state.bfcDetails;
+      const oppDetails = this.state.oppDetails;
+      const scorer = "";
+      const scorerHandle = "";
 
-      this.triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore);
+      const tweetArgs = [tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle, clubDetails, bfcDetails, oppDetails]
+
+
+      this.triggerTweet(...tweetArgs);
     }
 
     snapTimerState();

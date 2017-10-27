@@ -9,22 +9,43 @@ export const scheduleApi = [
         gameDay: 1,
         date: "",
         kickoff: "",
-        opponent: "Polonia Gwardia NY",
+        opponent: {
+          teamName: "Polonia Gwardia NY",
+          logo: "",
+          oppSocial: {
+            twitterHandle: "@ Polonia",
+            instaHandle: ""
+          }
+        }
       },
       {
         id: "002",
         gameDay: 2,
         date: "",
         kickoff: "",
-        opponent: "Panatha USA",
+        opponent: {
+          teamName: "Panatha USA",
+          logo: "555uytsgt.png",
+          oppSocial: {
+            twitterHandle: "@ Panatha",
+            instaHandle: ""
+          }
+        }
       },
       {
         id: "003",
         gameDay: 3,
         date: "",
         kickoff: "",
-        opponent: "Miami Kickers",
-      }
+        opponent: {
+          teamName: "Miami Kickers",
+          logo: "xyz",
+          oppSocial: {
+            twitterHandle: "@ Miami",
+            instaHandle: ""
+          }
+        }
+      },
     ]
   },
   {
@@ -37,21 +58,42 @@ export const scheduleApi = [
         gameDay: 1,
         date: "",
         kickoff: "",
-        opponent: "Polonia Gwardia NY",
+        opponent: {
+          teamName: "Polonia Gwardia NY",
+          logo: "ukjdhks.png",
+          oppSocial: {
+            twitterHandle: "@ Gwardia",
+            instaHandle: ""
+          }
+        }
       },
       {
         id: "002",
         gameDay: 2,
         date: "",
         kickoff: "",
-        opponent: "PFC Reserve",
+        opponent: {
+          teamName: "PFC Reserve",
+          logo: "iykjnbvvcc.png",
+          oppSocial: {
+            twitterHandle: "@ PFC",
+            instaHandle: ""
+          }
+        }
       },
       {
         id: "003",
         gameDay: 3,
         date: "",
         kickoff: "",
-        opponent: "MK Reserve",
+        opponent: {
+          teamName: "MK Reserve",
+          logo: "",
+          oppSocial: {
+            twitterHandle: "@ MK",
+            instaHandle: ""
+          }
+        }
       }
     ]
   }

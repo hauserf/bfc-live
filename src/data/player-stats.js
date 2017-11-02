@@ -1,8 +1,8 @@
 export const PlayerStats = [
   {
     id: "101",
-    firstName: "Andres",
-    lastName: "Guarneros",
+    firstName: "James",
+    lastName: "Leavy",
     playerActive: false,
     minutesPlayed: 0,
     startingEleven: false,

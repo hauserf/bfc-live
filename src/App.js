@@ -286,8 +286,9 @@ matchLengthOfHalf(scheduleID) {
       const oppScore = this.state.oppScore;
       const bfcDetails = this.state.bfcDetails;
       const oppDetails = this.state.oppDetails;
+      const applang = this.state.applang;
 
-      const tweetArgs = [tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle, clubDetails, bfcDetails, oppDetails]
+      const tweetArgs = [tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle, clubDetails, bfcDetails, oppDetails, applang]
 
       this.triggerTweet(...tweetArgs)
 
@@ -358,8 +359,9 @@ matchLengthOfHalf(scheduleID) {
           const oppScore = this.state.oppScore;
           const scorer = "";
           const scorerHandle = "";
+          const applang = this.state.applang;
 
-          const tweetArgs = [tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle, clubDetails, bfcDetails, oppDetails]
+          const tweetArgs = [tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle, clubDetails, bfcDetails, oppDetails, applang]
 
           this.triggerTweet(...tweetArgs)
 
@@ -378,7 +380,7 @@ toggleTweetUpdates(e) {
 // const urlParams = new URLSearchParams(window.location.search);
 
 // const tweet = urlParams.get('tweet') || 'The opponent has scored a goal!';
-triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle, clubDetails, bfcDetails, oppDetails) {
+triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle, clubDetails, bfcDetails, oppDetails, applang) {
 
 
   console.log(teamBFC);
@@ -386,9 +388,9 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
 
   if (tweetUpdates) {
     // const tweet = `${this.state.teamOPP} has scored a goal!`;
-    const tweet = Tweets(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle, clubDetails, bfcDetails, oppDetails);
+    const tweet = Tweets(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle, clubDetails, bfcDetails, oppDetails, applang);
     // const jimpData = "";
-    const jimpData = {tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle, clubDetails, bfcDetails, oppDetails}
+    const jimpData = {tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle, clubDetails, bfcDetails, oppDetails, applang}
 
     axios.post('/api/tweet', { tweet, jimpData })
         .then(response => {
@@ -453,8 +455,9 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
       const oppDetails = this.state.oppDetails;
       const scorer = "";
       const scorerHandle = "";
+      const applang = this.state.applang;
 
-      const tweetArgs = [tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle, clubDetails, bfcDetails, oppDetails]
+      const tweetArgs = [tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, scorerHandle, clubDetails, bfcDetails, oppDetails, applang]
 
 
       this.triggerTweet(...tweetArgs);

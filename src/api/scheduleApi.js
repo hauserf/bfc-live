@@ -24,10 +24,10 @@ export const scheduleApi = [
         date: "",
         kickoff: "",
         opponent: {
-          teamName: "Panatha USA",
+          teamName: "NY Cosmos",
           logo: "555uytsgt.png",
           oppSocial: {
-            twitterHandle: "@ Panatha",
+            twitterHandle: "@ NYCosmos",
             instaHandle: ""
           }
         }

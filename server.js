@@ -127,17 +127,23 @@ app.post('/api/tweet', (req, res) => {
 
   const jimpText = {
     playerScored: {
-      headline: "Goal for Beyond!!!",
+      headline: "",
       subHeadline: scorer,
       text: `${min} minute`,
       templateImage: playerScoredTemplate
     },
     gameStarted: {
-      headline: "Game on!",
-      subHeadline: `${teamBFC} vs`,
-      text: `${teamOPP}`,
+      headline: "",
+      subHeadline: "",
+      text: "",
       templateImage: gameStartedTemplate
     },
+    // gameStarted: {
+    //   headline: "Game on!",
+    //   subHeadline: `${teamBFC} vs`,
+    //   text: `${teamOPP}`,
+    //   templateImage: gameStartedTemplate
+    // },
     halfTime: {
       headline: `${beyondScore} : ${oppScore} at halftime`,
       subHeadline: ``,
@@ -172,10 +178,10 @@ app.post('/api/tweet', (req, res) => {
   //
   Jimp.read(templateImage, function (err, img) {
       if (err) throw err;
-      Jimp.loadFont( Jimp.FONT_SANS_128_WHITE ).then(function (font) { // load font from .fnt file
+      Jimp.loadFont( Jimp.FONT_SANS_64_WHITE ).then(function (font) { // load font from .fnt file
       img.print(font, 20, 20, headline)
-      img.print(font, 20, 100, subHeadline)
-      img.print(font, 20, 140, text)
+      img.print(font, 55, 150, subHeadline)
+      img.print(font, 55, 210, text)
       // img.scaleToFit( 400, 300)
             .write(savedImagePath); // save
       // image.print(font, x, y, str, width); // print a message on an image with text wrapped at width

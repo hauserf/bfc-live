@@ -3,14 +3,14 @@ export const AppLang = {
     manager: {
       englishUS: "Manager View",
       german: "Manager",
-      french: "",
+      french: "Manager",
       italian: "",
       spanish: ""
     },
     fan: {
       englishUS: "Fan View",
       german: "Fan",
-      french: "",
+      french: "Supporter",
       italian: "",
       spanish: ""
     }
@@ -20,7 +20,7 @@ export const AppLang = {
       accessText: {
         englishUS: "Access as",
         german: "App nutzen als",
-        french: "",
+        french: "Accéder en tant que",
         italian: "",
         spanish: ""
       },
@@ -28,14 +28,14 @@ export const AppLang = {
         manager: {
           englishUS: "Manager",
           german: "Manager",
-          french: "",
+          french: "Manager",
           italian: "",
           spanish: ""
         },
         player: {
           englishUS: "Player",
           german: "Spieler",
-          french: "",
+          french: "Joueur",
           italian: "",
           spanish: ""
         }
@@ -43,7 +43,7 @@ export const AppLang = {
       pitch: {
         englishUS: "One click live stats, social updates and game reports for clubs and leagues. Powered by",
         german: "Live-Statistiken, Social Media Posts and Spielberichte für Vereine und Ligen mit nur einem Klick",
-        french: "",
+        french: "Statistiques en direct, mises à jour sociales et rapports de matchs pour les clubs et les ligues. Réalisé par",
         italian: "",
         spanish: ""
       }
@@ -53,7 +53,7 @@ export const AppLang = {
       teamCode: {
         englishUS: "Enter Team Code",
         german: "Mannschafts-Code eingeben",
-        french: "",
+        french: "Saisir le Code Équipe",
         italian: "",
         spanish: ""
       }
@@ -64,28 +64,28 @@ export const AppLang = {
         startingPlayers: {
           englishUS: "Starting Players ",
           german: "Startaufstellung ",
-          french: "",
+          french: "Joueurs de Départ ",
           italian: "",
           spanish: ""
         },
         currentlyPlaying: {
           englishUS: "Currently Playing ",
           german: "Momentan auf dem Feld ",
-          french: "",
+          french: "En Train de Jouer ",
           italian: "",
           spanish: ""
         },
         availableRoster: {
           englishUS: "Available Roster ",
           german: "Im Kader ",
-          french: "",
+          french: "Liste des Joueurs Disponible ",
           italian: "",
           spanish: ""
         },
         subs: {
           englishUS: "Subs ",
           german: "Wechselspieler ",
-          french: "",
+          french: "Remplaçants ",
           italian: "",
           spanish: ""
         }
@@ -94,7 +94,7 @@ export const AppLang = {
         selectPlayers: {
           englishUS: 'Select players from "Available Roster" to track playing time and record goals and assists.',
           german: 'Wähle Spieler von "Im Kader", um Tore, Vorlagen und gespielte Minuten zu erfassen.',
-          french: "",
+          french: 'Sélectionnez les joueurs de la "Liste des Joueurs Disponible" pour suivre le temps de jeu et enregistrer les buts et les passes',
           italian: "",
           spanish: ""
         }
@@ -104,14 +104,14 @@ export const AppLang = {
           alert: {
             englishUS: "Automatic twitter updates are turned off by default. Click 'ACTIVATE' to activate updates using the club's official Twitter account @BFCNY.",
             german: "Automatische Twitter-Updates sind momentan nicht aktiviert. Klicke 'AKTIVIEREN', um Twitter updates über das Twitterkonto des Vereins zu aktivieren.",
-            french: "",
+            french: 'Les mises à jour automatiques de Twitter sont désactivées par défaut. Cliquez sur "ACTIVATER" pour activer les mises à jour en utilisant le compte Twitter officiel du club',
             italian: "",
             spanish: ""
           },
           btn: {
             englishUS: "ACTIVATE",
             german: "AKTIVIEREN",
-            french: "",
+            french: "ACTIVER",
             italian: "",
             spanish: ""
           }
@@ -120,14 +120,14 @@ export const AppLang = {
           alert: {
             englishUS: "Automatic twitter updates are currently turned on. Click 'DEACTIVATE' to deactivate twitter updates.",
             german: "Automatische Twitter-Updates sind aktiviert. Klicke 'DEAKTIVIEREN', um Twitter updates über das Twitterkonto des Vereins zu deaktivieren.",
-            french: "",
+            french: "Les mises à jour automatiques de Twitter sont actuellement activées. Cliquez sur 'DÉSACTIVER' pour désactiver les mises à jour de Twitter.",
             italian: "",
             spanish: ""
           },
           btn: {
             englishUS: "DEACTIVATE",
             german: "DEAKTIVIEREN",
-            french: "",
+            french: "DESACTIVER",
             italian: "",
             spanish: ""
           }
@@ -139,14 +139,14 @@ export const AppLang = {
         playerGameStats: {
           englishUS: "Player Game Stats",
           german: "Spieler Statistik zum Spiel",
-          french: "",
+          french: "Statistiques de match du joueur",
           italian: "",
           spanish: ""
         },
         healthPerformance: {
           englishUS: "Health & Performance",
           german: "Gesundheits- und Leistungsdaten",
-          french: "",
+          french: "Santé et performance",
           italian: "",
           spanish: ""
         }
@@ -155,42 +155,42 @@ export const AppLang = {
         goals: {
           englishUS: "Goals",
           german: "Tore",
-          french: "",
+          french: "Buts",
           italian: "",
           spanish: ""
         },
         assists: {
           englishUS: "Assists",
           german: "Vorlagen",
-          french: "",
+          french: "Passes Décisives",
           italian: "",
           spanish: ""
         },
         passes: {
           englishUS: "Passes",
           german: "Pässe",
-          french: "",
+          french: "Passes",
           italian: "",
           spanish: ""
         },
         touches: {
           englishUS: "Touches",
           german: "Ballberührungen",
-          french: "",
+          french: "Touches de Balle",
           italian: "",
           spanish: ""
         },
         crosses: {
           englishUS: "Crosses",
           german: "Flanken",
-          french: "",
+          french: "Centres",
           italian: "",
           spanish: ""
         },
         shots: {
           englishUS: "Shots",
           german: "Torschüsse",
-          french: "",
+          french: "Tirs",
           italian: "",
           spanish: ""
         }
@@ -199,28 +199,28 @@ export const AppLang = {
         heartRate: {
           englishUS: "Heart rate",
           german: "Puls",
-          french: "",
+          french: "Rythme cardiaque",
           italian: "",
           spanish: ""
         },
         distance: {
           englishUS: "Distance",
           german: "Distanz",
-          french: "",
+          french: "Distance",
           italian: "",
           spanish: ""
         },
         sprints: {
           englishUS: "# of Sprints",
           german: "Anzahl der Sprints",
-          french: "",
+          french: "# de Sprints",
           italian: "",
           spanish: ""
         },
         maxSpeed: {
           englishUS: "Max Speed",
           german: "Max. Geschwindigkeit",
-          french: "",
+          french: "Vitesse Maximum",
           italian: "",
           spanish: ""
         },
@@ -228,15 +228,15 @@ export const AppLang = {
       connectDevice: {
         alert: {
           englishUS: "To import health and performance data, first connect your tracking device.",
-          german: "Mit Fitness- und Health-Tracker verbinden, um Daten zu importieren",
-          french: "",
+          german: "Mit Fitness- und Health-Tracker verbinden, um Daten zu importieren.",
+          french: "Pour importer des données de santé et de performances, connectez d'abord votre périphérique de suivi.",
           italian: "",
           spanish: ""
         },
         btn: {
           englishUS: "Connect device",
           german: "Mit Tracker verbinden",
-          french: "",
+          french: "Connecter l'appareil",
           italian: "",
           spanish: ""
         }
@@ -249,14 +249,14 @@ export const AppLang = {
       gameEnded: {
         englishUS: "Game ended",
         german: "Das Spiel is zu Ende",
-        french: "",
+        french: "Match terminé",
         italian: "",
         spanish: ""
       },
       error: {
         englishUS: "Game report cannot be processed",
         german: "Der Spielbericht konnte nicht generiert werden",
-        french: "",
+        french: "Le rapport de jeu ne peut pas être traité",
         italian: "",
         spanish: ""
       }
@@ -265,14 +265,14 @@ export const AppLang = {
       manager: {
         englishUS: "Manager view",
         german: "Manager",
-        french: "",
+        french: "Manager",
         italian: "",
         spanish: ""
       },
       fan: {
         englishUS: "Fan view",
         german: "Fan",
-        french: "",
+        french: "Supporter",
         italian: "",
         spanish: ""
       }
@@ -284,14 +284,14 @@ export const AppLang = {
       btnName: {
         englishUS: "Start Game",
         german: "Starte das Spiel",
-        french: "",
+        french: "Démarrer le Match",
         italian: "",
         spanish: ""
       },
       timerEvent: {
         englishUS: "Waiting for Kickoff",
         german: "Wir warten auf den Anpfiff",
-        french: "",
+        french: "En attente du coup d'envoi",
         italian: "",
         spanish: ""
       }
@@ -301,7 +301,7 @@ export const AppLang = {
       btnName: {
         englishUS: "End 1st Half",
         german: "Halbzeit",
-        french: "",
+        french: "Terminer la 1ere Mi-Temps",
         italian: "",
         spanish: ""
       },
@@ -318,14 +318,14 @@ export const AppLang = {
       btnName: {
         englishUS: "Start 2nd Half",
         german: "Starte 2. Halbzeit",
-        french: "",
+        french: "Démarrer la 2ème mi-temps",
         italian: "",
         spanish: ""
       },
       timerEvent: {
         englishUS: "First Half Ended",
         german: "Die erste Halbzeit endet",
-        french: "",
+        french: "Fin de la 1ere Mi-Temps",
         italian: "",
         spanish: ""
       }
@@ -335,14 +335,14 @@ export const AppLang = {
       btnName: {
         englishUS: "End 2nd Half",
         german: "Abpfiff",
-        french: "",
+        french: "Terminer la 2eme Mi-Temps",
         italian: "",
         spanish: ""
       },
       timerEvent: {
         englishUS: "Second Half Begins",
         german: "Die zweite Halbzeit beginnt",
-        french: "",
+        french: "Début de la 2eme Mi-Temps",
         italian: "",
         spanish: ""
       }
@@ -352,14 +352,14 @@ export const AppLang = {
       btnName: {
         englishUS: "Game Ended",
         german: "Das Spiel hat geendet",
-        french: "",
+        french: "Match Terminé",
         italian: "",
         spanish: ""
       },
       timerEvent: {
         englishUS: "Second Half Ended",
         german: "Die zweite Halbzeit endet",
-        french: "",
+        french: "Fin de la 2eme Mi-Temps",
         italian: "",
         spanish: ""
       }

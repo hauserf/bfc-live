@@ -16,7 +16,67 @@ export const Tweets = (tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, s
 
   console.log(leagueTwitterHandle, clubDetails, min, oppTwitterHandle);
 
-  const twitterUpdates = {
+  // const twitterUpdates = {
+  //   gameStarted: [
+  //     `${teamBFC} vs ${teamOPP} is underway! ${bfcTwitterHandle} ${oppTwitterHandle} ${leagueTwitterHandle}`,
+  //     `${teamBFC} vs ${teamOPP} Let's go! ${bfcTwitterHandle} ${oppTwitterHandle} ${leagueTwitterHandle}`
+  //   ],
+  //   halfTime: [
+  //     `It's halftime in NYC: ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP}`,
+  //     `First half ends: ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP}`
+  //   ],
+  //   secondHalf: [
+  //     `And we're back! ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${bfcTwitterHandle} ${oppTwitterHandle} ${leagueTwitterHandle}`,
+  //     `Second half begins ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${bfcTwitterHandle} ${oppTwitterHandle} ${leagueTwitterHandle}`,
+  //   ],
+  //   finalScore: [
+  //     `Final score ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${bfcTwitterHandle} ${oppTwitterHandle} ${leagueTwitterHandle}`,
+  //     `And here's the final whistle: ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${bfcTwitterHandle} ${oppTwitterHandle} ${leagueTwitterHandle}`
+  //   ],
+  //   opponentScored: [
+  //     `${teamOPP} scored in the ${min} min. ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${oppTwitterHandle}`
+  //   ],
+  //   BFCTeamScored: [
+  //     `Beyond F.C. scores again.`
+  //   ],
+  //   playerScored: [
+  //     `${scorer} scores for ${teamBFC} in the ${min} min. ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${bfcTwitterHandle} ${leagueTwitterHandle}`,
+  //     `${scorer} scores for ${teamBFC} against ${teamOPP} in the ${min} min of the game. ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${bfcTwitterHandle}`,
+  //     `Goal for ${teamBFC}! ${scorer} scores in the ${min} min. ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${bfcTwitterHandle}`
+  //   ]
+  // }
+
+  const germanTweets = {
+    gameStarted: [
+      `GER ${teamBFC} vs ${teamOPP} is underway! ${bfcTwitterHandle} ${oppTwitterHandle} ${leagueTwitterHandle}`,
+      `GER ${teamBFC} vs ${teamOPP} Let's go! ${bfcTwitterHandle} ${oppTwitterHandle} ${leagueTwitterHandle}`
+    ],
+    halfTime: [
+      `It's halftime in NYC: ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP}`,
+      `First half ends: ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP}`
+    ],
+    secondHalf: [
+      `And we're back! ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${bfcTwitterHandle} ${oppTwitterHandle} ${leagueTwitterHandle}`,
+      `Second half begins ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${bfcTwitterHandle} ${oppTwitterHandle} ${leagueTwitterHandle}`,
+    ],
+    finalScore: [
+      `Final score ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${bfcTwitterHandle} ${oppTwitterHandle} ${leagueTwitterHandle}`,
+      `And here's the final whistle: ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${bfcTwitterHandle} ${oppTwitterHandle} ${leagueTwitterHandle}`
+    ],
+    opponentScored: [
+      `${teamOPP} scored in the ${min} min. ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${oppTwitterHandle}`
+    ],
+    BFCTeamScored: [
+      `Beyond F.C. scores again.`
+    ],
+    playerScored: [
+      `${scorer} scores for ${teamBFC} in the ${min} min. ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${bfcTwitterHandle} ${leagueTwitterHandle}`,
+      `${scorer} scores for ${teamBFC} against ${teamOPP} in the ${min} min of the game. ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${bfcTwitterHandle}`,
+      `Goal for ${teamBFC}! ${scorer} scores in the ${min} min. ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${bfcTwitterHandle}`
+    ]
+  }
+
+  const englishUSTweets = {
     gameStarted: [
       `${teamBFC} vs ${teamOPP} is underway! ${bfcTwitterHandle} ${oppTwitterHandle} ${leagueTwitterHandle}`,
       `${teamBFC} vs ${teamOPP} Let's go! ${bfcTwitterHandle} ${oppTwitterHandle} ${leagueTwitterHandle}`
@@ -46,52 +106,18 @@ export const Tweets = (tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, s
     ]
   }
 
-  // const germanTweets = {
-  //
-  // }
-  //
-  // const englishUSTweets = {
-  //   gameStarted: [
-  //     `${teamBFC} vs ${teamOPP} is underway! ${bfcTwitterHandle} ${oppTwitterHandle} ${leagueTwitterHandle}`,
-  //     `${teamBFC} vs ${teamOPP} Let's go! ${bfcTwitterHandle} ${oppTwitterHandle} ${leagueTwitterHandle}`
-  //   ],
-  //   halfTime: [
-  //     `It's halftime in NYC: ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP}`,
-  //     `First half ends: ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP}`
-  //   ],
-  //   secondHalf: [
-  //     `And we're back! ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${bfcTwitterHandle} ${oppTwitterHandle} ${leagueTwitterHandle}`,
-  //     `Second half begins ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${bfcTwitterHandle} ${oppTwitterHandle} ${leagueTwitterHandle}`,
-  //   ],
-  //   finalScore: [
-  //     `Final score ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${bfcTwitterHandle} ${oppTwitterHandle} ${leagueTwitterHandle}`,
-  //     `And here's the final whistle: ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${bfcTwitterHandle} ${oppTwitterHandle} ${leagueTwitterHandle}`
-  //   ],
-  //   opponentScored: [
-  //     `${teamOPP} scored in the ${min} min. ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${oppTwitterHandle}`
-  //   ],
-  //   BFCTeamScored: [
-  //     `Beyond F.C. scores again.`
-  //   ],
-  //   playerScored: [
-  //     `${scorer} scores for ${teamBFC} in the ${min} min. ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${bfcTwitterHandle} ${leagueTwitterHandle}`,
-  //     `${scorer} scores for ${teamBFC} against ${teamOPP} in the ${min} min of the game. ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${bfcTwitterHandle}`,
-  //     `Goal for ${teamBFC}! ${scorer} scores in the ${min} min. ${teamBFC} ${beyondScore} : ${oppScore} ${teamOPP} ${bfcTwitterHandle}`
-  //   ]
-  // }
-  //
-  // const frenchTweets = {
-  //
-  // }
+  const frenchTweets = {
 
-  // const twitterUpdates = `${applang + "Tweets"}`;
-  // const lang = twitterUpdates;
-  // console.log(`${applang}Tweets`, lang, englishUSTweets);
-  // const tweetVersions = twitterUpdates[tweetKey].length;
-  // const update = twitterUpdates[tweetKey][Math.floor(Math.random() * tweetVersions)];
+  }
 
+  const twitterUpdates = eval(`${applang}Tweets`);
+  const lang = twitterUpdates;
+  console.log(`${applang}Tweets`, lang, englishUSTweets);
   const tweetVersions = twitterUpdates[tweetKey].length;
   const update = twitterUpdates[tweetKey][Math.floor(Math.random() * tweetVersions)];
+
+  // const tweetVersions = twitterUpdates[tweetKey].length;
+  // const update = twitterUpdates[tweetKey][Math.floor(Math.random() * tweetVersions)];
 
   return update
 };

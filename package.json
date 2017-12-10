@@ -25,7 +25,8 @@
     "react-router-dom": "^4.1.1",
     "rebuild": "^0.1.2",
     "semantic-ui-react": "^0.71.4",
-    "twit": "^2.2.9"
+    "twit": "^2.2.9",
+    "twitter": "^1.7.1"
   },
   "devDependencies": {
     "nodemon": "^1.11.0",

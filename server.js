@@ -12,12 +12,12 @@ const mergeImages = require('merge-images');
 const Canvas = require('canvas');
 
 // import twitter dependencies
-const dotenv = require('dotenv');
-const Twit = require('twit');
+// const Twit = require('twit');
+const Twitter = require('twitter');
 const fs = require('fs');
 
-const Team = require('./model/teams');
-
+// const Team = require('./model/teams');
+const dotenv = require('dotenv');
 dotenv.config();
 
 // Create Express server
@@ -37,28 +37,35 @@ if (process.env.TWITTER_CONSUMER_KEY
         && process.env.TWITTER_ACCESS_TOKEN
         && process.env.TWITTER_ACCESS_TOKEN_SECRET) {
     console.log('Configuring Twitter...')
-    twitter = new Twit({
+    twitter = new Twitter({
         consumer_key:         process.env.TWITTER_CONSUMER_KEY,
         consumer_secret:      process.env.TWITTER_CONSUMER_SECRET,
         access_token:         process.env.TWITTER_ACCESS_TOKEN,
         access_token_secret:  process.env.TWITTER_ACCESS_TOKEN_SECRET,
-        timeout_ms:           60 * 1000,  // optional HTTP request timeout to apply to all requests.
+        // timeout_ms:           60 * 1000,  // optional HTTP request timeout to apply to all requests.
     });
 } else {
     console.log('No Twitter')
 }
 /* eslint-enable */
 
+////////////////////////////////////////////////////////
+                  //DATABASE//
+////////////////////////////////////////////////////////
 // DB config
-let db = null
-if (process.env.MONGODB_URI) {
-    console.log('Configuring MongoDB...')
-    mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true })
-    db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-} else {
-    console.log('No MongoDB')
-}
+// let db = null
+// if (process.env.MONGODB_URI) {
+//     console.log('Configuring MongoDB...')
+//     mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true })
+//     db = mongoose.connection;
+//     db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+// } else {
+//     console.log('No MongoDB')
+// }
+
+////////////////////////////////////////////////////////
+                  //END DATABASE//
+////////////////////////////////////////////////////////
 
 // Serve the static content
 
@@ -106,8 +113,6 @@ app.post('/api/tweet', (req, res) => {
   var oppLogo = "";
   var teamID = "";
 
-  console.log(teamOPP);
-
   if (teamOPP[0] !== "Opponent") {
     teamID = jimpData.bfcDetails[0].id;
     oppLogo = jimpData.oppDetails[0].logo;
@@ -115,6 +120,8 @@ app.post('/api/tweet', (req, res) => {
     teamID = "00000";
     oppLogo = "./public/00000/logo_placeholder.png";
   }
+
+  console.log(teamOPP, "teamID:", teamID);
 
   const playerScoredTemplate = `./public/${teamID}/templates/playerScored_template.png`;
   const gameStartedTemplate = `./public/${teamID}/templates/gameStarted_template.png`;
@@ -145,17 +152,23 @@ app.post('/api/tweet', (req, res) => {
     //   templateImage: gameStartedTemplate
     // },
     halfTime: {
-      headline: `${beyondScore} : ${oppScore} at halftime`,
-      subHeadline: ``,
+      headline: "",
+      subHeadline: `${beyondScore} : ${oppScore} at halftime`,
       text: ``,
       templateImage: halfTimeTemplate
     },
     secondHalf: {
-      headline: `Second half is underway`,
-      subHeadline: `${teamBFC} ${beyondScore}`,
-      text: `${teamOPP} ${oppScore}`,
+      headline: "",
+      subHeadline: "",
+      text: "",
       templateImage: secondHalfTemplate
     },
+    // secondHalf: {
+    //   headline: "Second half is underway",
+    //   subHeadline: `${teamBFC} ${beyondScore}`,
+    //   text: `${teamOPP} ${oppScore}`,
+    //   templateImage: secondHalfTemplate
+    // },
     finalScore: {
       headline: "Game ended",
       subHeadline: `${teamBFC} ${beyondScore}`,
@@ -164,62 +177,140 @@ app.post('/api/tweet', (req, res) => {
     }
   };
 
-  const headline = jimpText[tweetKey].headline;
-  const subHeadline = jimpText[tweetKey].subHeadline;
-  const text = jimpText[tweetKey].text;
+  const headline = 'headline'
+  const subHeadline = 'subHeadline'
+  const text = 'text'
+  // const headline = jimpText[tweetKey].headline;
+  // const subHeadline = jimpText[tweetKey].subHeadline;
+  // const text = jimpText[tweetKey].text;
+  const tweet = req.body.tweet;
 
   var date = new Date();
   var timestamp = date.getTime();
   //
-  const templateImage = jimpText[tweetKey].templateImage;
-  const savedImagePath = `./public/jimps/BFCLive_${timestamp}.jpg`;
-  //
-  //
-  //
-  Jimp.read(templateImage, function (err, img) {
-      if (err) throw err;
-      Jimp.loadFont( Jimp.FONT_SANS_64_WHITE ).then(function (font) { // load font from .fnt file
-      img.print(font, 20, 20, headline)
-      img.print(font, 55, 150, subHeadline)
-      img.print(font, 55, 210, text)
-      // img.scaleToFit( 400, 300)
-            .write(savedImagePath); // save
-      // image.print(font, x, y, str, width); // print a message on an image with text wrapped at width
-  })
-  })
-  // .then(savedImagePath => {
+  const templateImageFile = jimpText[tweetKey].templateImage;
+  const targetImageFile = `./public/jimps/BFCLive_${timestamp}.jpg`;
 
-  setTimeout(() => {
-    var base64Image = fs.readFileSync(savedImagePath, { encoding: 'base64' })
-    // const base64Image = base64String.split(';base64,').pop();
-    console.log(base64Image);
-    // first we must post the media to Twitter
-    twitter.post('media/upload', { media_data: base64Image }, function (err, data, response) {
-      if (err) {
-        console.log(err);
-      } else {
-        // now we can assign alt text to the media, for use by screen readers and
-        // other text-based presentations and interpreters
-        var mediaIdStr = data.media_id_string
-        var altText = "Updates via HelloFC app"
-        var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
+  const addonImageFile = './public/goal.png';
 
-        twitter.post('media/metadata/create', meta_params, function (err, data, response) {
-          if (err) {
-              console.log(err);
-          } else {
-            // now we can reference the media and post a tweet (media will attach to the tweet)
-            const tweet = req.body.tweet;
-            var params = { status: tweet, media_ids: [mediaIdStr] }
-            twitter.post('statuses/update', params, (err, data, response) => {
-              console.log(data)
-              if (err) console.log(err);
-            });
-          }
-        })
-      }
-    })
-  }, 3000)
+  const templateImagePromise = Jimp.read(templateImageFile)
+  const addonImagePromise = Jimp.read(addonImageFile)
+  const fontLoadPromise = Jimp.loadFont(Jimp.FONT_SANS_64_WHITE)
+
+  const tweetImage = (image) => {
+      twitter.post('media/upload', { media: image })
+          .then(media => {
+              console.log('Image upload successful!')
+              const statusParams = { status: tweet, media_ids: media.media_id_string }
+              twitter.post('statuses/update', statusParams)
+                  .then(result => {
+                      console.log('Twitter update successful!')
+                  })
+                  .catch(err => {
+                      console.log('Failed to update Twitter status!')
+                      console.log(err)
+                      console.log(err.stack)
+                      throw err
+                  })
+          })
+          .catch(err => {
+              console.log('Failed to upload image!')
+              console.log(err)
+              console.log(err.stack)
+              throw err
+          })
+  }
+
+  const encodeJimpImage = (image, mime) => {
+      return new Promise((fulfil, reject) => {
+          image.getBuffer(mime, (err, data) => {
+              if (err) {
+                  reject(err)
+              } else {
+                  fulfil(data)
+              }
+          })
+      })
+  }
+
+  const createImage = () => {
+      return Promise.all([
+          templateImagePromise,
+          addonImagePromise,
+          fontLoadPromise
+      ])
+          .then(results => {
+              const baseImage = results[0]
+              const addonImage = results[1]
+              const font = results[2]
+
+              return baseImage
+                  .clone()
+                  .print(font, 20, 20, headline)
+                  .print(font, 55, 150, subHeadline)
+                  .print(font, 55, 210, text)
+                  .composite(addonImage, 150, 80)
+                  .write(targetImageFile) // optional
+          })
+          .then(createdImage => encodeJimpImage(createdImage, Jimp.MIME_PNG))
+  }
+
+  createImage()
+      .then(image => tweetImage(image))
+      .catch(err => {
+          console.log('Failed to create image!')
+          console.log(err)
+          console.log(err.stack)
+          throw err
+      })
+
+
+//   //
+//   Jimp.read(templateImage, function (err, img) {
+//       if (err) throw err;
+//       Jimp.loadFont( Jimp.FONT_SANS_64_WHITE ).then(function (font) { // load font from .fnt file
+//       img.print(font, 20, 20, headline)
+//       img.print(font, 55, 150, subHeadline)
+//       img.print(font, 55, 210, text)
+//       // img.scaleToFit( 400, 300)
+//             .write(savedImagePath); // save
+//       // image.print(font, x, y, str, width); // print a message on an image with text wrapped at width
+//   })
+//   })
+//   // .then(savedImagePath => {
+//
+//   setTimeout(() => {
+//     var base64Image = fs.readFileSync(savedImagePath, { encoding: 'base64' })
+//     // const base64Image = base64String.split(';base64,').pop();
+//     console.log(base64Image);
+//     // first we must post the media to Twitter
+//     twitter.post('media/upload', { media_data: base64Image }, function (err, data, response) {
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         // now we can assign alt text to the media, for use by screen readers and
+//         // other text-based presentations and interpreters
+//         var mediaIdStr = data.media_id_string
+//         var altText = "Updates via HelloFC app"
+//         var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
+//
+//         twitter.post('media/metadata/create', meta_params, function (err, data, response) {
+//           if (err) {
+//               console.log(err);
+//           } else {
+//             // now we can reference the media and post a tweet (media will attach to the tweet)
+//             const tweet = req.body.tweet;
+//             var params = { status: tweet, media_ids: [mediaIdStr] }
+//             twitter.post('statuses/update', params, (err, data, response) => {
+//               console.log(data)
+//               if (err) console.log(err);
+//             });
+//           }
+//         })
+//       }
+//     })
+//   }, 3000)
+});
   // })
   // .catch(err => {
   //   console.log(err);
@@ -235,39 +326,7 @@ app.post('/api/tweet', (req, res) => {
   // ], {
   //   Canvas: Canvas
   // })
-  // .then(base64String => {
-  //   const base64Image = base64String.split(';base64,').pop();
-  //   // first we must post the media to Twitter
-  //   twitter.post('media/upload', { media_data: base64Image }, function (err, data, response) {
-  //     if (err) {
-  //       console.log(err);
-  //     } else {
-  //       // now we can assign alt text to the media, for use by screen readers and
-  //       // other text-based presentations and interpreters
-  //       var mediaIdStr = data.media_id_string
-  //       var altText = "BFC game updates"
-  //       var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
-  //
-  //       twitter.post('media/metadata/create', meta_params, function (err, data, response) {
-  //         if (err) {
-  //             console.log(err);
-  //         } else {
-  //           // now we can reference the media and post a tweet (media will attach to the tweet)
-  //           const tweet = req.body.tweet;
-  //           var params = { status: tweet, media_ids: [mediaIdStr] }
-  //           twitter.post('statuses/update', params, (err, data, response) => {
-  //             console.log(data)
-  //             if (err) console.log(err);
-  //           });
-  //         }
-  //       })
-  //     }
-  //   })
-  // })
-  // .catch(err => {
-  //   console.log(err);
-  // });
-});
+
 
 ///////////////////////// END ///////////////////////////////
 

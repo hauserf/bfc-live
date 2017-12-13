@@ -17,6 +17,7 @@ export const teamApi = {
     {
       id: "11111",
       name: "Beyond FC First",
+      logo: "./public/france.png",
       season: "2017/18",
       league: {
         name: "Cosmopolitan Soccer League",
@@ -29,6 +30,7 @@ export const teamApi = {
     {
       id: "12345",
       name: "Beyond FC Reserve",
+      logo: "./public/italy.png",
       season: "2017/18",
       league: {
         name: "Cosmopolitan Soccer League",

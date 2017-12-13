@@ -40,7 +40,7 @@ if (process.env.TWITTER_CONSUMER_KEY
     twitter = new Twitter({
         consumer_key:         process.env.TWITTER_CONSUMER_KEY,
         consumer_secret:      process.env.TWITTER_CONSUMER_SECRET,
-        access_token:         process.env.TWITTER_ACCESS_TOKEN,
+        access_token_key:     process.env.TWITTER_ACCESS_TOKEN,
         access_token_secret:  process.env.TWITTER_ACCESS_TOKEN_SECRET,
         // timeout_ms:           60 * 1000,  // optional HTTP request timeout to apply to all requests.
     });
@@ -92,15 +92,6 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.post('/api/tweet', (req, res) => {
   // console.log({ origin: req.headers, body: req.body });
 
-
-  // use cases affect selection of media templates for tweets
-  // as well as flow of posts (w/ or w/o media)
-  // (1) club: branded templates (BFCNY)
-  // (2) league: branded templates (CSL)
-  // (3) tbd
-
-  // const useCase = "club"
-
   // create jimp image
   const jimpData = req.body.jimpData;
   const tweetKey = jimpData.tweetKey;
@@ -112,6 +103,7 @@ app.post('/api/tweet', (req, res) => {
   const beyondScore = jimpData.beyondScore;
   var oppLogo = "";
   var teamID = "";
+  var bfcLogo = jimpData.bfcDetails[0].logo;
 
   if (teamOPP[0] !== "Opponent") {
     teamID = jimpData.bfcDetails[0].id;
@@ -121,7 +113,8 @@ app.post('/api/tweet', (req, res) => {
     oppLogo = "./public/00000/logo_placeholder.png";
   }
 
-  console.log(teamOPP, "teamID:", teamID);
+  console.log("bfc details: ", jimpData.bfcDetails);
+
 
   const playerScoredTemplate = `./public/${teamID}/templates/playerScored_template.png`;
   const gameStartedTemplate = `./public/${teamID}/templates/gameStarted_template.png`;
@@ -132,17 +125,62 @@ app.post('/api/tweet', (req, res) => {
   ////////////MEDIA === JIMP////////////////////////
 
 
+  if (tweetKey === "gameStarted" || "halftime" || "secondHalf" || "finalScore") {
+
   const jimpText = {
-    playerScored: {
-      headline: "",
-      subHeadline: scorer,
-      text: `${min} minute`,
-      templateImage: playerScoredTemplate
-    },
     gameStarted: {
-      headline: "",
-      subHeadline: "",
-      text: "",
+      myTeam: {
+        teamName: {
+          name: `${teamBFC}`,
+          font: `${Jimp.FONT_SANS_64_WHITE}`,
+          coord: {
+            x: 60,
+            y: 20
+          }
+        },
+        logo: {
+          file: `${bfcLogo}`,
+          coord: {
+            x: 60,
+            y: 250
+          }
+        }
+      },
+      opposition: {
+        teamName: {
+          name: `${teamOPP}`,
+          font: `${Jimp.FONT_SANS_64_WHITE}`,
+          coord: {
+            x: 60,
+            y: 80
+          }
+        },
+        logo: {
+          file: `${oppLogo}`,
+          coord: {
+            x: 100,
+            y: 250
+          }
+        }
+      },
+      scoreline: {
+        myTeamScore: {
+          score: `${beyondScore}`,
+          font: `${Jimp.FONT_SANS_64_WHITE}`,
+          coord: {
+            x: 800,
+            y: 20
+          }
+        },
+        oppositionScore: {
+          score: `${oppScore}`,
+          font: `${Jimp.FONT_SANS_64_WHITE}`,
+          coord: {
+            x: 800,
+            y: 80
+          }
+        }
+      },
       templateImage: gameStartedTemplate
     },
     // gameStarted: {
@@ -152,15 +190,113 @@ app.post('/api/tweet', (req, res) => {
     //   templateImage: gameStartedTemplate
     // },
     halfTime: {
-      headline: "",
-      subHeadline: `${beyondScore} : ${oppScore} at halftime`,
-      text: ``,
+      myTeam: {
+        teamName: {
+          name: `${teamBFC}`,
+          font: `${Jimp.FONT_SANS_16_WHITE}`,
+          coord: {
+            x: 60,
+            y: 20
+          }
+        },
+        logo: {
+          file: './public/goal.png',
+          coord: {
+            x: 60,
+            y: 250
+          }
+        }
+      },
+      opposition: {
+        teamName: {
+          name: `${teamOPP}`,
+          font: `${Jimp.FONT_SANS_16_WHITE}`,
+          coord: {
+            x: 60,
+            y: 80
+          }
+        },
+        logo: {
+          file: './public/field.png',
+          coord: {
+            x: 100,
+            y: 250
+          }
+        }
+      },
+      scoreline: {
+        myTeamScore: {
+          score: `${beyondScore}`,
+          font: `${Jimp.FONT_SANS_16_WHITE}`,
+          coord: {
+            x: 800,
+            y: 20
+          }
+        },
+        oppositionScore: {
+          score: `${oppScore}`,
+          font: `${Jimp.FONT_SANS_16_WHITE}`,
+          coord: {
+            x: 800,
+            y: 80
+          }
+        }
+      },
       templateImage: halfTimeTemplate
     },
     secondHalf: {
-      headline: "",
-      subHeadline: "",
-      text: "",
+      myTeam: {
+        teamName: {
+          name: `${teamBFC}`,
+          font: `${Jimp.FONT_SANS_64_WHITE}`,
+          coord: {
+            x: 60,
+            y: 20
+          }
+        },
+        logo: {
+          file: './public/goal.png',
+          coord: {
+            x: 60,
+            y: 250
+          }
+        }
+      },
+      opposition: {
+        teamName: {
+          name: `${teamOPP}`,
+          font: `${Jimp.FONT_SANS_64_WHITE}`,
+          coord: {
+            x: 60,
+            y: 80
+          }
+        },
+        logo: {
+          file: './public/field.png',
+          coord: {
+            x: 100,
+            y: 250
+          }
+        }
+      },
+      scoreline: {
+        myTeamScore: {
+          score: `${beyondScore}`,
+          font: `${Jimp.FONT_SANS_64_WHITE}`,
+          coord: {
+            x: 800,
+            y: 20
+          }
+        },
+        oppositionScore: {
+          score: `${oppScore}`,
+          font: `${Jimp.FONT_SANS_64_WHITE}`,
+          coord: {
+            x: 800,
+            y: 80
+          }
+        }
+      },
       templateImage: secondHalfTemplate
     },
     // secondHalf: {
@@ -170,19 +306,92 @@ app.post('/api/tweet', (req, res) => {
     //   templateImage: secondHalfTemplate
     // },
     finalScore: {
-      headline: "Game ended",
-      subHeadline: `${teamBFC} ${beyondScore}`,
-      text: `${teamOPP} ${oppScore}`,
+      myTeam: {
+        teamName: {
+          name: `${teamBFC}`,
+          font: `${Jimp.FONT_SANS_32_WHITE}`,
+          coord: {
+            x: 60,
+            y: 20
+          }
+        },
+        logo: {
+          file: './public/goal.png',
+          coord: {
+            x: 60,
+            y: 250
+          }
+        }
+      },
+      opposition: {
+        teamName: {
+          name: `${teamOPP}`,
+          font: `${Jimp.FONT_SANS_32_WHITE}`,
+          coord: {
+            x: 60,
+            y: 80
+          }
+        },
+        logo: {
+          file: './public/field.png',
+          coord: {
+            x: 100,
+            y: 250
+          }
+        }
+      },
+      scoreline: {
+        myTeamScore: {
+          score: `${beyondScore}`,
+          font: `${Jimp.FONT_SANS_32_WHITE}`,
+          coord: {
+            x: 800,
+            y: 20
+          }
+        },
+        oppositionScore: {
+          score: `${oppScore}`,
+          font: `${Jimp.FONT_SANS_32_WHITE}`,
+          coord: {
+            x: 800,
+            y: 80
+          }
+        }
+      },
       templateImage: finalScoreTemplate
+    },
+    playerScored: {
+      headline: "",
+      subHeadline: scorer,
+      text: `${min} minute`,
+      templateImage: playerScoredTemplate
     }
   };
 
-  const headline = 'headline'
-  const subHeadline = 'subHeadline'
-  const text = 'text'
-  // const headline = jimpText[tweetKey].headline;
-  // const subHeadline = jimpText[tweetKey].subHeadline;
-  // const text = jimpText[tweetKey].text;
+  const myTeamName = jimpText[tweetKey].myTeam.teamName.name;
+  const myTeamFont = jimpText[tweetKey].myTeam.teamName.font;
+  const myTeamNameX = jimpText[tweetKey].myTeam.teamName.coord.x;
+  const myTeamNameY = jimpText[tweetKey].myTeam.teamName.coord.y;
+  const myLogoFile = jimpText[tweetKey].myTeam.logo.file;
+  const myLogoX = jimpText[tweetKey].myTeam.logo.coord.x;
+  const myLogoY = jimpText[tweetKey].myTeam.logo.coord.y;
+  const myScore = jimpText[tweetKey].scoreline.myTeamScore.score;
+  const myScoreFont = jimpText[tweetKey].scoreline.myTeamScore.font;
+  const myScoreX = jimpText[tweetKey].scoreline.myTeamScore.coord.x;
+  const myScoreY = jimpText[tweetKey].scoreline.myTeamScore.coord.y;
+
+  const oppTeamName = jimpText[tweetKey].opposition.teamName.name;
+  const oppTeamFont = jimpText[tweetKey].opposition.teamName.font;
+  const oppTeamNameX = jimpText[tweetKey].opposition.teamName.coord.x;
+  const oppTeamNameY = jimpText[tweetKey].opposition.teamName.coord.y;
+  const oppLogoFile = jimpText[tweetKey].opposition.logo.file;
+  const oppLogoX = jimpText[tweetKey].opposition.logo.coord.x;
+  const oppLogoY = jimpText[tweetKey].opposition.logo.coord.y;
+  const oppositionScore = jimpText[tweetKey].scoreline.oppositionScore.score;
+  const oppositionScoreFont = jimpText[tweetKey].scoreline.oppositionScore.font;
+  const oppositionScoreX = jimpText[tweetKey].scoreline.oppositionScore.coord.x;
+  const oppositionScoreY = jimpText[tweetKey].scoreline.oppositionScore.coord.y;
+
   const tweet = req.body.tweet;
 
   var date = new Date();
@@ -191,11 +400,58 @@ app.post('/api/tweet', (req, res) => {
   const templateImageFile = jimpText[tweetKey].templateImage;
   const targetImageFile = `./public/jimps/BFCLive_${timestamp}.jpg`;
 
-  const addonImageFile = './public/goal.png';
+  const templateImagePromise = Jimp.read(templateImageFile);
+  const myLogoFilePromise = Jimp.read(myLogoFile);
+  const oppLogoFilePromise = Jimp.read(oppLogoFile);
+  // const fontLoadPromise = Jimp.loadFont(Jimp.FONT_SANS_64_WHITE);
+  const myTeamFontPromise = Jimp.loadFont(myTeamFont);
+  const oppTeamFontPromise = Jimp.loadFont(oppTeamFont);
+  const myScoreFontPromise = Jimp.loadFont(myScoreFont);
+  const oppositionScoreFontPromise = Jimp.loadFont(oppositionScoreFont);
 
-  const templateImagePromise = Jimp.read(templateImageFile)
-  const addonImagePromise = Jimp.read(addonImageFile)
-  const fontLoadPromise = Jimp.loadFont(Jimp.FONT_SANS_64_WHITE)
+  const encodeJimpImage = (image, mime) => {
+      return new Promise((fulfil, reject) => {
+          image.getBuffer(mime, (err, data) => {
+              if (err) {
+                  reject(err)
+              } else {
+                  fulfil(data)
+              }
+          })
+      })
+  }
+
+  const createImage = () => {
+      return Promise.all([
+          templateImagePromise,
+          myLogoFilePromise,
+          oppLogoFilePromise,
+          myTeamFontPromise,
+          oppTeamFontPromise,
+          myScoreFontPromise,
+          oppositionScoreFontPromise
+      ])
+          .then(results => {
+              const baseImage = results[0]
+              const myLogo = results[1]
+              const oppLogo = results[2]
+              const fontMyTeam = results[3]
+              const fontOppTeam = results[4]
+              const fontMyScore = results[5]
+              const fontOppScore = results[6]
+
+              return baseImage
+                  .clone()
+                  .print(fontMyTeam, myTeamNameX, myTeamNameY, myTeamName)
+                  .print(fontOppTeam, oppTeamNameX, oppTeamNameY, oppTeamName)
+                  .print(fontMyScore, myScoreX, myScoreY, myScore)
+                  .print(fontOppScore, oppositionScoreX, oppositionScoreY, oppositionScore)
+                  .composite(myLogo, myLogoX, myLogoY)
+                  .composite(oppLogo, oppLogoX, oppLogoY)
+                  .write(targetImageFile) // optional
+          })
+          .then(createdImage => encodeJimpImage(createdImage, Jimp.MIME_PNG))
+  }
 
   const tweetImage = (image) => {
       twitter.post('media/upload', { media: image })
@@ -221,40 +477,6 @@ app.post('/api/tweet', (req, res) => {
           })
   }
 
-  const encodeJimpImage = (image, mime) => {
-      return new Promise((fulfil, reject) => {
-          image.getBuffer(mime, (err, data) => {
-              if (err) {
-                  reject(err)
-              } else {
-                  fulfil(data)
-              }
-          })
-      })
-  }
-
-  const createImage = () => {
-      return Promise.all([
-          templateImagePromise,
-          addonImagePromise,
-          fontLoadPromise
-      ])
-          .then(results => {
-              const baseImage = results[0]
-              const addonImage = results[1]
-              const font = results[2]
-
-              return baseImage
-                  .clone()
-                  .print(font, 20, 20, headline)
-                  .print(font, 55, 150, subHeadline)
-                  .print(font, 55, 210, text)
-                  .composite(addonImage, 150, 80)
-                  .write(targetImageFile) // optional
-          })
-          .then(createdImage => encodeJimpImage(createdImage, Jimp.MIME_PNG))
-  }
-
   createImage()
       .then(image => tweetImage(image))
       .catch(err => {
@@ -264,71 +486,11 @@ app.post('/api/tweet', (req, res) => {
           throw err
       })
 
+    } else {
+      twitter.post('statuses/update', {status: tweet})
+    }
 
-//   //
-//   Jimp.read(templateImage, function (err, img) {
-//       if (err) throw err;
-//       Jimp.loadFont( Jimp.FONT_SANS_64_WHITE ).then(function (font) { // load font from .fnt file
-//       img.print(font, 20, 20, headline)
-//       img.print(font, 55, 150, subHeadline)
-//       img.print(font, 55, 210, text)
-//       // img.scaleToFit( 400, 300)
-//             .write(savedImagePath); // save
-//       // image.print(font, x, y, str, width); // print a message on an image with text wrapped at width
-//   })
-//   })
-//   // .then(savedImagePath => {
-//
-//   setTimeout(() => {
-//     var base64Image = fs.readFileSync(savedImagePath, { encoding: 'base64' })
-//     // const base64Image = base64String.split(';base64,').pop();
-//     console.log(base64Image);
-//     // first we must post the media to Twitter
-//     twitter.post('media/upload', { media_data: base64Image }, function (err, data, response) {
-//       if (err) {
-//         console.log(err);
-//       } else {
-//         // now we can assign alt text to the media, for use by screen readers and
-//         // other text-based presentations and interpreters
-//         var mediaIdStr = data.media_id_string
-//         var altText = "Updates via HelloFC app"
-//         var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
-//
-//         twitter.post('media/metadata/create', meta_params, function (err, data, response) {
-//           if (err) {
-//               console.log(err);
-//           } else {
-//             // now we can reference the media and post a tweet (media will attach to the tweet)
-//             const tweet = req.body.tweet;
-//             var params = { status: tweet, media_ids: [mediaIdStr] }
-//             twitter.post('statuses/update', params, (err, data, response) => {
-//               console.log(data)
-//               if (err) console.log(err);
-//             });
-//           }
-//         })
-//       }
-//     })
-//   }, 3000)
 });
-  // })
-  // .catch(err => {
-  //   console.log(err);
-  // });
-
-  //   ////////////MEDIA === MERGE IMAGES////////////////////////
-  //
-  // // Merge images
-  // mergeImages([
-  //   { src: './public/BFCLive_events_template.png', x: 0, y: 0 },
-  //   { src: './public/field.png', x: 150, y: 80 },
-  //   { src: './public/goal.png', x: 350, y: 60 }
-  // ], {
-  //   Canvas: Canvas
-  // })
-
-
-///////////////////////// END ///////////////////////////////
 
 // Serve the App
 

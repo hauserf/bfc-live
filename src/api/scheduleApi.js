@@ -25,7 +25,7 @@ export const scheduleApi = [
         kickoff: "",
         opponent: {
           teamName: "Sporting Astoria",
-          logo: "555uytsgt.png",
+          logo: "./public/germany.png",
           oppSocial: {
             twitterHandle: "@ SportingAstoria",
             instaHandle: ""
@@ -74,7 +74,7 @@ export const scheduleApi = [
         kickoff: "",
         opponent: {
           teamName: "PFC Reserve",
-          logo: "iykjnbvvcc.png",
+          logo: "./public/spain.png",
           oppSocial: {
             twitterHandle: "@ PFC",
             instaHandle: ""

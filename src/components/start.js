@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import Formation from './formation';
 import StartInput from './start-input';
 import { AppLang } from '../data/applang';
 

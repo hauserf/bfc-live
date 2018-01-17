@@ -16,26 +16,39 @@ export const teamApi = {
   teams: [
     {
       id: "11111",
-      name: "Beyond FC First",
-      logo: "./public/france.png",
+      name: "Manhattan Kickers",
+      logo: "./public/ManhattanKickers_logo.png",
       season: "2017/18",
       league: {
         name: "Cosmopolitan Soccer League",
         division: "Division 2",
-        scheduleID: "321",
+        scheduleID: "111",
         twitterHandle: "@ CosmoLeague",
         hashtag: "# Div2"
       }
     },
     {
-      id: "12345",
-      name: "Beyond FC Reserve",
-      logo: "./public/italy.png",
+      id: "22222",
+      name: "BFC Reserve",
+      logo: "./public/bfcny_logo_200.png",
       season: "2017/18",
       league: {
         name: "Cosmopolitan Soccer League",
         division: "Division 2",
-        scheduleID: "432",
+        scheduleID: "222",
+        twitterHandle: "@ CosmoLeague",
+        hashtag: "# Div2R"
+      }
+    },
+    {
+      id: "33333",
+      name: "BFC Metro",
+      logo: "./public/bfcny_logo_200.png",
+      season: "2017/18",
+      league: {
+        name: "Cosmopolitan Soccer League",
+        division: "Division 2",
+        scheduleID: "333",
         twitterHandle: "@ CosmoLeague",
         hashtag: "# Div2R"
       }

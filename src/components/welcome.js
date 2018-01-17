@@ -21,7 +21,7 @@ const Welcome = (props) => {
         {/* <p className="intro-welcome text-center"> Access as</p> */}
         <p className="intro-welcome text-center"> {copy.accessText[applang]} </p>
         <div className="text-center">
-          <Button link="/start" css="input-btn" text={copy.accessBtn.manager[applang]}/>
+          <Button link="/games" css="input-btn" text={copy.accessBtn.manager[applang]}/>
           <Button link="/fanview" css="input-btn bg-secondary" text={copy.accessBtn.player[applang]}/>
         </div>
         <div className="bfc-logo-wrapper flex-con flex-dir-col">

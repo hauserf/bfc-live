@@ -13,6 +13,7 @@ import Roster from './components/roster';
 import TeamStats from './components/team-stats';
 import PlayerDetailsPage from './components/player-details-page';
 import Settings from './components/settings';
+import Games from './components/games';
 import Start from './components/start';
 import Welcome from './components/welcome';
 import TimerState from './components/highlights_timer-state';
@@ -98,9 +99,14 @@ loadTeamsFromServer() {
  ------------  START  ------------
  ********************************/
 
-setTeamCode(e){
-   const teamCode = e.target.value;
+ setTeamCode = (teamCode) => {
    this.setState({ teamCode });
+
+// setTeamCode(e){
+//    const teamCode = e.target.value;
+//    this.setState({ teamCode });
+
+console.log(this.state.teamCode);
 
    setTimeout(() => {
      const teams = teamApi.teams;
@@ -109,6 +115,7 @@ setTeamCode(e){
      this.setScheduleID(team);
      this.matchBFCTeam(team);
    }}, 10);
+
  }
 
 handleLanguageSelected(language){
@@ -546,6 +553,11 @@ triggerTweet(tweetKey, min, teamOPP, teamBFC, oppScore, beyondScore, scorer, sco
                 teamCodeMatched={this.state.teamCodeMatched}
                 applang={this.state.applang}
               />} />
+              <Route path="/games" render={() => <Games
+                setTeamCode={this.setTeamCode.bind(this)}
+                applang={this.state.applang}
+                />}
+              />
               <Route path="/settings" render={() => <Settings
                 setBFCTeam={this.setBFCTeam.bind(this)}
                 setOPPTeam={this.setOPPTeam.bind(this)}

@@ -1,23 +1,9 @@
 export const scheduleApi = [
   {
-    id: "321",
+    id: "111",
     extraTime: false,
     lengthOfHalfs: 2700,
     games: [
-      {
-        id: "001",
-        gameDay: 1,
-        date: "",
-        kickoff: "",
-        opponent: {
-          teamName: "Polonia Gwardia NY",
-          logo: "",
-          oppSocial: {
-            twitterHandle: "@ Polonia",
-            instaHandle: ""
-          }
-        }
-      },
       {
         id: "002",
         gameDay: 2,
@@ -25,72 +11,51 @@ export const scheduleApi = [
         kickoff: "",
         opponent: {
           teamName: "Sporting Astoria",
-          logo: "./public/germany.png",
+          logo: "./public/sportingastoria_logo_200.png",
           oppSocial: {
             twitterHandle: "@ SportingAstoria",
             instaHandle: ""
           }
         }
-      },
-      {
-        id: "003",
-        gameDay: 3,
-        date: "",
-        kickoff: "",
-        opponent: {
-          teamName: "Miami Kickers",
-          logo: "xyz",
-          oppSocial: {
-            twitterHandle: "@ Miami",
-            instaHandle: ""
-          }
-        }
-      },
+      }
     ]
   },
   {
-    id: "432",
+    id: "222",
     extraTime: false,
     lengthOfHalfs: 2700,
     games: [
       {
         id: "001",
-        gameDay: 1,
+        gameDay: 2,
         date: "",
         kickoff: "",
         opponent: {
           teamName: "Polonia Gwardia NY",
-          logo: "ukjdhks.png",
+          logo: "./public/empty.png",
           oppSocial: {
             twitterHandle: "@ Gwardia",
             instaHandle: ""
           }
         }
-      },
+      }
+    ]
+  },
+  {
+    id: "333",
+    extraTime: false,
+    lengthOfHalfs: 2700,
+    games: [
       {
-        id: "002",
+        id: "001",
         gameDay: 2,
         date: "",
         kickoff: "",
         opponent: {
-          teamName: "PFC Reserve",
-          logo: "./public/spain.png",
+          teamName: "Manhattan Kickers",
+          logo: "./public/ManhattanKickers_logo.png",
           oppSocial: {
-            twitterHandle: "@ PFC",
-            instaHandle: ""
-          }
-        }
-      },
-      {
-        id: "003",
-        gameDay: 3,
-        date: "",
-        kickoff: "",
-        opponent: {
-          teamName: "MK Reserve",
-          logo: "",
-          oppSocial: {
-            twitterHandle: "@ MK",
+            twitterHandle: "@ Kickers",
             instaHandle: ""
           }
         }

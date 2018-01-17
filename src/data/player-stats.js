@@ -18,7 +18,7 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: ["11111", "2345"]
+    teamID: ["11111"]
   },
   {
     id: "102",
@@ -228,7 +228,7 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: ["11111", "12345"]
+    teamID: ["11111", "22222"]
   },
   {
     id: "112",
@@ -249,7 +249,7 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: ["11111", "12345"]
+    teamID: ["11111", "22222", "33333"]
   },
   {
     id: "113",
@@ -270,7 +270,7 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: ["11111", "12345"]
+    teamID: ["11111", "22222", "33333"]
   },
   {
     id: "114",
@@ -291,7 +291,7 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: ["11111", "12345"]
+    teamID: ["11111", "22222", "33333"]
   },
   {
     id: "115",
@@ -312,7 +312,7 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: ["11111", "12345"]
+    teamID: ["11111", "22222", "33333"]
   },
   {
     id: "116",
@@ -333,7 +333,7 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: ["11111", "12345"]
+    teamID: ["11111", "22222", "33333"]
   },
   {
     id: "117",
@@ -354,7 +354,7 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: ["11111", "12345"]
+    teamID: ["11111", "22222", "33333"]
   },
   {
     id: "118",
@@ -375,7 +375,7 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: ["11111", "12345"]
+    teamID: ["11111", "22222", "33333"]
   },
   {
     id: "119",
@@ -396,7 +396,7 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: ["11111", "12345"]
+    teamID: ["11111", "22222", "33333"]
   },
   {
     id: "120",
@@ -417,7 +417,7 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: ["11111", "12345"]
+    teamID: ["11111", "22222", "33333"]
   },
   {
     id: "121",
@@ -438,7 +438,7 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: ["11111", "12345"]
+    teamID: ["11111", "22222", "33333"]
   },
   {
     id: "122",
@@ -459,7 +459,7 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: ["11111", "12345"]
+    teamID: ["11111", "22222"]
   },
   {
     id: "123",
@@ -480,6 +480,6 @@ export const PlayerStats = [
     twitter: function(){
       return `@${this.lastName}${this.firstName.charAt(0).toLowerCase()}`
     },
-    teamID: ["11111", "12345"]
+    teamID: ["11111", "22222", "33333"]
   },
 ];

@@ -9,7 +9,7 @@ const PlayerMore = (props) => {
 
   return (
     <div className="stats-more">
-      <Link to={playerURL}><img className="" src="dots..png" alt="|||" /></Link>
+      <Link to={playerURL}>|||</Link>
     </div>
   );
 }

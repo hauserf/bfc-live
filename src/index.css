@@ -43,6 +43,13 @@ background: linear-gradient(to right, #FFC837, #FF8008); /* W3C, IE 10+/ Edge, F
   align-content: flex-start;
   margin-top: 20px;
 }
+.flex-dir-rows {
+  flex-direction: row;
+  height: 40px;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  margin-top: 20px;
+}
 
 .flex-items-align {
   justify-content: space-between;
@@ -161,6 +168,52 @@ input:focus {
   width: 200px;
   text-decoration: none;
 }
+.s-item {
+    background: #262c42;
+    border: none;
+    color: #00b2ee;
+    padding: 5px 10px;
+    font-size: 1.4em;
+    font-weight: 100;
+    font-family: arial, sans-serif;
+    border-radius: 5%;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+.s-item:hover {
+    background: #343e54;
+    border: none;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 1.4em;
+    font-weight: 600;
+    font-family: arial, sans-serif;
+    border-radius: 5%;
+    margin-bottom: 20px;
+    cursor: pointer;
+    text-decoration: none !important;
+}
+
+.s-vs {
+  font-weight: 600;
+  color: #fff;
+}
+
+.s-time {
+  font-weight: 600;
+  color: #fff;
+  font-size: 12px;
+  text-align: right;
+}
+
+.s-title {
+  color: #ff8f18;
+  padding: 10px 15px 0;
+  text-transform: uppercase;
+  font-size: 0.8em;
+}
+
+
 .x-aside,
 .length-btn {
     background: #262c42;

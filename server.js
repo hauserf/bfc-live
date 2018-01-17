@@ -124,14 +124,26 @@ app.post('/api/tweet', (req, res) => {
 
   ////////////MEDIA === JIMP////////////////////////
 
+  const tweet = req.body.tweet;
+  const eventTypes = [ "gameStarted", "halfTime", "secondHalf", "finalScore" ]
 
-  if (tweetKey === "gameStarted" || "halftime" || "secondHalf" || "finalScore") {
+  if (eventTypes.indexOf(tweetKey) === -1) {
+    twitter.post('statuses/update', {status: tweet})
+        .then(response => {
+            console.log(response)
+        })
+        .catch(err => {
+            console.log(err)
+            console.log(err.stack)
+            throw err
+        })
+} else {
 
   const jimpText = {
     gameStarted: {
       myTeam: {
         teamName: {
-          name: `${teamBFC}`,
+          name: ``,
           font: `${Jimp.FONT_SANS_64_WHITE}`,
           coord: {
             x: 60,
@@ -142,13 +154,13 @@ app.post('/api/tweet', (req, res) => {
           file: `${bfcLogo}`,
           coord: {
             x: 60,
-            y: 250
+            y: 220
           }
         }
       },
       opposition: {
         teamName: {
-          name: `${teamOPP}`,
+          name: ``,
           font: `${Jimp.FONT_SANS_64_WHITE}`,
           coord: {
             x: 60,
@@ -158,14 +170,14 @@ app.post('/api/tweet', (req, res) => {
         logo: {
           file: `${oppLogo}`,
           coord: {
-            x: 100,
-            y: 250
+            x: 220,
+            y: 220
           }
         }
       },
       scoreline: {
         myTeamScore: {
-          score: `${beyondScore}`,
+          score: ``,
           font: `${Jimp.FONT_SANS_64_WHITE}`,
           coord: {
             x: 800,
@@ -173,7 +185,7 @@ app.post('/api/tweet', (req, res) => {
           }
         },
         oppositionScore: {
-          score: `${oppScore}`,
+          score: ``,
           font: `${Jimp.FONT_SANS_64_WHITE}`,
           coord: {
             x: 800,
@@ -193,52 +205,52 @@ app.post('/api/tweet', (req, res) => {
       myTeam: {
         teamName: {
           name: `${teamBFC}`,
-          font: `${Jimp.FONT_SANS_16_WHITE}`,
+          font: `${Jimp.FONT_SANS_64_BLACK}`,
           coord: {
             x: 60,
-            y: 20
+            y: 120
           }
         },
         logo: {
-          file: './public/goal.png',
+          file: "./public/empty.png",
           coord: {
             x: 60,
-            y: 250
+            y: 220
           }
         }
       },
       opposition: {
         teamName: {
           name: `${teamOPP}`,
-          font: `${Jimp.FONT_SANS_16_WHITE}`,
+          font: `${Jimp.FONT_SANS_64_BLACK}`,
           coord: {
             x: 60,
-            y: 80
+            y: 180
           }
         },
         logo: {
-          file: './public/field.png',
+          file: "./public/empty.png",
           coord: {
-            x: 100,
-            y: 250
+            x: 220,
+            y: 220
           }
         }
       },
       scoreline: {
         myTeamScore: {
           score: `${beyondScore}`,
-          font: `${Jimp.FONT_SANS_16_WHITE}`,
+          font: `${Jimp.FONT_SANS_64_BLACK}`,
           coord: {
             x: 800,
-            y: 20
+            y: 120
           }
         },
         oppositionScore: {
           score: `${oppScore}`,
-          font: `${Jimp.FONT_SANS_16_WHITE}`,
+          font: `${Jimp.FONT_SANS_64_BLACK}`,
           coord: {
             x: 800,
-            y: 80
+            y: 180
           }
         }
       },
@@ -247,7 +259,7 @@ app.post('/api/tweet', (req, res) => {
     secondHalf: {
       myTeam: {
         teamName: {
-          name: `${teamBFC}`,
+          name: "",
           font: `${Jimp.FONT_SANS_64_WHITE}`,
           coord: {
             x: 60,
@@ -255,7 +267,7 @@ app.post('/api/tweet', (req, res) => {
           }
         },
         logo: {
-          file: './public/goal.png',
+          file: "./public/empty.png",
           coord: {
             x: 60,
             y: 250
@@ -264,7 +276,7 @@ app.post('/api/tweet', (req, res) => {
       },
       opposition: {
         teamName: {
-          name: `${teamOPP}`,
+          name: "",
           font: `${Jimp.FONT_SANS_64_WHITE}`,
           coord: {
             x: 60,
@@ -272,7 +284,7 @@ app.post('/api/tweet', (req, res) => {
           }
         },
         logo: {
-          file: './public/field.png',
+          file: "./public/empty.png",
           coord: {
             x: 100,
             y: 250
@@ -281,7 +293,7 @@ app.post('/api/tweet', (req, res) => {
       },
       scoreline: {
         myTeamScore: {
-          score: `${beyondScore}`,
+          score: "",
           font: `${Jimp.FONT_SANS_64_WHITE}`,
           coord: {
             x: 800,
@@ -289,7 +301,7 @@ app.post('/api/tweet', (req, res) => {
           }
         },
         oppositionScore: {
-          score: `${oppScore}`,
+          score: "",
           font: `${Jimp.FONT_SANS_64_WHITE}`,
           coord: {
             x: 800,
@@ -309,52 +321,52 @@ app.post('/api/tweet', (req, res) => {
       myTeam: {
         teamName: {
           name: `${teamBFC}`,
-          font: `${Jimp.FONT_SANS_32_WHITE}`,
+          font: `${Jimp.FONT_SANS_64_WHITE}`,
           coord: {
             x: 60,
-            y: 20
+            y: 140
           }
         },
         logo: {
-          file: './public/goal.png',
+          file: `${bfcLogo}`,
           coord: {
             x: 60,
-            y: 250
+            y: 270
           }
         }
       },
       opposition: {
         teamName: {
           name: `${teamOPP}`,
-          font: `${Jimp.FONT_SANS_32_WHITE}`,
+          font: `${Jimp.FONT_SANS_64_WHITE}`,
           coord: {
             x: 60,
-            y: 80
+            y: 200
           }
         },
         logo: {
-          file: './public/field.png',
+          file: `${oppLogo}`,
           coord: {
             x: 100,
-            y: 250
+            y: 270
           }
         }
       },
       scoreline: {
         myTeamScore: {
           score: `${beyondScore}`,
-          font: `${Jimp.FONT_SANS_32_WHITE}`,
+          font: `${Jimp.FONT_SANS_64_WHITE}`,
           coord: {
             x: 800,
-            y: 20
+            y: 140
           }
         },
         oppositionScore: {
           score: `${oppScore}`,
-          font: `${Jimp.FONT_SANS_32_WHITE}`,
+          font: `${Jimp.FONT_SANS_64_WHITE}`,
           coord: {
             x: 800,
-            y: 80
+            y: 200
           }
         }
       },
@@ -392,8 +404,6 @@ app.post('/api/tweet', (req, res) => {
   const oppositionScoreX = jimpText[tweetKey].scoreline.oppositionScore.coord.x;
   const oppositionScoreY = jimpText[tweetKey].scoreline.oppositionScore.coord.y;
 
-  const tweet = req.body.tweet;
-
   var date = new Date();
   var timestamp = date.getTime();
   //
@@ -420,6 +430,8 @@ app.post('/api/tweet', (req, res) => {
           })
       })
   }
+
+  // include another if statement for "playerScored" ???
 
   const createImage = () => {
       return Promise.all([
@@ -486,8 +498,6 @@ app.post('/api/tweet', (req, res) => {
           throw err
       })
 
-    } else {
-      twitter.post('statuses/update', {status: tweet})
     }
 
 });
